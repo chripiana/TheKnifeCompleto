@@ -1,0 +1,3 @@
+L'avviamento del programma TheKnife avverrà tramite terminale.
+Una volta aperto il terminale e essersi spostati nella cartella del file desiderato esegui il seguente comando per avviare l'applicazione
+java -jar TheKnife.jar 
