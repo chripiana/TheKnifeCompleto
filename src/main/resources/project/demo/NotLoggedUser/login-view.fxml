@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.geometry.Insets?>
+
+<StackPane xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
+           fx:controller="project.demo.LoginController"
+           stylesheets="@../style.css" styleClass="main-bg">
+
+    <VBox spacing="0">
+        <!-- NAVBAR -->
+        <HBox styleClass="navbar" alignment="CENTER_LEFT" prefHeight="75">
+            <padding><Insets left="60" right="60"/></padding>
+            <Text text="TheKnife" style="-fx-font-family: 'Playfair Display'; -fx-font-size: 24; -fx-font-weight: bold; -fx-fill: #1B4332;"/>
+            <Region HBox.hgrow="ALWAYS" />
+            <Button text="← Torna alla Home" onAction="#goToHome" style="-fx-background-color: transparent; -fx-text-fill: #2D6A4F; -fx-font-weight: bold; -fx-cursor: hand;"/>
+        </HBox>
+
+        <StackPane VBox.vgrow="ALWAYS">
+            <padding><Insets top="50" bottom="50" left="50" right="50"/></padding>
+
+            <HBox styleClass="main-card" maxWidth="1100" maxHeight="750">
+
+                <!-- SEZIONE LOGIN (SINISTRA) -->
+                <VBox styleClass="login-section" prefWidth="500" spacing="35" alignment="TOP_LEFT">
+                    <padding><Insets top="70" right="70" bottom="70" left="70"/></padding>
+
+                    <VBox spacing="10">
+                        <Label text="Bentornato" style="-fx-font-family: 'Playfair Display'; -fx-font-size: 32; -fx-font-weight: bold; -fx-text-fill: white;"/>
+                        <Label text="Inserisci i tuoi dati per accedere." style="-fx-text-fill: #B7E4C7;"/>
+                    </VBox>
+
+                    <VBox spacing="20">
+                        <TextField fx:id="loginUsername" promptText="Email" />
+                        <PasswordField fx:id="loginPassword" promptText="Password" />
+
+                        <!-- Label per errori di Login -->
+                        <Label fx:id="loginErrorLabel" style="-fx-text-fill: #FFD2D2; -fx-font-weight: bold;" visible="false" managed="false"/>
+
+                        <Button text="ACCEDI" onAction="#handleLogin" styleClass="btn-main"
+                                style="-fx-background-color: white; -fx-text-fill: #1B4332; -fx-cursor: hand;" maxWidth="Infinity"/>
+                    </VBox>
+
+                    <Region VBox.vgrow="ALWAYS" />
+                    <Label text="TheKnife Dashboard v2.0" style="-fx-text-fill: white; -fx-opacity: 0.4; -fx-font-size: 10;"/>
+                </VBox>
+
+                <!-- SEZIONE REGISTRAZIONE (DESTRA) -->
+                <VBox prefWidth="600" spacing="25" alignment="TOP_LEFT">
+                    <padding><Insets top="40" right="70" bottom="40" left="70"/></padding>
+
+                    <VBox spacing="10">
+                        <Label text="Crea Account" style="-fx-font-family: 'Playfair Display'; -fx-font-size: 32; -fx-font-weight: bold; -fx-text-fill: #1B4332;"/>
+                        <Label text="Compila i campi per iscriverti alla community." style="-fx-text-fill: #707070;"/>
+                    </VBox>
+
+                    <VBox spacing="12">
+                        <HBox spacing="15">
+                            <TextField fx:id="regNome" promptText="Nome" HBox.hgrow="ALWAYS"/>
+                            <TextField fx:id="regCognome" promptText="Cognome" HBox.hgrow="ALWAYS"/>
+                        </HBox>
+
+                        <TextField fx:id="regEmail" promptText="Email" maxWidth="Infinity"/>
+                        <PasswordField fx:id="regPassword" promptText="Crea Password" maxWidth="Infinity"/>
+                        <TextField fx:id="regLuogoDomicilio" promptText="Città di domicilio" maxWidth="Infinity"/>
+
+                        <VBox spacing="5">
+                            <Label text="DATA DI NASCITA" style="-fx-font-size: 10; -fx-font-weight: bold; -fx-text-fill: #2D6A4F;"/>
+                            <DatePicker fx:id="regDataNascita" maxWidth="Infinity" promptText="Seleziona data"/>
+                        </VBox>
+
+                        <VBox spacing="8">
+                            <Label text="TIPO DI ACCOUNT" style="-fx-font-size: 10; -fx-font-weight: bold; -fx-text-fill: #2D6A4F;"/>
+                            <HBox spacing="10">
+                                <fx:define>
+                                    <ToggleGroup fx:id="tipoAccountGroup" />
+                                </fx:define>
+
+                                <ToggleButton fx:id="btnCliente" text="🍽 CLIENTE"
+                                              toggleGroup="$tipoAccountGroup"
+                                              styleClass="type-btn"
+                                              HBox.hgrow="ALWAYS" maxWidth="Infinity" prefHeight="45" selected="true" style="-fx-cursor: hand;" />
+
+                                <ToggleButton fx:id="btnRistoratore" text="👨‍🍳 RISTORATORE"
+                                              toggleGroup="$tipoAccountGroup"
+                                              styleClass="type-btn"
+                                              HBox.hgrow="ALWAYS" maxWidth="Infinity" prefHeight="45" style="-fx-cursor: hand;" />
+                            </HBox>
+                        </VBox>
+                    </VBox>
+
+                    <!-- Label per feedback di Registrazione -->
+                    <Label fx:id="regErrorLabel" style="-fx-text-fill: #D90429; -fx-font-weight: bold;" visible="false" managed="false"/>
+
+                    <Button text="REGISTRATI ORA" onAction="#handleRegister" styleClass="btn-main"
+                            style="-fx-background-color: #2D6A4F; -fx-text-fill: white; -fx-cursor: hand;" maxWidth="Infinity"/>
+                </VBox>
+            </HBox>
+        </StackPane>
+    </VBox>
+</StackPane>

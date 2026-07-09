@@ -1,0 +1,5 @@
+Correzioni progetto
+
+== NotLogged
+Sistemare i filtri a sx
+Sistemare le recensioni e le stelle che sono sempre statiche 

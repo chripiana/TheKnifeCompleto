@@ -1,0 +1,6 @@
+Correzioni progetto
+
+== LOGIN PAGE
+- nella pagina si può inserire la propria registrazione anche se non viene inserito
+il carattere @ nella casella apposita del campo email
+- una volta registrato l'utente non viene portato alla pagina di un utente gia loggato

@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.geometry.Insets?>
+
+<ScrollPane fitToWidth="true" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="project.demo.FavoritesController" stylesheets="@../style.css" styleClass="modern-scrollpane">
+
+    <VBox spacing="0" styleClass="favorites-page" style="-fx-background-color: #F8F9FA;">
+
+        <HBox styleClass="navbar" alignment="CENTER_LEFT" prefHeight="64" style="-fx-background-color: #1B4332; -fx-padding: 0 60px;">
+            <HBox alignment="CENTER_LEFT" onMouseClicked="#handleGoToHome" style="-fx-cursor: hand;">
+                <Text text="The" style="-fx-font-family: 'Playfair Display'; -fx-font-size: 26; -fx-font-weight: bold; -fx-fill: white;"/>
+                <Text text="Knife" style="-fx-font-family: 'Playfair Display'; -fx-font-size: 26; -fx-font-weight: bold; -fx-fill: #74C69D;"/>
+            </HBox>
+            <Region HBox.hgrow="ALWAYS" />
+            <HBox spacing="22" alignment="CENTER">
+                <Button text="Cerca" onAction="#handleCerca" style="-fx-background-color: transparent; -fx-text-fill: white; -fx-cursor: hand;"/>
+                <Button text="❤️ Preferiti" style="-fx-background-color: transparent; -fx-text-fill: #74C69D; -fx-font-weight: bold; -fx-cursor: hand;"/>
+                <Button text="Le mie recensioni" onAction="#handleRecensioni" style="-fx-background-color: transparent; -fx-text-fill: white; -fx-cursor: hand;"/>
+                <Button text="👤 Profilo" onAction="#handleProfilo" style="-fx-background-color: transparent; -fx-text-fill: white; -fx-cursor: hand;"/>
+                <Button text="Esci" onAction="#handleLogout" style="-fx-background-color: transparent; -fx-text-fill: #FF6B6B; -fx-cursor: hand;"/>
+            </HBox>
+        </HBox>
+
+        <VBox spacing="20" style="-fx-padding: 40 60;">
+            <Text text="❤️ I tuoi Ristoranti Preferiti" style="-fx-font-size: 28px; -fx-font-weight: bold; -fx-fill: #1B4332;" />
+
+            <FlowPane fx:id="containerPreferiti" hgap="20" vgap="20" />
+
+            <VBox fx:id="emptyFavoritesBox" alignment="CENTER" spacing="12" visible="false" managed="false" style="-fx-padding: 60; -fx-background-color: white; -fx-background-radius: 8;">
+                <Text text="💔 Nessun preferito ancora" style="-fx-font-size: 22px; -fx-font-weight: bold; -fx-fill: #555555;"/>
+                <Text text="Esplora i ristoranti e salva quelli che ti interessano di più" style="-fx-font-size: 14px; -fx-fill: #777777;"/>
+                <Button text="Vai alla ricerca" onAction="#handleVaiAllaRicerca" style="-fx-background-color: #2D6A4F; -fx-text-fill: white; -fx-padding: 10 20; -fx-cursor: hand; -fx-font-weight: bold;"/>
+            </VBox>
+        </VBox>
+    </VBox>
+</ScrollPane>

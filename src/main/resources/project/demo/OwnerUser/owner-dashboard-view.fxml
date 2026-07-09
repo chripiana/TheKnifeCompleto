@@ -1,0 +1,214 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.geometry.Insets?>
+<?import java.lang.String?>
+<?import javafx.collections.FXCollections?>
+
+<ScrollPane fitToWidth="true" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
+            fx:controller="project.demo.OwnerDashboardController" stylesheets="@../style.css">
+
+    <VBox spacing="0" styleClass="owner-dashboard-page">
+
+        <!-- NAVBAR -->
+        <HBox styleClass="navbar" alignment="CENTER_LEFT" prefHeight="64">
+            <padding><Insets left="30" right="30"/></padding>
+            <children>
+                <HBox alignment="CENTER_LEFT" spacing="10">
+                    <HBox alignment="CENTER_LEFT">
+                        <Text text="The" style="-fx-font-family: 'Playfair Display'; -fx-font-size: 24; -fx-font-weight: bold; -fx-fill: white;"/>
+                        <Text text="Knife" style="-fx-font-family: 'Playfair Display'; -fx-font-size: 24; -fx-font-weight: bold; -fx-fill: #74C69D;"/>
+                    </HBox>
+                    <Label text="👨‍🍳 Ristoratore" styleClass="nav-badge" />
+                </HBox>
+
+                <Region HBox.hgrow="ALWAYS" />
+
+                <HBox spacing="10" alignment="CENTER">
+                    <Hyperlink text="Vedi sito" styleClass="nav-link"/>
+                    <Hyperlink text="Esci" styleClass="nav-link"/>
+                </HBox>
+            </children>
+        </HBox>
+
+        <!-- SPAZIATORE: stacca visivamente la navbar dal blocco ristorante -->
+        <Region prefHeight="20" minHeight="20" style="-fx-background-color: #F8F9FA;" />
+
+        <!-- HERO DASHBOARD -->
+        <HBox styleClass="hero-dash" alignment="CENTER_LEFT">
+            <padding><Insets top="30" right="40" bottom="30" left="40"/></padding>
+            <children>
+                <HBox alignment="CENTER_LEFT" spacing="20" HBox.hgrow="ALWAYS">
+                    <children>
+                        <Label text="🍽️" styleClass="avatar-big" alignment="CENTER"/>
+                        <VBox spacing="4">
+                            <children>
+                                <Label text="Trattoria da Mario" styleClass="dash-nome" />
+                                <HBox spacing="6" alignment="CENTER_LEFT">
+                                    <Label text="Gestita da: " style="-fx-text-fill: #D8F3DC; -fx-font-size: 13;"/>
+                                    <Label text="mario.tratt" style="-fx-text-fill: white; -fx-font-weight: bold; -fx-font-size: 13;"/>
+                                    <Label text="·  Via Roma 12, Milano" style="-fx-text-fill: #D8F3DC; -fx-font-size: 13;"/>
+                                </HBox>
+                                <Label text="👨‍🍳 Account Ristoratore" styleClass="dash-badge" />
+                            </children>
+                        </VBox>
+                    </children>
+                </HBox>
+
+                <!-- KPI BLOCKS -->
+                <HBox spacing="16" alignment="CENTER_RIGHT">
+                    <children>
+                        <VBox styleClass="kpi" alignment="CENTER">
+                            <Label text="312" styleClass="kpi-num"/>
+                            <Label text="Recensioni" styleClass="kpi-label"/>
+                        </VBox>
+                        <VBox styleClass="kpi" alignment="CENTER">
+                            <Label text="4.8" styleClass="kpi-num"/>
+                            <Label text="Media stelle" styleClass="kpi-label"/>
+                        </VBox>
+                        <VBox styleClass="kpi" alignment="CENTER">
+                            <Label text="3" styleClass="kpi-num"/>
+                            <Label text="Senza risposta" styleClass="kpi-label"/>
+                        </VBox>
+                    </children>
+                </HBox>
+            </children>
+        </HBox>
+
+        <!-- MAIN LAYOUT (Sidebar + Content) -->
+        <HBox spacing="25" alignment="TOP_CENTER">
+            <padding><Insets top="30" bottom="40" left="40" right="40"/></padding>
+            <children>
+
+                <!-- SIDEBAR -->
+                <VBox spacing="4" prefWidth="220" minWidth="220" styleClass="sidebar">
+                    <padding><Insets top="15" right="12" bottom="15" left="12"/></padding>
+                    <children>
+                        <Hyperlink text="🏠  Panoramica" styleClass="menu-item, active" maxWidth="Infinity"/>
+                        <Hyperlink text="✏️  Modifica ristorante" styleClass="menu-item" maxWidth="Infinity"/>
+                        <Hyperlink text="⭐  Recensioni (312)" styleClass="menu-item" maxWidth="Infinity"/>
+                        <Hyperlink text="➕  Nuovo ristorante" styleClass="menu-item" maxWidth="Infinity"/>
+                        <Region styleClass="sidebar-divider"/>
+                        <Hyperlink text="👁️  Vedi scheda pubblica" styleClass="menu-item" maxWidth="Infinity"/>
+                        <Hyperlink text="🚪  Esci" styleClass="menu-item" style="-fx-text-fill: #C0392B;" maxWidth="Infinity"/>
+                    </children>
+                </VBox>
+
+                <!-- CONTENUTO PRINCIPALE (MAIN) -->
+                <VBox spacing="20" HBox.hgrow="ALWAYS" maxWidth="750">
+                    <children>
+
+                        <!-- FORM: MODIFICA DATI -->
+                        <VBox spacing="10">
+                            <children>
+                                <Label text="MODIFICA DATI RISTORANTE" styleClass="section-title" />
+                                <VBox spacing="15" styleClass="card">
+                                    <padding><Insets top="20" right="20" bottom="20" left="20"/></padding>
+                                    <children>
+                                        <HBox alignment="CENTER_LEFT">
+                                            <Label text="✏️ Informazioni ristorante" styleClass="card-title" HBox.hgrow="ALWAYS" maxWidth="Infinity"/>
+                                            <Button text="👁️ Vedi scheda" styleClass="btn-outline" />
+                                        </HBox>
+
+                                        <VBox spacing="5">
+                                            <Label text="NOME RISTORANTE" styleClass="field-label"/>
+                                            <TextField text="Trattoria da Mario" styleClass="home-text-field"/>
+                                        </VBox>
+
+                                        <GridPane hgap="12" vgap="0">
+                                            <columnConstraints>
+                                                <ColumnConstraints percentWidth="50"/>
+                                                <ColumnConstraints percentWidth="50"/>
+                                            </columnConstraints>
+                                            <rowConstraints><RowConstraints/></rowConstraints>
+                                            <children>
+                                                <VBox spacing="5" GridPane.columnIndex="0">
+                                                    <Label text="CITTÀ" styleClass="field-label"/>
+                                                    <TextField text="Milano" styleClass="home-text-field"/>
+                                                </VBox>
+                                                <VBox spacing="5" GridPane.columnIndex="1">
+                                                    <Label text="NAZIONE" styleClass="field-label"/>
+                                                    <TextField text="Italia" styleClass="home-text-field"/>
+                                                </VBox>
+                                            </children>
+                                        </GridPane>
+
+                                        <VBox spacing="5">
+                                            <Label text="INDIRIZZO" styleClass="field-label"/>
+                                            <TextField text="Via Roma 12" styleClass="home-text-field"/>
+                                        </VBox>
+
+                                        <GridPane hgap="12" vgap="0">
+                                            <columnConstraints>
+                                                <ColumnConstraints percentWidth="33.3"/>
+                                                <ColumnConstraints percentWidth="33.3"/>
+                                                <ColumnConstraints percentWidth="33.3"/>
+                                            </columnConstraints>
+                                            <children>
+                                                <VBox spacing="5" GridPane.columnIndex="0">
+                                                    <Label text="LATITUDINE" styleClass="field-label"/>
+                                                    <TextField text="45.4654" styleClass="home-text-field"/>
+                                                </VBox>
+                                                <VBox spacing="5" GridPane.columnIndex="1">
+                                                    <Label text="LONGITUDINE" styleClass="field-label"/>
+                                                    <TextField text="9.1859" styleClass="home-text-field"/>
+                                                </VBox>
+                                                <VBox spacing="5" GridPane.columnIndex="2">
+                                                    <Label text="FASCIA DI PREZZO" styleClass="field-label"/>
+                                                    <ComboBox promptText="€€ — Medio (~45€)" maxWidth="Infinity" styleClass="home-text-field"/>
+                                                </VBox>
+                                            </children>
+                                        </GridPane>
+
+                                        <VBox spacing="5">
+                                            <Label text="TIPO DI CUCINA" styleClass="field-label"/>
+                                            <TextField text="Italiana tradizionale" styleClass="home-text-field"/>
+                                        </VBox>
+
+                                        <HBox spacing="20">
+                                            <CheckBox text="🛵 Delivery disponibile" selected="true" styleClass="filter-checkbox"/>
+                                            <CheckBox text="📅 Prenotazione online" selected="true" styleClass="filter-checkbox"/>
+                                        </HBox>
+
+                                        <HBox spacing="10">
+                                            <Button text="💾 Salva modifiche" styleClass="btn-primary" />
+                                            <Button text="🗑️ Elimina ristorante" styleClass="btn-danger" />
+                                        </HBox>
+                                    </children>
+                                </VBox>
+                            </children>
+                        </VBox>
+
+                        <!-- GESTIONE RECENSIONI -->
+                        <VBox spacing="10">
+                            <children>
+                                <Label text="RECENSIONI RICEVUTE" styleClass="section-title" />
+                                <VBox spacing="15" styleClass="card">
+                                    <padding><Insets top="20" right="20" bottom="20" left="20"/></padding>
+                                    <children>
+                                        <HBox alignment="CENTER_LEFT" styleClass="results-header">
+                                            <Label text="⭐ Recensioni dei clienti" styleClass="card-title" HBox.hgrow="ALWAYS" maxWidth="Infinity"/>
+                                            <ComboBox promptText="Tutte le recensioni" prefWidth="180" styleClass="home-text-field"/>
+                                        </HBox>
+
+                                        <!-- Contenitore iniezione dinamica per le Recensioni -->
+                                        <VBox fx:id="containerRecensioni" spacing="12" />
+                                    </children>
+                                </VBox>
+                            </children>
+                        </VBox>
+
+                    </children>
+                </VBox>
+            </children>
+        </HBox>
+
+        <!-- FOOTER -->
+        <VBox alignment="CENTER" spacing="12" style="-fx-background-color: #1B4332;">
+            <padding><Insets top="30" bottom="30"/></padding>
+            <Text text="TheKnife © 2025 — Università degli Studi dell'Insubria" style="-fx-fill: #D8F3DC; -fx-font-size: 12;"/>
+        </VBox>
+    </VBox>
+</ScrollPane>

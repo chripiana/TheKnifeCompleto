@@ -1,5 +1,4 @@
 758417	Pianarosa	Christian CO
 756956	Gerundino	Mattia CO
-756153	Tornaboni	Gioele CO
 
 GitHub	https://github.com/chripiana/TheKnife.git
