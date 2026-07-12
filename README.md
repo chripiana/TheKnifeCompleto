@@ -9,7 +9,7 @@ REQUISITI
 
 STRUTTURA DEL PROGETTO
 -----------------------
-L'applicazione è divisa in due moduli eseguibili distinti, come richiesto:
+L'applicazione è divisa in due moduli eseguibili distinti:
 
 - serverTK  (classe main: db.net.ServerTK)
   Si interfaccia direttamente con PostgreSQL via JDBC. All'avvio chiede da
