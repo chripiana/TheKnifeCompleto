@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.collections.FXCollections?>
+<?import java.lang.String?>
+
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.shape.SVGPath?>
+<ScrollPane fitToWidth="true" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml"
+            fx:controller="project.demo.HomeLoggedController" stylesheets="@../style.css" styleClass="modern-scrollpane">
+
+    <VBox spacing="0" styleClass="home-page">
+
+        <HBox styleClass="navbar-logged" alignment="CENTER_LEFT" prefHeight="70">
+            <padding><Insets left="60" right="60"/></padding>
+            <HBox alignment="CENTER_LEFT">
+                <Text text="The" style="-fx-font-family: 'Playfair Display'; -fx-font-size: 26; -fx-font-weight: bold; -fx-fill: white;"/>
+                <Text text="Knife" style="-fx-font-family: 'Playfair Display'; -fx-font-size: 26; -fx-font-weight: bold; -fx-fill: #74C69D;"/>
+            </HBox>
+            <Region HBox.hgrow="ALWAYS" />
+            <HBox spacing="15" alignment="CENTER">
+                <Hyperlink text="I miei ristoranti" styleClass="nav-link" onAction="#visualizzaRistoranti"/>
+
+                <Button  styleClass="user-avatar-btn">
+                    <graphic>
+                        <StackPane onMouseClicked="#handleGoToOwner" style="-fx-cursor: hand;">
+                            <Circle radius="20" fill="white" stroke="#B7E4C7" strokeWidth="1" />
+
+                            <SVGPath content="M12,2C14.2,2 16,3.8 16,6C16,8.2 14.2,10 12,10C9.8,10 8,8.2 8,6C8,3.8 9.8,2 12,2M12,12C7.6,12 4,13.8 4,16V18H20V16C20,13.8 16.4,12 12,12Z"
+                                     fill="#4A6B57" scaleX="1.1" scaleY="1.1"/>
+                        </StackPane>
+                    </graphic>
+                </Button>
+            </HBox>
+        </HBox>
+
+
+        <VBox alignment="CENTER" spacing="20" styleClass="hero-section">
+            <padding><Insets top="55" bottom="65" left="20" right="20"/></padding>
+
+            <VBox alignment="CENTER" spacing="6">
+                <Text text="Scopri i Migliori Ristoranti 🍳" styleClass="hero-title"/>
+                <Text text="Esplora cucine uniche dal mondo, prenota un tavolo in pochi click e condividi la tua esperienza culinaria." styleClass="hero-subtitle"/>
+            </VBox>
+
+            <HBox alignment="CENTER" maxWidth="700" styleClass="search-bar-container">
+                <TextField fx:id="searchField" promptText="🔍 Cerca per nome ristorante, città, cucina..." HBox.hgrow="ALWAYS" styleClass="search-field"/>
+                <Button text="Cerca 🚀" onAction="#onGlobalSearch" styleClass="btn-search"/>
+            </HBox>
+
+            <VBox alignment="CENTER" spacing="10">
+                <Text text="✨ Oppure esplora una cucina popolare:" style="-fx-fill: #D8F3DC; -fx-font-size: 13; -fx-font-weight: bold;"/>
+                <HBox alignment="CENTER" spacing="10">
+                    <Button text="🍕 Italiana" onAction="#onCucinaItalianaClick" styleClass="btn-tag"/>
+                    <Button text="🍣 Giapponese" onAction="#onCucinaGiapponeseClick" styleClass="btn-tag"/>
+                    <Button text="🥐 Francese" onAction="#onCucinaFranceseClick" styleClass="btn-tag"/>
+                    <Button text="🥩 Meats &amp; Grills" onAction="#onCucinaGrillsClick" styleClass="btn-tag"/>
+                    <Button text="🥗 Mediterranea" onAction="#onCucinaMediterraneaClick" styleClass="btn-tag"/>
+                </HBox>
+            </VBox>
+        </VBox>
+
+        <VBox spacing="0" styleClass="main-content" alignment="CENTER">
+            <padding><Insets top="30" bottom="30" left="60" right="60"/></padding>
+
+            <!-- Div unico che raccoglie tutti i filtri, layout a due colonne per ridurre lo spazio vuoto -->
+            <VBox spacing="16" maxWidth="900" prefWidth="900" styleClass="filter-panel">
+                <padding><Insets top="22" bottom="22" left="26" right="26"/></padding>
+
+                <HBox alignment="CENTER_LEFT" spacing="10">
+                    <Text text="🎯 Ricerca Avanzata" styleClass="filter-title"/>
+                    <Region HBox.hgrow="ALWAYS"/>
+                    <Text text="Affina i parametri per trovare il locale ideale" style="-fx-fill: #94A3B8; -fx-font-size: 11;"/>
+                </HBox>
+                <Separator/>
+
+                <HBox spacing="18">
+                    <VBox spacing="5" HBox.hgrow="ALWAYS">
+                        <Label text="📍 Città / Località" styleClass="filter-label"/>
+                        <TextField fx:id="filterCitta" promptText="Es. Milano, Roma, Parigi..." maxWidth="Infinity" styleClass="filter-input"/>
+                    </VBox>
+                    <VBox spacing="5" HBox.hgrow="ALWAYS">
+                        <Label text="💰 Prezzo Massimo stimato (€)" styleClass="filter-label"/>
+                        <TextField fx:id="filterPrezzo" promptText="Es. 60" maxWidth="Infinity" styleClass="filter-input"/>
+                    </VBox>
+                </HBox>
+
+                <HBox spacing="18">
+                    <VBox spacing="5" HBox.hgrow="ALWAYS">
+                        <Label text="⭐ Valutazione Guida (Stelle)" styleClass="filter-label"/>
+                        <ComboBox fx:id="filterStelle" promptText="Qualsiasi valutazione" maxWidth="Infinity" styleClass="filter-combo">
+                            <items>
+                                <FXCollections fx:factory="observableArrayList">
+                                    <String fx:value="Tutti i ristoranti" />
+                                    <String fx:value="1 Stella ⭐" />
+                                    <String fx:value="2 Stelle ⭐⭐" />
+                                    <String fx:value="3 Stelle ⭐⭐⭐" />
+                                    <String fx:value="4 Stelle ⭐⭐⭐⭐" />
+                                    <String fx:value="5 Stelle ⭐⭐⭐⭐⭐" />
+                                </FXCollections>
+                            </items>
+                        </ComboBox>
+                    </VBox>
+                    <VBox spacing="5" HBox.hgrow="ALWAYS">
+                        <Label text="🔀 Ordina i risultati per" styleClass="filter-label"/>
+                        <ComboBox fx:id="filterOrdine" promptText="Nessun ordinamento specifico" maxWidth="Infinity" styleClass="filter-combo">
+                            <items>
+                                <FXCollections fx:factory="observableArrayList">
+                                    <String fx:value="Prezzo (Più economico)" />
+                                    <String fx:value="Prezzo (Più esclusivo)" />
+                                    <String fx:value="Valutazione (Stelle)" />
+                                    <String fx:value="Nome Alfabetico (A-Z)" />
+                                </FXCollections>
+                            </items>
+                        </ComboBox>
+                    </VBox>
+                </HBox>
+
+                <Button text="Applica Filtri ed Esplora 📊" onAction="#onApplicaFiltriClick" maxWidth="Infinity" styleClass="btn-primary" style="-fx-background-color: #2D6A4F; -fx-font-size: 13; -fx-padding: 10;"/>
+            </VBox>
+        </VBox>
+
+        <HBox alignment="CENTER" spacing="80" styleClass="stats-container">
+            <padding><Insets top="45" bottom="45"/></padding>
+            <VBox alignment="CENTER">
+                <Text text="12.400+" styleClass="stat-num"/>
+                <Text text="💎 Ristoranti d'Élite" styleClass="stat-desc"/>
+            </VBox>
+            <VBox alignment="CENTER">
+                <Text text="89.000+" styleClass="stat-num"/>
+                <Text text="💬 Recensioni Autentiche" styleClass="stat-desc"/>
+            </VBox>
+            <VBox alignment="CENTER">
+                <Text text="42" styleClass="stat-num"/>
+                <Text text="🌍 Nazioni Rappresentate" styleClass="stat-desc"/>
+            </VBox>
+        </HBox>
+
+        <VBox alignment="CENTER" spacing="12" style="-fx-background-color: #1B4332;">
+            <padding><Insets top="35" bottom="35"/></padding>
+            <Text text="TheKnife © 2026 — Università degli Studi dell'Insubria 🏛️" style="-fx-fill: #D8F3DC; -fx-font-size: 13; -fx-font-weight: bold;"/>
+        </VBox>
+
+    </VBox>
+</ScrollPane>

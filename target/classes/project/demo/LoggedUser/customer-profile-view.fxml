@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import java.lang.String?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.DatePicker?>
+<?import javafx.scene.control.Hyperlink?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.PasswordField?>
+<?import javafx.scene.control.ScrollPane?>
+<?import javafx.scene.control.TextField?>
+<?import javafx.scene.layout.BorderPane?>
+<?import javafx.scene.layout.ColumnConstraints?>
+<?import javafx.scene.layout.GridPane?>
+<?import javafx.scene.layout.HBox?>
+<?import javafx.scene.layout.Region?>
+<?import javafx.scene.layout.RowConstraints?>
+<?import javafx.scene.layout.VBox?>
+<?import javafx.scene.text.Text?>
+
+<BorderPane styleClass="profile-page" stylesheets="@../style.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="project.demo.CustomerProfileController">
+
+    <top>
+        <HBox alignment="CENTER_LEFT" prefHeight="64.0" spacing="20.0" styleClass="navbar">
+            <padding>
+                <Insets left="60.0" right="60.0" />
+            </padding>
+            <children>
+                <HBox alignment="CENTER" onMouseClicked="#handleGoToHome" style="-fx-cursor: hand;" styleClass="logo-container">
+                    <children>
+                        <Label styleClass="logo-text-main" text="The" style="-fx-font-family: 'Playfair Display'; -fx-font-size: 26; -fx-font-weight: bold; -fx-fill: white;" />
+                        <Label styleClass="logo-text-sub" text="Knife" style="-fx-font-family: 'Playfair Display'; -fx-font-size: 26; -fx-font-weight: bold; -fx-fill: #74C69D;" />
+                    </children>
+                </HBox>
+
+                <Region HBox.hgrow="ALWAYS" />
+
+                <HBox alignment="CENTER" spacing="22">
+                    <children>
+                        <Hyperlink onAction="#handleCercaRistoranti" styleClass="nav-link" text="Cerca ristoranti" style="-fx-text-fill: #D8F3DC; -fx-underline: false;" />
+                        <Hyperlink styleClass="nav-link" text="❤️ Preferiti" style="-fx-text-fill: #D8F3DC; -fx-underline: false;" onAction="#handleVediPreferiti" />
+                        <Hyperlink styleClass="nav-link" text="Le mie recensioni" style="-fx-text-fill: #D8F3DC; -fx-underline: false;" onAction="#handleVediRecensioni"/>
+                        <Hyperlink styleClass="nav-link-active" text="👤 Profilo" style="-fx-text-fill: #74C69D; -fx-font-weight: bold; -fx-underline: false;" />
+                        <Hyperlink onAction="#handleLogout" styleClass="nav-link" text="Esci" style="-fx-text-fill: #74C69D; -fx-underline: false;" />
+                    </children>
+                </HBox>
+            </children>
+        </HBox>
+    </top>
+
+    <center>
+        <ScrollPane fitToWidth="true" styleClass="modern-scrollpane" BorderPane.alignment="CENTER">
+            <content>
+                <VBox alignment="TOP_CENTER" spacing="30.0">
+                    <padding>
+                        <Insets bottom="50.0" left="50.0" right="50.0" top="40.0" />
+                    </padding>
+                    <children>
+
+                        <VBox alignment="CENTER" spacing="8.0" maxWidth="800.0">
+                            <children>
+                                <Text text="Il tuo Profilo" style="-fx-font-family: 'Playfair Display'; -fx-font-size: 32; -fx-font-weight: bold; -fx-fill: #1B4332;" />
+                                <Text text="Gestisci e aggiorna le tue informazioni personali, l'indirizzo di domicilio e le credenziali di accesso." style="-fx-font-size: 14; -fx-fill: #52B788;" />
+                            </children>
+                        </VBox>
+
+                        <GridPane maxWidth="800.0" hgap="20.0" vgap="20.0" style="-fx-background-color: white; -fx-background-radius: 12; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.06), 15, 0, 0, 5);">
+                            <padding>
+                                <Insets bottom="40.0" left="40.0" right="40.0" top="40.0" />
+                            </padding>
+                            <columnConstraints>
+                                <ColumnConstraints hgrow="ALWAYS" percentWidth="50.0" />
+                                <ColumnConstraints hgrow="ALWAYS" percentWidth="50.0" />
+                            </columnConstraints>
+
+                            <children>
+                                <VBox spacing="6.0" GridPane.columnIndex="0" GridPane.rowIndex="0">
+                                    <children>
+                                        <Label styleClass="field-label" text="NOME" style="-fx-font-weight: bold; -fx-fill: #2D6A4F; -fx-font-size: 11;" />
+                                        <TextField fx:id="nomeField" promptText="Inserisci il tuo nome" styleClass="modern-textfield" prefHeight="42.0" />
+                                    </children>
+                                </VBox>
+
+                                <VBox spacing="6.0" GridPane.columnIndex="1" GridPane.rowIndex="0">
+                                    <children>
+                                        <Label styleClass="field-label" text="COGNOME" style="-fx-font-weight: bold; -fx-fill: #2D6A4F; -fx-font-size: 11;" />
+                                        <TextField fx:id="cognomeField" promptText="Inserisci il tuo cognome" styleClass="modern-textfield" prefHeight="42.0" />
+                                    </children>
+                                </VBox>
+
+                                <VBox spacing="6.0" GridPane.columnIndex="0" GridPane.rowIndex="1">
+                                    <children>
+                                        <Label styleClass="field-label" text="DATA DI NASCITA" style="-fx-font-weight: bold; -fx-fill: #2D6A4F; -fx-font-size: 11;" />
+                                        <DatePicker fx:id="dataNascitaPicker" promptText="GG/MM/AAAA" styleClass="modern-datepicker" prefHeight="42.0" maxWidth="Infinity" />
+                                    </children>
+                                </VBox>
+
+                                <VBox spacing="6.0" GridPane.columnIndex="1" GridPane.rowIndex="1">
+                                    <children>
+                                        <Label styleClass="field-label" text="LUOGO DI DOMICILIO" style="-fx-font-weight: bold; -fx-fill: #2D6A4F; -fx-font-size: 11;" />
+                                        <TextField fx:id="domicilioField" promptText="Via, Città, CAP" styleClass="modern-textfield" prefHeight="42.0" />
+                                    </children>
+                                </VBox>
+
+                                <VBox spacing="6.0" GridPane.columnSpan="2" GridPane.rowIndex="2">
+                                    <children>
+                                        <Label styleClass="field-label" text="NUOVA PASSWORD (LASCIA VUOTO PER NON CAMBIARE)" style="-fx-font-weight: bold; -fx-fill: #2D6A4F; -fx-font-size: 11;" />
+                                        <PasswordField fx:id="passwordField" promptText="••••••••" styleClass="modern-textfield" prefHeight="42.0" />
+                                    </children>
+                                </VBox>
+
+                                <VBox alignment="CENTER" spacing="10.0" GridPane.columnSpan="2" GridPane.rowIndex="3">
+                                    <padding>
+                                        <Insets top="15.0" />
+                                    </padding>
+                                    <children>
+                                        <Button fx:id="btnSalvaModifiche" maxWidth="Infinity" onAction="#handleSalvaModifiche" styleClass="btn-accent" text="Salva modifiche" style="-fx-background-color: #2D6A4F; -fx-text-fill: white; -fx-font-weight: bold; -fx-font-size: 14; -fx-padding: 12 0; -fx-background-radius: 6; -fx-cursor: hand;" />
+                                    </children>
+                                </VBox>
+                            </children>
+                            <rowConstraints>
+                                <RowConstraints />
+                                <RowConstraints />
+                                <RowConstraints />
+                                <RowConstraints />
+                            </rowConstraints>
+                        </GridPane>
+
+                    </children>
+                </VBox>
+            </content>
+        </ScrollPane>
+    </center>
+
+    <bottom>
+        <HBox alignment="CENTER" prefHeight="55.0" style="-fx-background-color: #1B4332;" BorderPane.alignment="CENTER">
+            <children>
+                <Label text="TheKnife © 2026 — Università degli Studi dell'Insubria" style="-fx-text-fill: #D8F3DC; -fx-font-size: 12.0;" />
+            </children>
+        </HBox>
+    </bottom>
+</BorderPane>

@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.geometry.Insets?>
+<?import java.lang.String?>
+<?import javafx.collections.FXCollections?>
+
+<ScrollPane fitToWidth="true" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="project.demo.NewRestaurantController" stylesheets="@../style.css" styleClass="modern-scrollpane">
+
+    <!-- La root eredita "owner-dashboard-page" (per hero-dash/kpi) e "restaurant-details-page"
+         (per mappa-box/map-title/map-coords/hero-subtext) senza duplicare CSS -->
+    <VBox spacing="0" styleClass="new-restaurant-page, owner-dashboard-page, restaurant-details-page">
+
+        <!-- NAVBAR -->
+        <HBox styleClass="navbar" alignment="CENTER_LEFT" prefHeight="64">
+            <padding><Insets left="60" right="60"/></padding>
+            <HBox alignment="CENTER_LEFT" onMouseClicked="#handleGoToHome" style="-fx-cursor: hand;">
+                <Text text="The" style="-fx-font-family: 'Playfair Display'; -fx-font-size: 26; -fx-font-weight: bold; -fx-fill: white;"/>
+                <Text text="Knife" style="-fx-font-family: 'Playfair Display'; -fx-font-size: 26; -fx-font-weight: bold; -fx-fill: #74C69D;"/>
+            </HBox>
+
+            <Region HBox.hgrow="ALWAYS" />
+
+            <HBox spacing="22" alignment="CENTER">
+                <Hyperlink text="I miei ristoranti" onAction="#handleAnnulla" styleClass="nav-link" style="-fx-text-fill: white; -fx-underline: false;" />
+                <Hyperlink text="Esci" onAction="#handleLogout" styleClass="nav-link" style="-fx-text-fill: #74C69D; -fx-underline: false;" />
+            </HBox>
+        </HBox>
+
+        <VBox spacing="26" alignment="TOP_CENTER">
+            <padding><Insets top="30" bottom="60" left="60" right="60"/></padding>
+
+            <!-- FASCIA "CHI SONO" — Riepilogo del ristoratore loggato -->
+            <HBox spacing="26" alignment="CENTER_LEFT" maxWidth="900" prefWidth="900" styleClass="hero-dash">
+                <padding><Insets top="26" bottom="26" left="30" right="30"/></padding>
+
+                <StackPane styleClass="avatar-big">
+                    <Text fx:id="txtInizialiGestore" text="--" style="-fx-font-size: 22; -fx-font-weight: bold; -fx-fill: #1B4332;"/>
+                </StackPane>
+
+                <VBox spacing="4" HBox.hgrow="ALWAYS">
+                    <HBox spacing="10" alignment="CENTER_LEFT">
+                        <Text fx:id="txtNomeGestore" text="Caricamento..." styleClass="dash-nome"/>
+                        <Label text="🍴 Ristoratore" styleClass="dash-badge"/>
+                    </HBox>
+                    <Text fx:id="txtEmailGestore" text="email@theknife.it" styleClass="hero-subtext"/>
+                </VBox>
+
+                <Region HBox.hgrow="ALWAYS"/>
+
+                <HBox spacing="14" alignment="CENTER">
+                    <VBox alignment="CENTER" spacing="2" styleClass="kpi">
+                        <Text fx:id="lblKpiRistoranti" text="-" styleClass="kpi-num"/>
+                        <Text text="Ristoranti" styleClass="kpi-label"/>
+                    </VBox>
+                </HBox>
+            </HBox>
+
+            <!-- FORM NUOVO RISTORANTE -->
+            <VBox spacing="20" maxWidth="900" prefWidth="900" styleClass="form-card" style="-fx-background-color: white; -fx-background-radius: 8; -fx-padding: 30;">
+                <padding><Insets top="28" bottom="28" left="32" right="32"/></padding>
+
+                <VBox spacing="2">
+                    <Text text="🍽️ Crea un Nuovo Ristorante" styleClass="filter-title" style="-fx-font-size: 19;"/>
+                    <Text text="Compila i campi per aggiungere un nuovo locale alla piattaforma" style="-fx-fill: #94A3B8; -fx-font-size: 12;"/>
+                </VBox>
+                <Separator/>
+
+                <!-- SEZIONE: Dati generali -->
+                <Text text="📋 DATI GENERALI" styleClass="section-title"/>
+                <VBox spacing="5">
+                    <Label text="NOME RISTORANTE" styleClass="filter-label"/>
+                    <TextField fx:id="txtNome" promptText="Es. Trattoria da Marco" maxWidth="Infinity" styleClass="filter-input"/>
+                </VBox>
+
+                <HBox spacing="16">
+                    <VBox spacing="5" HBox.hgrow="ALWAYS">
+                        <Label text="TIPOLOGIA CUCINA" styleClass="filter-label"/>
+                        <ComboBox fx:id="comboCucina" promptText="Seleziona una cucina" maxWidth="Infinity" styleClass="filter-combo">
+                            <items>
+                                <FXCollections fx:factory="observableArrayList">
+                                    <String fx:value="🍕 Italiana" />
+                                    <String fx:value="🍣 Giapponese" />
+                                    <String fx:value="🥐 Francese" />
+                                    <String fx:value="🥩 Meats &amp; Grills" />
+                                    <String fx:value="🥗 Mediterranea" />
+                                    <String fx:value="🌶️ Messicana" />
+                                    <String fx:value="🍜 Asiatica" />
+                                    <String fx:value="🥙 Vegetariana / Vegana" />
+                                </FXCollections>
+                            </items>
+                        </ComboBox>
+                    </VBox>
+                    <VBox spacing="5" HBox.hgrow="ALWAYS">
+                        <Label text="PREZZO MEDIO (€)" styleClass="filter-label"/>
+                        <TextField fx:id="txtPrezzoMedio" promptText="Es. 35" maxWidth="Infinity" styleClass="filter-input"/>
+                    </VBox>
+                </HBox>
+
+                <VBox spacing="6">
+                    <Label text="VALUTAZIONE INIZIALE (STELLA)" styleClass="filter-label"/>
+                    <HBox fx:id="starInputBox" spacing="8" alignment="CENTER_LEFT">
+                        <Label fx:id="star1" text="★" onMouseClicked="#handleStar1" styleClass="star-input-icon" style="-fx-cursor: hand; -fx-font-size: 20px; -fx-text-fill: #CBD5E1;" />
+                        <Label fx:id="star2" text="★" onMouseClicked="#handleStar2" styleClass="star-input-icon" style="-fx-cursor: hand; -fx-font-size: 20px; -fx-text-fill: #CBD5E1;" />
+                        <Label fx:id="star3" text="★" onMouseClicked="#handleStar3" styleClass="star-input-icon" style="-fx-cursor: hand; -fx-font-size: 20px; -fx-text-fill: #CBD5E1;" />
+                        <Label fx:id="star4" text="★" onMouseClicked="#handleStar4" styleClass="star-input-icon" style="-fx-cursor: hand; -fx-font-size: 20px; -fx-text-fill: #CBD5E1;" />
+                        <Label fx:id="star5" text="★" onMouseClicked="#handleStar5" styleClass="star-input-icon" style="-fx-cursor: hand; -fx-font-size: 20px; -fx-text-fill: #CBD5E1;" />
+                        <Text text="(Seleziona una valutazione iniziale fissa)" style="-fx-fill: #ADB5BD; -fx-font-size: 11px; -fx-padding: 0 0 0 8;"/>
+                    </HBox>
+                </VBox>
+
+                <!-- OPZIONI AGGIUNTIVE -->
+                <HBox spacing="30">
+                    <children>
+                        <CheckBox fx:id="chkDelivery" text="🛵 Servizio Delivery Disponibile" styleClass="filter-checkbox" selected="true" />
+                        <CheckBox fx:id="chkPrenotazione" text="📅 Consenti Prenotazione Online" styleClass="filter-checkbox" selected="true" />
+                    </children>
+                </HBox>
+
+                <Separator styleClass="form-section-divider"/>
+
+                <!-- SEZIONE: Localizzazione -->
+                <Text text="📍 LOCALIZZAZIONE" styleClass="section-title"/>
+                <HBox spacing="16">
+                    <VBox spacing="5" HBox.hgrow="ALWAYS">
+                        <Label text="NAZIONE" styleClass="filter-label"/>
+                        <TextField fx:id="txtNazione" promptText="Es. Italia" maxWidth="Infinity" styleClass="filter-input"/>
+                    </VBox>
+                    <VBox spacing="5" HBox.hgrow="ALWAYS">
+                        <Label text="CITTÀ" styleClass="filter-label"/>
+                        <TextField fx:id="txtCitta" promptText="Es. Milano" maxWidth="Infinity" styleClass="filter-input"/>
+                    </VBox>
+                </HBox>
+
+                <VBox spacing="5">
+                    <Label text="INDIRIZZO" styleClass="filter-label"/>
+                    <TextField fx:id="txtIndirizzo" promptText="Es. Via Roma 12" maxWidth="Infinity" styleClass="filter-input"/>
+                </VBox>
+
+                <HBox spacing="16">
+                    <VBox spacing="5" HBox.hgrow="ALWAYS">
+                        <Label text="LATITUDINE" styleClass="filter-label"/>
+                        <TextField fx:id="txtLatitudine" promptText="Es. 45.4642" maxWidth="Infinity" styleClass="filter-input" />
+                    </VBox>
+                    <VBox spacing="5" HBox.hgrow="ALWAYS">
+                        <Label text="LONGITUDINE" styleClass="filter-label"/>
+                        <TextField fx:id="txtLongitudine" promptText="Es. 9.1900" maxWidth="Infinity" styleClass="filter-input" />
+                    </VBox>
+                </HBox>
+
+                <!-- Anteprima posizione geografica -->
+                <VBox spacing="8" styleClass="mappa-box">
+                    <padding><Insets top="14" bottom="14" left="16" right="16"/></padding>
+                    <Region prefHeight="100" styleClass="map-visual-placeholder"/>
+                    <HBox spacing="6" alignment="CENTER_LEFT">
+                        <Text text="📍" styleClass="map-title"/>
+                        <Text text="Geolocalizzazione Domicilio" styleClass="map-title"/>
+                        <Region HBox.hgrow="ALWAYS"/>
+                        <Text fx:id="lblCoordinatePreview" text="Lat: —, Long: —" styleClass="map-coords"/>
+                    </HBox>
+                </VBox>
+
+                <Separator/>
+
+                <HBox spacing="12" alignment="CENTER_RIGHT">
+                    <Button text="Annulla" onAction="#handleAnnulla" styleClass="btn-reset" style="-fx-cursor: hand;"/>
+                    <Button text="Crea Ristorante 🚀" onAction="#handleCreaRistorante" styleClass="btn-accent" style="-fx-background-color: #2D6A4F; -fx-text-fill: white; -fx-font-weight: bold; -fx-cursor: hand;"/>
+                </HBox>
+            </VBox>
+        </VBox>
+
+        <!-- FOOTER -->
+        <VBox alignment="CENTER" spacing="12" style="-fx-background-color: #1B4332;">
+            <padding><Insets top="35" bottom="35"/></padding>
+            <Text text="TheKnife © 2026 — Università degli Studi dell'Insubria" style="-fx-fill: #D8F3DC; -fx-font-size: 12;"/>
+        </VBox>
+    </VBox>
+</ScrollPane>

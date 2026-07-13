@@ -1,0 +1,1330 @@
+/* ==========================================================================
+   1. GLOBAL STYLES & BASE COMPONENTS (Shared Across the App)
+   ========================================================================== */
+.root {
+    -fx-font-family: 'Segoe UI', Helvetica, Arial, sans-serif;
+    -fx-background-color: #F8F9FA;
+}
+
+/* ScrollPane Modernization */
+.modern-scrollpane {
+    -fx-background-color: transparent;
+    -fx-background-insets: 0;
+    -fx-padding: 0;
+}
+.modern-scrollpane > .viewport {
+    -fx-background-color: transparent;
+}
+.modern-scrollpane .scroll-bar:vertical,
+.modern-scrollpane .scroll-bar:horizontal {
+    -fx-background-color: transparent;
+    -fx-pref-width: 6px;
+    -fx-pref-height: 6px;
+}
+.modern-scrollpane .scroll-bar .thumb {
+    -fx-background-color: #CBD5E1;
+    -fx-background-radius: 4px;
+}
+
+/* Global Navbar */
+.navbar, .navbar-logged {
+    -fx-background-color: #1B4332;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.1), 10, 0, 0, 4);
+}
+.nav-link {
+    -fx-text-fill: #D8F3DC;
+    -fx-underline: false;
+    -fx-font-size: 14px;
+}
+.nav-link:hover {
+    -fx-text-fill: #74C69D;
+}
+.nav-link-active {
+    -fx-text-fill: #74C69D;
+    -fx-font-weight: bold;
+    -fx-underline: false;
+    -fx-font-size: 14px;
+}
+
+/* Logo Brand */
+.logo-container {
+    -fx-spacing: 2px;
+}
+.logo-text-main {
+    -fx-font-family: 'Playfair Display', serif;
+    -fx-font-size: 26px;
+    -fx-font-weight: bold;
+    -fx-text-fill: white;
+}
+.logo-text-sub {
+    -fx-font-family: 'Playfair Display', serif;
+    -fx-font-size: 26px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #74C69D;
+}
+
+/* Standardized UI Elements */
+.card {
+    -fx-background-color: white;
+    -fx-background-radius: 16px;
+    -fx-border-color: #EDF1EE;
+    -fx-border-radius: 16px;
+    -fx-border-width: 1px;
+    -fx-effect: dropshadow(three-pass-box, rgba(27,67,50,0.06), 10, 0, 0, 3);
+}
+.card-title {
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #1B4332;
+}
+.section-title {
+    -fx-font-size: 12px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #4A6B57;
+    -fx-letter-spacing: 1px;
+}
+.field-label {
+    -fx-font-size: 11px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #4A6B57;
+}
+
+/* Global Buttons */
+.btn-primary {
+    -fx-background-color: #40916C;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-background-radius: 10px;
+    -fx-padding: 9px 18px;
+    -fx-cursor: hand;
+}
+.btn-primary:hover {
+    -fx-background-color: #2D6A4F;
+}
+.btn-primary:pressed {
+    -fx-background-color: #1B4332;
+}
+.btn-accent {
+    -fx-background-color: #2D6A4F;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-background-radius: 10px;
+    -fx-padding: 10px 20px;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(three-pass-box, rgba(45,106,79,0.25), 8, 0, 0, 3);
+}
+.btn-accent:hover {
+    -fx-background-color: #1B4332;
+}
+.btn-outline-hero {
+    -fx-background-color: transparent;
+    -fx-border-color: #B7E4C7;
+    -fx-border-radius: 10px;
+    -fx-border-width: 1px;
+    -fx-text-fill: #D8F3DC;
+    -fx-padding: 8px 16px;
+    -fx-cursor: hand;
+}
+.btn-outline-hero:hover {
+    -fx-background-color: rgba(255,255,255,0.08);
+}
+
+/* Shared Sidebar Pattern */
+.sidebar {
+    -fx-background-color: white;
+    -fx-background-radius: 16px;
+    -fx-border-color: #EDF1EE;
+    -fx-border-radius: 16px;
+    -fx-border-width: 1px;
+    -fx-effect: dropshadow(three-pass-box, rgba(27,67,50,0.06), 10, 0, 0, 3);
+}
+.sidebar .menu-item {
+    -fx-text-fill: #495057;
+    -fx-font-size: 14px;
+    -fx-underline: false;
+    -fx-padding: 9px 12px;
+    -fx-background-radius: 10px;
+}
+.sidebar .menu-item:hover {
+    -fx-background-color: #F1F3F5;
+}
+.sidebar .menu-item.active {
+    -fx-background-color: #E8F5E9;
+    -fx-text-fill: #2D6A4F;
+    -fx-font-weight: bold;
+}
+.sidebar-divider {
+    -fx-min-height: 1px;
+    -fx-max-height: 1px;
+    -fx-background-color: #E9ECEF;
+    -fx-margin: 8px 0;
+}
+
+/* Forms controls globally */
+.modern-textfield, .modern-datepicker, .home-text-field {
+    -fx-background-color: #F1F3F5;
+    -fx-background-radius: 10px;
+    -fx-border-color: transparent;
+    -fx-border-radius: 10px;
+    -fx-border-width: 1px;
+    -fx-padding: 9px 12px;
+    -fx-text-fill: #212529;
+}
+.modern-textfield:focused, .modern-datepicker:focused, .home-text-field:focused {
+    -fx-background-color: white;
+    -fx-border-color: #74C69D;
+}
+
+/* Global Footer */
+.footer {
+    -fx-background-color: #1B4332;
+}
+.footer-text {
+    -fx-text-fill: #D8F3DC;
+    -fx-font-size: 12px;
+}
+
+
+/* ==========================================================================
+   2. HOME PAGE SCHEMA (.home-page)
+   ========================================================================== */
+.home-page .navbar .btn-primary {
+    -fx-background-color: #40916C;
+    -fx-font-size: 12px;
+}
+.home-page .hero-section {
+    -fx-background-color: linear-gradient(to bottom, #1B4332, #2D6A4F);
+}
+.home-page .hero-title {
+    -fx-font-family: 'Playfair Display';
+    -fx-font-size: 38px;
+    -fx-font-weight: bold;
+    -fx-fill: white;
+}
+.home-page .hero-subtitle {
+    -fx-font-size: 16px;
+    -fx-fill: #B7E4C7;
+}
+.home-page .search-container {
+    -fx-background-color: white;
+    -fx-background-radius: 30px;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.15), 15, 0, 0, 5);
+}
+.home-page .search-input {
+    -fx-background-color: transparent;
+    -fx-font-size: 14px;
+}
+
+/* Barra di ricerca pillola, pulita e compatta */
+.home-page .search-bar-container {
+    -fx-background-color: white;
+    -fx-background-radius: 50px;
+    -fx-padding: 5px 5px 5px 22px;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.18), 22, 0, 0, 8);
+}
+.home-page .search-field {
+    -fx-background-color: transparent;
+    -fx-font-size: 14px;
+    -fx-text-fill: #212529;
+    -fx-prompt-text-fill: #94A3B8;
+}
+.home-page .btn-search {
+    -fx-background-color: #2D6A4F;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-font-size: 13px;
+    -fx-background-radius: 50px;
+    -fx-padding: 11px 24px;
+    -fx-cursor: hand;
+}
+.home-page .btn-search:hover {
+    -fx-background-color: #1B4332;
+}
+
+/* Contenitore risultati/filtri: meno spazi vuoti, sfondo neutro */
+.home-page .main-content {
+    -fx-background-color: #F8F9FA;
+}
+
+.home-page .chip {
+    -fx-background-color: rgba(255, 255, 255, 0.15);
+    -fx-text-fill: white;
+    -fx-background-radius: 20px;
+    -fx-padding: 6px 16px;
+}
+.home-page .chip-active {
+    -fx-background-color: #74C69D;
+    -fx-text-fill: #1B4332;
+    -fx-font-weight: bold;
+}
+.home-page .home-card {
+    -fx-background-color: white;
+    -fx-background-radius: 16px;
+    -fx-border-color: #EDF1EE;
+    -fx-border-radius: 16px;
+    -fx-border-width: 1px;
+    -fx-effect: dropshadow(three-pass-box, rgba(27,67,50,0.06), 12, 0, 0, 4);
+}
+.home-page .home-card:hover {
+    -fx-effect: dropshadow(three-pass-box, rgba(27,67,50,0.12), 16, 0, 0, 6);
+}
+.home-page .stats-container {
+    -fx-background-color: #E8F5E9;
+}
+.home-page .stat-num {
+    -fx-font-size: 32px;
+    -fx-font-weight: bold;
+    -fx-fill: #1B4332;
+}
+.home-page .stat-desc {
+    -fx-font-size: 14px;
+    -fx-fill: #4A6B57;
+}
+.home-page .user-avatar-btn {
+    -fx-background-color: transparent;
+    -fx-cursor: hand;
+}
+
+/* Stile dei bottoni cucina rapidi nella Hero - Stato iniziale elegante e integrato */
+.btn-tag {
+    -fx-background-color: rgba(255, 255, 255, 0.12);
+    -fx-text-fill: #E8F5E9;
+    -fx-font-size: 13px;
+    -fx-font-weight: bold;
+    -fx-background-radius: 24px;
+    -fx-border-color: rgba(255, 255, 255, 0.25);
+    -fx-border-radius: 24px;
+    -fx-border-width: 1px;
+    -fx-padding: 9px 20px;
+    -fx-cursor: hand;
+    -fx-transition: all 0.2s ease-in-out;
+}
+
+/* Bellissimo effetto Hover: il bottone prende colore, profondità ed importanza visiva */
+.btn-tag:hover {
+    -fx-background-color: #74C69D;
+    -fx-border-color: #74C69D;
+    -fx-text-fill: #1B4332;
+    -fx-effect: dropshadow(three-pass-box, rgba(116, 198, 157, 0.5), 10, 0, 0, 0);
+    -fx-scale-x: 1.06;
+    -fx-scale-y: 1.06;
+}
+
+/* ComboBox personalizzati all'interno dei Filtri */
+.filter-combo {
+    -fx-background-color: #F1F3F5;
+    -fx-border-color: transparent;
+    -fx-border-radius: 8px;
+    -fx-background-radius: 8px;
+    -fx-padding: 4px 6px;
+    -fx-font-size: 13px;
+}
+.filter-combo:focused {
+    -fx-border-color: #40916C;
+}
+
+/* Pannello filtri/form riutilizzabile su qualunque pagina (Home, Search, Nuovo Ristorante...) */
+.filter-panel {
+    -fx-background-color: white;
+    -fx-background-radius: 16px;
+    -fx-border-color: #EDF1EE;
+    -fx-border-radius: 16px;
+    -fx-border-width: 1px;
+    -fx-effect: dropshadow(three-pass-box, rgba(27,67,50,0.06), 12, 0, 0, 4);
+}
+.filter-title {
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-fill: #1B4332;
+}
+.filter-label {
+    -fx-text-fill: #4A6B57;
+    -fx-font-size: 11px;
+    -fx-font-weight: bold;
+}
+.filter-input {
+    -fx-background-color: #F1F3F5;
+    -fx-background-radius: 8px;
+    -fx-padding: 9px 12px;
+    -fx-font-size: 13px;
+    -fx-text-fill: #212529;
+}
+.filter-input:focused {
+    -fx-background-color: #E8F5E9;
+}
+
+/* Textarea e "input a stelle" riutilizzabili (form recensione, form nuovo ristorante...) */
+.modern-textarea {
+    -fx-background-color: #F1F3F5;
+    -fx-background-radius: 10px;
+    -fx-border-color: transparent;
+    -fx-border-radius: 10px;
+}
+.modern-textarea:focused {
+    -fx-background-color: white;
+    -fx-border-color: #74C69D;
+}
+.star-input-icon {
+    -fx-font-size: 24px;
+    -fx-text-fill: #DEE2E6;
+    -fx-cursor: hand;
+}
+.star-input-icon.active {
+    -fx-text-fill: #FFD166;
+}
+
+/* Placeholder mappa riutilizzabile (dettaglio ristorante, creazione nuovo ristorante...) */
+.map-visual-placeholder {
+    -fx-background-color: linear-gradient(to bottom right, #E8F5E9, #C8E6C9);
+    -fx-background-radius: 10px;
+    -fx-min-height: 120px;
+    -fx-pref-height: 120px;
+}
+
+/* Stato vuoto riutilizzabile ("nessun preferito", "nessuna recensione", "nessun risultato"...) */
+.empty-state-box {
+    -fx-background-color: white;
+    -fx-background-radius: 16px;
+    -fx-border-color: #EDF1EE;
+    -fx-border-radius: 16px;
+    -fx-border-width: 1px;
+}
+.empty-state-title {
+    -fx-font-size: 15px;
+    -fx-font-weight: bold;
+    -fx-fill: #495057;
+}
+.empty-state-subtitle {
+    -fx-font-size: 12px;
+    -fx-fill: #94A3B8;
+}
+
+/* ScrollPane trasparente per la lista ristoranti */
+.transparent-scroll {
+    -fx-background-color: transparent;
+    -fx-background-insets: 0;
+    -fx-padding: 0;
+}
+.transparent-scroll > .viewport {
+    -fx-background-color: transparent;
+}
+
+/* ==========================================================================
+   3. LOGIN & REGISTRATION SCHEMA (.main-bg)
+   ========================================================================== */
+.main-bg {
+    -fx-background-color: #F4F7F6;
+}
+.main-bg .navbar {
+    -fx-background-color: transparent;
+    -fx-effect: null;
+}
+.main-bg .main-card {
+    -fx-background-color: white;
+    -fx-background-radius: 20px;
+    -fx-effect: dropshadow(three-pass-box, rgba(27,67,50,0.10), 24, 0, 0, 8);
+}
+.main-bg .login-section {
+    -fx-background-color: #1B4332;
+    -fx-background-radius: 20px 0px 0px 20px;
+}
+.main-bg .type-btn {
+    -fx-background-color: #F1F3F5;
+    -fx-border-color: #DEE2E6;
+    -fx-border-radius: 10px;
+    -fx-background-radius: 10px;
+    -fx-text-fill: #495057;
+    -fx-font-weight: bold;
+    -fx-padding: 8px 14px;
+    -fx-cursor: hand;
+}
+.main-bg .type-btn:selected {
+    -fx-background-color: #E8F5E9;
+    -fx-border-color: #2D6A4F;
+    -fx-text-fill: #2D6A4F;
+}
+
+
+/* ==========================================================================
+   4. CUSTOMER PROFILE SCHEMA (.profile-page)
+   ========================================================================== */
+.profile-page .hero-dash-morbida {
+    -fx-background-color: linear-gradient(to right, #1B4332, #2D6A4F);
+    -fx-background-radius: 18px;
+    -fx-effect: dropshadow(three-pass-box, rgba(27,67,50,0.18), 16, 0, 0, 6);
+}
+.profile-page .kpi {
+    -fx-background-color: rgba(255,255,255,0.1);
+    -fx-background-radius: 12px;
+    -fx-padding: 10px 18px;
+}
+.profile-page .avatar-big-container {
+    -fx-min-width: 70px;
+    -fx-min-height: 70px;
+    -fx-background-color: white;
+    -fx-background-radius: 50%;
+}
+.profile-page .avatar-text {
+    -fx-font-size: 22px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #1B4332;
+}
+.profile-page .dash-nome {
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+    -fx-text-fill: white;
+}
+.profile-page .hero-subtext {
+    -fx-text-fill: #B7E4C7;
+    -fx-font-size: 14px;
+}
+.profile-page .dash-badge {
+    -fx-background-color: rgba(255,255,255,0.15);
+    -fx-text-fill: white;
+    -fx-padding: 4px 10px;
+    -fx-background-radius: 12px;
+    -fx-font-size: 12px;
+}
+.profile-page .kpi-num {
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #74C69D;
+}
+.profile-page .kpi-label {
+    -fx-text-fill: #D8F3DC;
+    -fx-font-size: 12px;
+}
+.profile-page .menu-item-logout {
+    -fx-text-fill: #C0392B;
+    -fx-font-size: 14px;
+    -fx-underline: false;
+    -fx-padding: 8px 12px;
+}
+.profile-page .info-row {
+    -fx-padding: 6px 0;
+    -fx-border-color: #F1F3F5;
+    -fx-border-width: 0 0 1px 0;
+}
+.profile-page .info-key {
+    -fx-text-fill: #6C757D;
+}
+.profile-page .info-val {
+    -fx-text-fill: #212529;
+    -fx-font-weight: bold;
+}
+
+
+/* ==========================================================================
+   5. SEARCH PAGE SCHEMA (.search-page)
+   ========================================================================== */
+.search-page .search-inline-container {
+    -fx-background-color: rgba(255,255,255,0.15);
+    -fx-background-radius: 10px;
+    -fx-padding: 2px 4px;
+}
+.search-page .search-inline-input {
+    -fx-background-color: transparent;
+    -fx-text-fill: white;
+    -fx-prompt-text-fill: #B7E4C7;
+}
+.search-page .btn-search-nav {
+    -fx-background-color: #74C69D;
+    -fx-text-fill: #1B4332;
+    -fx-font-weight: bold;
+    -fx-background-radius: 8px;
+    -fx-cursor: hand;
+}
+.search-page .btn-search-nav:hover {
+    -fx-background-color: #B7E4C7;
+}
+.search-page .sidebar-card {
+    -fx-background-color: white;
+    -fx-background-radius: 16px;
+    -fx-border-color: #EDF1EE;
+    -fx-border-radius: 16px;
+    -fx-border-width: 1px;
+    -fx-effect: dropshadow(three-pass-box, rgba(27,67,50,0.06), 10, 0, 0, 3);
+}
+.search-page .btn-reset {
+    -fx-background-color: transparent;
+    -fx-text-fill: #6C757D;
+    -fx-cursor: hand;
+}
+.search-page .btn-reset:hover {
+    -fx-text-fill: #C0392B;
+}
+.search-page .pag-btn {
+    -fx-background-color: white;
+    -fx-border-color: #DEE2E6;
+    -fx-border-radius: 8px;
+    -fx-background-radius: 8px;
+    -fx-text-fill: #495057;
+    -fx-cursor: hand;
+}
+.search-page .pag-btn:hover {
+    -fx-background-color: #F1F3F5;
+}
+.search-page .pag-active {
+    -fx-background-color: #2D6A4F;
+    -fx-text-fill: white;
+    -fx-border-color: #2D6A4F;
+}
+
+
+/* ==========================================================================
+   6. RESTAURANT DETAILS PAGE SCHEMA (.restaurant-details-page)
+   ========================================================================== */
+.restaurant-details-page .nav-breadcrumb {
+    -fx-text-fill: #B7E4C7;
+}
+.restaurant-details-page .hero-dash-morbida {
+    -fx-background-color: linear-gradient(to right, #1B4332, #2D6A4F);
+    -fx-background-radius: 18px;
+    -fx-effect: dropshadow(three-pass-box, rgba(27,67,50,0.18), 16, 0, 0, 6);
+}
+.restaurant-details-page .avatar-ristorante-container {
+    -fx-min-width: 80px;
+    -fx-min-height: 80px;
+    -fx-background-color: white;
+    -fx-background-radius: 16px;
+}
+.restaurant-details-page .dash-nome-ristorante {
+    -fx-font-size: 28px;
+    -fx-font-weight: bold;
+    -fx-text-fill: white;
+}
+.restaurant-details-page .hero-subtext {
+    -fx-text-fill: #D8F3DC;
+}
+.restaurant-details-page .rating-stars-value {
+    -fx-text-fill: #FFD166;
+    -fx-font-weight: bold;
+}
+.restaurant-details-page .rating-count-muted {
+    -fx-text-fill: #B7E4C7;
+}
+.restaurant-details-page .dash-badge {
+    -fx-background-color: rgba(255,255,255,0.15);
+    -fx-text-fill: white;
+    -fx-padding: 4px 10px;
+    -fx-background-radius: 12px;
+}
+.restaurant-details-page .tabs-container {
+    -fx-border-color: #DEE2E6;
+    -fx-border-width: 0 0 2px 0;
+}
+.restaurant-details-page .tab-item-active {
+    -fx-text-fill: #2D6A4F;
+    -fx-font-weight: bold;
+    -fx-border-color: #2D6A4F;
+    -fx-border-width: 0 0 3px 0;
+    -fx-padding: 8px 4px;
+}
+.restaurant-details-page .tab-item-inactive {
+    -fx-text-fill: #6C757D;
+    -fx-padding: 8px 4px;
+}
+.restaurant-details-page .avatar-small {
+    -fx-min-width: 36px;
+    -fx-min-height: 36px;
+    -fx-background-color: #E9ECEF;
+    -fx-background-radius: 50%;
+}
+.restaurant-details-page .review-author {
+    -fx-font-weight: bold;
+}
+.restaurant-details-page .review-date {
+    -fx-font-size: 11px;
+    -fx-text-fill: #999999;
+}
+.restaurant-details-page .stars-display {
+    -fx-text-fill: #FFD166;
+}
+.restaurant-details-page .risposta-box {
+    -fx-background-color: #F8F9FA;
+    -fx-padding: 12px 14px;
+    -fx-background-radius: 12px;
+    -fx-border-color: #EDF1EE;
+    -fx-border-radius: 12px;
+    -fx-border-width: 1px;
+}
+.restaurant-details-page .risposta-title {
+    -fx-font-weight: bold;
+    -fx-text-fill: #1B4332;
+}
+.restaurant-details-page .rating-big-number {
+    -fx-font-size: 48px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #1B4332;
+}
+.restaurant-details-page .stars-display-big {
+    -fx-font-size: 18px;
+    -fx-text-fill: #FFD166;
+}
+.restaurant-details-page .rating-muted-sm {
+    -fx-text-fill: #6C757D;
+}
+.restaurant-details-page .rating-bar .track {
+    -fx-background-color: #E9ECEF;
+    -fx-background-radius: 6px;
+}
+.restaurant-details-page .rating-bar .bar {
+    -fx-background-color: #FFD166;
+    -fx-background-radius: 6px;
+    -fx-background-insets: 0;
+}
+.restaurant-details-page .info-row {
+    -fx-padding: 6px 0;
+}
+.restaurant-details-page .mappa-box {
+    -fx-background-color: #E8F5E9;
+    -fx-background-radius: 12px;
+    -fx-border-color: #C8E6C9;
+    -fx-border-radius: 12px;
+}
+.restaurant-details-page .map-title {
+    -fx-font-weight: bold;
+    -fx-text-fill: #2D6A4F;
+}
+.restaurant-details-page .map-coords {
+    -fx-font-size: 11px;
+    -fx-text-fill: #4F772D;
+}
+
+/* Fascia "Gestito da" in alto pagina */
+.restaurant-details-page .owner-strip {
+    -fx-background-color: white;
+    -fx-background-radius: 14px;
+    -fx-border-color: #EDF1EE;
+    -fx-border-radius: 14px;
+    -fx-border-width: 1px;
+    -fx-effect: dropshadow(three-pass-box, rgba(27,67,50,0.05), 8, 0, 0, 2);
+}
+.restaurant-details-page .owner-avatar {
+    -fx-min-width: 46px;
+    -fx-min-height: 46px;
+    -fx-max-width: 46px;
+    -fx-max-height: 46px;
+    -fx-background-color: #E8F5E9;
+    -fx-background-radius: 50%;
+}
+.restaurant-details-page .owner-avatar-text {
+    -fx-font-size: 15px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #2D6A4F;
+}
+.restaurant-details-page .owner-name {
+    -fx-font-size: 15px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #212529;
+}
+.restaurant-details-page .owner-email {
+    -fx-font-size: 12px;
+    -fx-text-fill: #6C757D;
+}
+.restaurant-details-page .owner-hint {
+    -fx-font-size: 12px;
+    -fx-text-fill: #ADB5BD;
+    -fx-font-style: italic;
+}
+.restaurant-details-page .badge-ristoratore {
+    -fx-background-color: #E8F5E9;
+    -fx-text-fill: #2D6A4F;
+    -fx-font-size: 11px;
+    -fx-font-weight: bold;
+    -fx-background-radius: 20px;
+    -fx-padding: 3px 10px;
+}
+
+/* Riquadro visivo mappa (placeholder, senza integrazione mappe reali) */
+/* Prezzo evidenziato nella card informazioni */
+.restaurant-details-page .info-val-price {
+    -fx-text-fill: #2D6A4F;
+    -fx-font-weight: bold;
+    -fx-font-size: 14px;
+}
+
+
+/* ==========================================================================
+   7. OWNER DASHBOARD SCHEMA (.owner-dashboard-page)
+   ========================================================================== */
+.owner-dashboard-page .nav-badge {
+    -fx-background-color: #40916C;
+    -fx-text-fill: white;
+    -fx-padding: 2px 8px;
+    -fx-background-radius: 4px;
+}
+.owner-dashboard-page .hero-dash {
+    -fx-background-color: linear-gradient(to right, #1B4332, #2D6A4F);
+    -fx-background-radius: 18px;
+    -fx-effect: dropshadow(three-pass-box, rgba(27,67,50,0.18), 16, 0, 0, 6);
+}
+.owner-dashboard-page .avatar-big {
+    -fx-font-size: 32px;
+    -fx-min-width: 64px;
+    -fx-min-height: 64px;
+    -fx-background-color: white;
+    -fx-background-radius: 50%;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.15), 6, 0, 0, 2);
+}
+.owner-dashboard-page .dash-nome {
+    -fx-font-size: 24px;
+    -fx-font-weight: bold;
+    -fx-text-fill: white;
+}
+.owner-dashboard-page .dash-badge {
+    -fx-background-color: rgba(255,255,255,0.15);
+    -fx-text-fill: white;
+    -fx-padding: 4px 10px;
+    -fx-background-radius: 12px;
+}
+.owner-dashboard-page .kpi {
+    -fx-background-color: rgba(255,255,255,0.1);
+    -fx-background-radius: 12px;
+    -fx-padding: 10px 18px;
+}
+.owner-dashboard-page .kpi-num {
+    -fx-font-size: 20px;
+    -fx-font-weight: bold;
+    -fx-text-fill: white;
+}
+.owner-dashboard-page .kpi-label {
+    -fx-text-fill: #B7E4C7;
+    -fx-font-size: 11px;
+}
+.owner-dashboard-page .btn-outline {
+    -fx-background-color: transparent;
+    -fx-border-color: #2D6A4F;
+    -fx-text-fill: #2D6A4F;
+    -fx-border-radius: 8px;
+    -fx-background-radius: 8px;
+    -fx-padding: 7px 14px;
+    -fx-cursor: hand;
+}
+.owner-dashboard-page .btn-outline:hover {
+    -fx-background-color: #E8F5E9;
+}
+.owner-dashboard-page .btn-danger {
+    -fx-background-color: #C0392B;
+    -fx-text-fill: white;
+    -fx-background-radius: 8px;
+    -fx-padding: 7px 14px;
+    -fx-cursor: hand;
+}
+.owner-dashboard-page .btn-danger:hover {
+    -fx-background-color: #A5321F;
+}
+
+
+/* ==========================================================================
+   8. PAGE HEADER BAND — fascia riutilizzabile sotto la navbar
+   (con barra di ricerca su Search, con titolo su Preferiti/Recensioni/ecc.)
+   ========================================================================== */
+.page-search-section {
+    -fx-background-color: #F1F4F2;
+}
+.page-search-bar {
+    -fx-background-color: white;
+    -fx-background-radius: 50px;
+    -fx-border-color: #E4EAE6;
+    -fx-border-radius: 50px;
+    -fx-border-width: 1px;
+    -fx-padding: 5px 5px 5px 18px;
+    -fx-spacing: 8px;
+    -fx-effect: dropshadow(three-pass-box, rgba(27,67,50,0.08), 12, 0, 0, 4);
+}
+.page-search-icon {
+    -fx-font-size: 14px;
+    -fx-text-fill: #6C757D;
+}
+.page-search-input {
+    -fx-background-color: transparent;
+    -fx-font-size: 14px;
+    -fx-text-fill: #212529;
+    -fx-prompt-text-fill: #94A3B8;
+}
+.btn-search-page {
+    -fx-background-color: #2D6A4F;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-font-size: 13px;
+    -fx-background-radius: 50px;
+    -fx-padding: 9px 22px;
+    -fx-cursor: hand;
+}
+.btn-search-page:hover {
+    -fx-background-color: #1B4332;
+}
+/* Titolo + sottotitolo pagina nella fascia header (Preferiti, Recensioni...) */
+.page-header-title {
+    -fx-font-size: 22px;
+    -fx-font-weight: bold;
+    -fx-fill: #1B4332;
+}
+.page-header-subtitle {
+    -fx-font-size: 13px;
+    -fx-fill: #4A6B57;
+}
+
+
+/* ==========================================================================
+   9. RESTAURANT RESULT CARD (elenco risultati ricerca)
+   ========================================================================== */
+.restaurant-card {
+    -fx-background-color: white;
+    -fx-background-radius: 14px;
+    -fx-border-color: #EDF1EE;
+    -fx-border-radius: 14px;
+    -fx-border-width: 1px;
+    -fx-cursor: hand;
+    -fx-effect: dropshadow(three-pass-box, rgba(27,67,50,0.05), 8, 0, 0, 2);
+}
+.restaurant-card:hover {
+    -fx-border-color: #B7E4C7;
+    -fx-effect: dropshadow(three-pass-box, rgba(27,67,50,0.12), 14, 0, 0, 5);
+}
+.restaurant-card-thumb {
+    -fx-background-color: #E8F5E9;
+    -fx-background-radius: 12px;
+}
+.restaurant-card-thumb-icon {
+    -fx-font-size: 26px;
+}
+.restaurant-card-name {
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #1B4332;
+}
+.restaurant-card-price {
+    -fx-font-size: 13px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #2D6A4F;
+}
+.restaurant-card-cuisine-chip {
+    -fx-background-color: #E8F5E9;
+    -fx-text-fill: #2D6A4F;
+    -fx-font-size: 11px;
+    -fx-font-weight: bold;
+    -fx-background-radius: 20px;
+    -fx-padding: 3px 12px;
+}
+.restaurant-card-meta {
+    -fx-font-size: 12px;
+    -fx-text-fill: #6C757D;
+}
+.restaurant-card-tag {
+    -fx-background-color: #F1F3F5;
+    -fx-text-fill: #495057;
+    -fx-font-size: 11px;
+    -fx-background-radius: 6px;
+    -fx-padding: 3px 9px;
+}
+.btn-card-cta {
+    -fx-background-color: transparent;
+    -fx-border-color: #B7E4C7;
+    -fx-border-radius: 8px;
+    -fx-border-width: 1px;
+    -fx-text-fill: #2D6A4F;
+    -fx-font-weight: bold;
+    -fx-font-size: 12px;
+    -fx-padding: 8px 16px;
+    -fx-cursor: hand;
+}
+.btn-card-cta:hover {
+    -fx-background-color: #E8F5E9;
+}
+
+/* Stelle valutazione: usare 5 Label "★" per riga, star-filled fino a Math.round(media), il resto star-empty.
+   Se il ristorante non ha ancora recensioni (media = 0), usare 5x star-empty. */
+.star-filled {
+    -fx-font-size: 16px;
+    -fx-text-fill: #FFD166;
+}
+.star-empty {
+    -fx-font-size: 16px;
+    -fx-text-fill: #D8DDE2;
+}
+.rating-avg-num {
+    -fx-font-size: 13px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #495057;
+    -fx-padding: 0 0 0 2px;
+}
+.rating-avg-num-muted {
+    -fx-font-size: 13px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #ADB5BD;
+    -fx-padding: 0 0 0 2px;
+}
+.rating-count {
+    -fx-font-size: 12px;
+    -fx-text-fill: #ADB5BD;
+}
+
+/* Sfondi sfumati ed evocativi per ciascuna tipologia di cucina */
+.thumb-italiana {
+    -fx-background-color: linear-gradient(to bottom right, #FDEBD3, #F6C99A); /* Arancio/Giallo caldo */
+}
+.thumb-giapponese {
+    -fx-background-color: linear-gradient(to bottom right, #FDE2E2, #F5B7B1); /* Rosa/Rosso soft giapponese */
+}
+.thumb-poke {
+    -fx-background-color: linear-gradient(to bottom right, #FDEDEC, #FADBD8); /* Rosa corallo/Salmone tenue */
+}
+.thumb-vegetariana {
+    -fx-background-color: linear-gradient(to bottom right, #E8F5E9, #B7E4C7); /* Verde foglia splendente */
+}
+.thumb-mediterranea {
+    -fx-background-color: linear-gradient(to bottom right, #E8F8F5, #D1F2EB); /* Verde acqua cristallino */
+}
+.thumb-carne {
+    -fx-background-color: linear-gradient(to bottom right, #F5EBE6, #E3C4B5); /* Ambra/Marrone cuoio delicato */
+}
+.thumb-messicana {
+    -fx-background-color: linear-gradient(to bottom right, #FDF2E2, #FAD7A0); /* Giallo mais speziato */
+}
+.thumb-pesce {
+    -fx-background-color: linear-gradient(to bottom right, #EBF5FB, #AED6F1); /* Azzurro mare profondo */
+}
+.thumb-indiana {
+    -fx-background-color: linear-gradient(to bottom right, #FEF9E7, #F9E79F); /* Zafferano/Curcuma dorato */
+}
+.thumb-arabo {
+    -fx-background-color: linear-gradient(to bottom right, #FBEEE6, #F5CBA7); /* Terracotta/Sabbia del deserto */
+}
+.thumb-francese {
+    -fx-background-color: linear-gradient(to bottom right, #EAF2F8, #FDEDEC); /* Sfumatura tricolore morbida */
+}
+.thumb-greca {
+    -fx-background-color: linear-gradient(to bottom right, #F4F6F7, #D6EAF8); /* Bianco e azzurro Mykonos */
+}
+.thumb-spagnola {
+    -fx-background-color: linear-gradient(to bottom right, #FEF5E7, #F8C471); /* Giallo caldo Paella */
+}
+.thumb-fastfood {
+    -fx-background-color: linear-gradient(to bottom right, #FDEDEC, #F9E79F); /* Mix vivace Rosso/Giallo Fast Food */
+}
+.thumb-streetfood {
+    -fx-background-color: linear-gradient(to bottom right, #F4F6F7, #EBEDEF); /* Grigio asfalto/Carta paglia pulito */
+}
+.thumb-dolci {
+    -fx-background-color: linear-gradient(to bottom right, #F5EEF8, #D7BDE2); /* Lilla confetto / Zucchero a velo */
+}
+.thumb-brunch {
+    -fx-background-color: linear-gradient(to bottom right, #FEF9E7, #FAD7A0); /* Crema pasticcera / Burro tiepido */
+}
+.thumb-pub {
+    -fx-background-color: linear-gradient(to bottom right, #FEF9E7, #F5B041); /* Ambra/Birra doppio malto */
+}
+.thumb-altro {
+    -fx-background-color: linear-gradient(to bottom right, #F2F4F4, #E5E8E8); /* Grigio neutro raffinato */
+}
+
+/* Nome gestore/proprietario del locale */
+.restaurant-card-owner {
+    -fx-font-size: 12px;
+    -fx-font-style: italic;
+    -fx-text-fill: #6C757D;
+}
+.restaurant-card-dot {
+    -fx-font-size: 10px;
+    -fx-text-fill: #CED4DA;
+}
+
+/* Prezzo come pillola, più evidente rispetto al testo semplice */
+.restaurant-card-price-badge {
+    -fx-background-color: #F1F3F5;
+    -fx-text-fill: #1B4332;
+    -fx-font-size: 12px;
+    -fx-font-weight: bold;
+    -fx-background-radius: 20px;
+    -fx-padding: 4px 12px;
+}
+
+/* Stato apertura locale */
+.status-open {
+    -fx-font-size: 12px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #2D8A4E;
+}
+.status-closed {
+    -fx-font-size: 12px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #C0392B;
+}
+
+/* Badge in evidenza per differenziare i locali migliori/nuovi dagli altri */
+.badge-featured {
+    -fx-background-color: linear-gradient(to right, #FFD166, #F4A300);
+    -fx-text-fill: #4A2E00;
+    -fx-font-size: 10px;
+    -fx-font-weight: bold;
+    -fx-background-radius: 20px;
+    -fx-padding: 3px 10px;
+}
+.badge-new {
+    -fx-background-color: #DCEEFB;
+    -fx-text-fill: #1D6FA5;
+    -fx-font-size: 10px;
+    -fx-font-weight: bold;
+    -fx-background-radius: 20px;
+    -fx-padding: 3px 10px;
+}
+
+/* Bottone preferiti (icona cuore) accanto alla CTA */
+.btn-card-fav {
+    -fx-background-color: #F1F3F5;
+    -fx-text-fill: #6C757D;
+    -fx-font-size: 15px;
+    -fx-background-radius: 8px;
+    -fx-padding: 6px 10px;
+    -fx-cursor: hand;
+}
+.btn-card-fav:hover {
+    -fx-background-color: #FDE2E2;
+    -fx-text-fill: #C0392B;
+}
+.btn-card-fav.active {
+    -fx-background-color: #FDE2E2;
+    -fx-text-fill: #C0392B;
+}
+
+
+/* ==========================================================================
+   10. REVIEW CARD — "Le mie recensioni"
+   ========================================================================== */
+.review-card {
+    -fx-background-color: white;
+    -fx-background-radius: 14px;
+    -fx-border-color: #EDF1EE;
+    -fx-border-radius: 14px;
+    -fx-border-width: 1px;
+    -fx-effect: dropshadow(three-pass-box, rgba(27,67,50,0.05), 8, 0, 0, 2);
+}
+.review-card:hover {
+    -fx-border-color: #D8F3DC;
+}
+.review-card-thumb {
+    -fx-background-color: #E8F5E9;
+    -fx-background-radius: 10px;
+}
+.review-card-restaurant-name {
+    -fx-font-size: 15px;
+    -fx-font-weight: bold;
+    -fx-fill: #1B4332;
+    -fx-cursor: hand;
+}
+.review-card-restaurant-name:hover {
+    -fx-underline: true;
+}
+.review-card-date {
+    -fx-font-size: 11px;
+    -fx-fill: #999999;
+}
+.review-card-text {
+    -fx-font-size: 13px;
+    -fx-fill: #495057;
+    -fx-wrap-text: true;
+}
+.review-card-reply-badge {
+    -fx-background-color: #E8F5E9;
+    -fx-text-fill: #2D6A4F;
+    -fx-font-size: 10px;
+    -fx-font-weight: bold;
+    -fx-background-radius: 10px;
+    -fx-padding: 3px 9px;
+}
+.btn-edit-review {
+    -fx-background-color: transparent;
+    -fx-border-color: #B7E4C7;
+    -fx-border-radius: 8px;
+    -fx-border-width: 1px;
+    -fx-text-fill: #2D6A4F;
+    -fx-font-size: 11px;
+    -fx-font-weight: bold;
+    -fx-padding: 6px 12px;
+    -fx-cursor: hand;
+}
+.btn-edit-review:hover {
+    -fx-background-color: #E8F5E9;
+}
+.btn-delete-review {
+    -fx-background-color: transparent;
+    -fx-border-color: #F5C6C0;
+    -fx-border-radius: 8px;
+    -fx-border-width: 1px;
+    -fx-text-fill: #C0392B;
+    -fx-font-size: 11px;
+    -fx-font-weight: bold;
+    -fx-padding: 6px 12px;
+    -fx-cursor: hand;
+}
+.btn-delete-review:hover {
+    -fx-background-color: #FDE2E2;
+}
+
+
+/* ==========================================================================
+   11. "CHI SONO" STRIP — riepilogo ristoratore (pagina Nuovo Ristorante)
+   Riusa in gran parte le classi già definite in .owner-dashboard-page
+   (hero-dash, avatar-big, dash-nome, dash-badge, kpi, kpi-num, kpi-label):
+   basta aggiungere "owner-dashboard-page" allo styleClass della root
+   della nuova pagina per ereditarle automaticamente, come già fatto
+   nel file new-restaurant-view.fxml.
+   ========================================================================== */
+.new-restaurant-page .form-card {
+    -fx-background-color: white;
+    -fx-background-radius: 16px;
+    -fx-border-color: #EDF1EE;
+    -fx-border-radius: 16px;
+    -fx-border-width: 1px;
+    -fx-effect: dropshadow(three-pass-box, rgba(27,67,50,0.06), 12, 0, 0, 4);
+}
+.new-restaurant-page .form-section-divider {
+    -fx-border-color: #F1F3F5;
+    -fx-border-width: 0 0 1px 0;
+}
+.new-restaurant-page .cuisine-pill {
+    -fx-background-color: #F1F3F5;
+    -fx-text-fill: #495057;
+    -fx-font-size: 12px;
+    -fx-font-weight: bold;
+    -fx-background-radius: 20px;
+    -fx-padding: 7px 16px;
+    -fx-cursor: hand;
+    -fx-border-color: transparent;
+    -fx-border-width: 1px;
+}
+.new-restaurant-page .cuisine-pill:hover {
+    -fx-background-color: #E8F5E9;
+}
+.new-restaurant-page .cuisine-pill-active {
+    -fx-background-color: #2D6A4F;
+    -fx-text-fill: white;
+}
+
+/* Sfondi dinamici per la barra dei Dettagli Ristorante (Hero Strip) */
+.hero-carne {
+    -fx-background-color: linear-gradient(to bottom right, #FADBD8, #F5B7B1); /* Rossastro/Carne soft elegante */
+}
+.hero-italiana {
+    -fx-background-color: linear-gradient(to bottom right, #FCF3CF, #F9E79F); /* Giallo/Arancio tenue */
+}
+.hero-giapponese {
+    -fx-background-color: linear-gradient(to bottom right, #FADBD8, #FDEDEC); /* Rosa confetto giapponese */
+}
+.hero-poke {
+    -fx-background-color: linear-gradient(to bottom right, #F5EEF8, #E8F8F5); /* Corallo/Salmone chiarissimo */
+}
+.hero-vegetariana {
+    -fx-background-color: linear-gradient(to bottom right, #D5F5E3, #A9DFBF); /* Verde brillante ma bilanciato */
+}
+.hero-mediterranea {
+    -fx-background-color: linear-gradient(to bottom right, #E8F8F5, #D1F2EB); /* Verde oliva/acqua cristallino */
+}
+.hero-pesce {
+    -fx-background-color: linear-gradient(to bottom right, #D4E6F1, #A9CCE3); /* Azzurro mare morbido */
+}
+.hero-messicana {
+    -fx-background-color: linear-gradient(to bottom right, #FDEBD0, #F5CBA7); /* Arancio speziato sfumato */
+}
+.hero-indiana {
+    -fx-background-color: linear-gradient(to bottom right, #FEF9E7, #FCF3CF); /* Zafferano chiarissimo */
+}
+.hero-arabo {
+    -fx-background-color: linear-gradient(to bottom right, #F5CBA7, #EDBB99); /* Sabbia/Terracotta del deserto */
+}
+.hero-francese {
+    -fx-background-color: linear-gradient(to bottom right, #EBF5FB, #FDEDEC); /* Sfumatura tricolore accennata */
+}
+.hero-greca {
+    -fx-background-color: linear-gradient(to bottom right, #EAEDED, #D6EAF8); /* Bianco/Blu Mykonos soft */
+}
+.hero-spagnola {
+    -fx-background-color: linear-gradient(to bottom right, #FAD7A0, #F8C471); /* Giallo caldo */
+}
+.hero-fastfood {
+    -fx-background-color: linear-gradient(to bottom right, #FADBD8, #FCF3CF); /* Rosso/Giallo FastFood stemperati */
+}
+.hero-streetfood {
+    -fx-background-color: linear-gradient(to bottom right, #E5E8E8, #F2F4F4); /* Grigio/Carta pulito */
+}
+.hero-dolci {
+    -fx-background-color: linear-gradient(to bottom right, #F5EEF8, #EBDEF0); /* Lilla/Zucchero filato */
+}
+.hero-brunch {
+    -fx-background-color: linear-gradient(to bottom right, #FEF9E7, #FDEBD0); /* Crema pasticcera soffice */
+}
+.hero-pub {
+    -fx-background-color: linear-gradient(to bottom right, #F9E79F, #F8C471); /* Dorato malto della birra */
+}
+.hero-altro {
+    -fx-background-color: linear-gradient(to bottom right, #E5E8E8, #D5D8DC); /* Sfondo neutro di default */
+}
+
+/* ===== CARD STANDARDIZZATE ===== */
+.card-restaurant {
+    -fx-background-color: #ffffff;
+    -fx-background-radius: 16;
+    -fx-padding: 18;
+    -fx-border-color: #EDF1EE;
+    -fx-border-radius: 16;
+    -fx-effect: dropshadow(three-pass-box, rgba(27,67,50,0.06), 10, 0, 0, 3);
+}
+
+.card-favorites {
+    -fx-background-color: #ffffff;
+    -fx-background-radius: 8;
+    -fx-padding: 15;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.08), 10, 0, 0, 4);
+}
+
+.card-review {
+    -fx-background-color: #ffffff;
+    -fx-background-radius: 8;
+    -fx-padding: 15;
+    -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.05), 8, 0, 0, 2);
+}
+
+/* ===== LABEL STANDARDIZZATE ===== */
+.label-card-title {
+    -fx-font-size: 16px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #1B4332;
+}
+
+.label-card-details {
+    -fx-font-size: 13px;
+    -fx-text-fill: #666666;
+}
+
+.label-card-price {
+    -fx-font-size: 13px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #2D6A4F;
+}
+
+.label-empty-state {
+    -fx-text-fill: #6B6B6B;
+    -fx-font-size: 14px;
+}
+
+.label-review-text {
+    -fx-font-size: 14px;
+    -fx-text-fill: #444444;
+    -fx-font-style: italic;
+}
+
+/* ===== PAGINATION BUTTONS ===== */
+.pagination-button-active {
+    -fx-background-color: #2D6A4F;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+}
+
+.pagination-button-inactive {
+    -fx-background-color: white;
+    -fx-border-color: #CBD5E1;
+    -fx-text-fill: #64748B;
+    -fx-cursor: hand;
+}
