@@ -153,7 +153,7 @@ public class CustomerProfileController {
 
     @FXML
     private void handleGoToHome(javafx.scene.input.MouseEvent event) {
-        navigator.navigateToHome();
+        navigator.navigateToHomeIntelligent();
     }
 
     /**

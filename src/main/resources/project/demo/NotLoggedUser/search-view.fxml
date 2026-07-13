@@ -12,6 +12,7 @@
 
     <VBox spacing="0" styleClass="search-page">
 
+        <!-- NAVBAR STRUTTURA ORIGINALE -->
         <HBox styleClass="navbar" alignment="CENTER_LEFT" prefHeight="64">
             <padding><Insets left="60" right="60"/></padding>
             <HBox alignment="CENTER_LEFT" onMouseClicked="#handleGoToHome" style="-fx-cursor: hand;">
@@ -20,72 +21,67 @@
             </HBox>
 
             <Region HBox.hgrow="ALWAYS" />
-
-            <HBox spacing="15" alignment="CENTER">
-                <Hyperlink text="Esci" onAction="#goToHome" styleClass="nav-link" style="-fx-text-fill: #74C69D;"/>
-            </HBox>
         </HBox>
 
+        <!-- SEZIONE BARRA DI RICERCA SUPERIORE (Ripristinato l'enorme capsula bianca) -->
         <HBox styleClass="page-search-section" alignment="CENTER">
             <padding><Insets top="22" bottom="22" left="60" right="60"/></padding>
             <children>
                 <HBox styleClass="page-search-bar" alignment="CENTER_LEFT" maxWidth="560" HBox.hgrow="ALWAYS">
                     <children>
                         <Label text="🔍" styleClass="page-search-icon"/>
-                        <TextField fx:id="searchInlineField" promptText="Cerca ristoranti, cucina, città..." styleClass="page-search-input" HBox.hgrow="ALWAYS"/>
+                        <TextField fx:id="searchInlineField" promptText="Cerca ristoranti, cucina, città..." styleClass="page-search-input" HBox.hgrow="ALWAYS" onAction="#OnCercaPremuto"/>
                         <Button text="Cerca" onAction="#OnCercaPremuto" styleClass="btn-search-page"/>
                     </children>
                 </HBox>
             </children>
         </HBox>
 
+        <!-- CONTENUTO PRINCIPALE -->
         <HBox spacing="30" alignment="TOP_CENTER">
             <padding><Insets top="10" bottom="60" left="60" right="60"/></padding>
             <children>
 
+                <!-- PANNELLO FILTRI LATERALE SINISTRO (Eredita lo stile nativo con angoli tondi e ombre) -->
                 <VBox spacing="20" prefWidth="280" minWidth="280" styleClass="sidebar-card">
                     <padding><Insets top="30" right="25" bottom="30" left="25"/></padding>
                     <children>
-                        <Label text="FILTRI RICERCA" style="-fx-text-fill: #4A6B57; -fx-font-weight: bold; -fx-letter-spacing: 1px; -fx-font-size: 12;"/>
+                        <Label text="Filtri Avanzati" styleClass="field-label" style="-fx-font-weight: bold; -fx-font-size: 14;"/>
 
                         <VBox spacing="5">
-                            <Label text="LUOGO" styleClass="field-label"/>
+                            <Label text="Città" styleClass="field-label"/>
                             <TextField fx:id="filterCitta" promptText="Es. Milano" styleClass="home-text-field"/>
                         </VBox>
 
                         <VBox spacing="5">
-                            <Label text="STELLE MINIME" styleClass="field-label"/>
-                            <ComboBox fx:id="filterStelle" promptText="Seleziona stelle" maxWidth="Infinity" styleClass="home-text-field">
-                                <items>
-                                    <FXCollections fx:factory="observableArrayList">
-                                        <String fx:value="Tutti" />
-                                        <String fx:value="3 ★ o più" />
-                                        <String fx:value="4 ★ o più" />
-                                        <String fx:value="5 ★" />
-                                    </FXCollections>
-                                </items>
-                            </ComboBox>
-                        </VBox>
-
-                        <VBox spacing="5">
-                            <Label text="PREZZO MAX (€)" styleClass="field-label"/>
+                            <Label text="Prezzo Massimo (€)" styleClass="field-label"/>
                             <TextField fx:id="filterPrezzo" promptText="Es. 50" styleClass="home-text-field"/>
                         </VBox>
 
-                        <Button text="AGGIORNA" onAction="#onAggiornaFiltriPremuto" styleClass="btn-primary" maxWidth="Infinity"/>
-                        <Button text="Reimposta filtri" onAction="#onResetFiltriPremuto" styleClass="btn-reset" maxWidth="Infinity"/>
+                        <VBox spacing="5">
+                            <Label text="Valutazione Minima" styleClass="field-label"/>
+                            <ComboBox fx:id="filterStelle" promptText="Tutti" maxWidth="Infinity" styleClass="home-text-field" />
+                        </VBox>
+
+                        <VBox spacing="10">
+                            <Button text="Applica Filtri" onAction="#onAggiornaFiltriPremuto" styleClass="btn-primary" maxWidth="Infinity"/>
+                            <Button text="Resetta Filtri 🔄" onAction="#onResetFiltriPremuto" style="-fx-background-color: transparent; -fx-text-fill: #EF4444; -fx-font-weight: bold; -fx-cursor: hand;" maxWidth="Infinity"/>
+                        </VBox>
                     </children>
                 </VBox>
 
+                <!-- COLONNA RISULTATI DESTRA -->
                 <VBox spacing="15" HBox.hgrow="ALWAYS" maxWidth="800">
                     <children>
 
                         <HBox alignment="CENTER_LEFT" styleClass="results-header">
                             <padding><Insets bottom="10"/></padding>
                             <children>
-                                <Label fx:id="lblResultsCount" text="Risultati di ricerca" style="-fx-font-size: 16; -fx-font-weight: bold; -fx-text-fill: #1B4332;"/>
+                                <Label text="Ristoranti Trovati" style="-fx-font-size: 18; -fx-font-weight: bold; -fx-text-fill: #1B4332;"/>
                                 <Region HBox.hgrow="ALWAYS" />
-                                <ComboBox fx:id="filterOrdine" promptText="Ordina per..." prefWidth="180" styleClass="home-text-field">
+
+                                <!-- ATTIVAZIONE ORDINAMENTO IMMEDIATO -->
+                                <ComboBox fx:id="filterOrdine" promptText="Ordina per..." prefWidth="200" styleClass="home-text-field" onAction="#onAggiornaFiltriPremuto">
                                     <items>
                                         <FXCollections fx:factory="observableArrayList">
                                             <String fx:value="Predefinito" />
@@ -98,8 +94,10 @@
                             </children>
                         </HBox>
 
+                        <!-- Box per le card dinamiche generate dal codice Java -->
                         <VBox fx:id="containerRisultati" spacing="15" HBox.hgrow="ALWAYS" />
 
+                        <!-- Paginazione delle card -->
                         <HBox fx:id="containerPaginazione" alignment="CENTER" spacing="8">
                             <padding><Insets top="25"/></padding>
                         </HBox>
@@ -109,9 +107,12 @@
             </children>
         </HBox>
 
+        <!-- FOOTER (Corretto senza tag illegali) -->
         <VBox alignment="CENTER" spacing="12" style="-fx-background-color: #1B4332;">
             <padding><Insets top="35" bottom="35"/></padding>
-            <Text text="TheKnife © 2026 — Università degli Studi dell'Insubria" style="-fx-fill: #D8F3DC; -fx-font-size: 12;"/>
+            <children>
+                <Text text="TheKnife © 2026 — Università degli Studi dell'Insubria" style="-fx-fill: #D8F3DC; -fx-font-size: 12;"/>
+            </children>
         </VBox>
     </VBox>
 </ScrollPane>

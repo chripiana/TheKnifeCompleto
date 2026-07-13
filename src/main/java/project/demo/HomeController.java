@@ -79,7 +79,7 @@ public class HomeController {
 
     @FXML
     private void handleGoToHome(javafx.scene.input.MouseEvent event) {
-        project.demo.Navigator.getInstance().navigateToHome();
+        Navigator.getInstance().navigateToHomeIntelligent();
     }
 
     /**
@@ -89,5 +89,16 @@ public class HomeController {
     private void goToLogin() {
         System.out.println("[HOME] Spostamento alla pagina Login");
         Navigator.getInstance().navigateTo("login-view.fxml", "Accedi");
+    }
+
+    @FXML
+    private void visualizzaPreferiti() {
+        System.out.println("[HOME] Spostamento alla pagina Preferiti");
+        Navigator.getInstance().navigateTo("favorites-view.fxml", "I tuoi preferiti");
+    }
+
+    @FXML
+    private void handleGoToProfile(javafx.scene.input.MouseEvent event) {
+        Navigator.getInstance().navigateToProfile();
     }
 }

@@ -3,10 +3,12 @@ package project.demo;
 import db.TheKnifeDAO;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.animation.PauseTransition;
 import java.sql.Date;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.time.LocalDate;
+import java.util.regex.Pattern;
 
 public class LoginController {
 
@@ -39,6 +41,12 @@ public class LoginController {
             return;
         }
 
+        // Validazione email
+        if (!isValidEmail(email)) {
+            showLoginError("Inserisci un'email valida (es: user@example.com)!");
+            return;
+        }
+
         TheKnifeDAO dao = Navigator.getInstance().getDao();
 
         try (ResultSet rs = dao.login(email)) {
@@ -58,8 +66,8 @@ public class LoginController {
                 // Smistamento pagine in base al ruolo presente nel database
                 if ("CLIENTE".equalsIgnoreCase(ruolo)) {
                     Navigator.getInstance().navigateTo("home-view-logged.fxml", "Home Cliente");
-                } else {
-                    Navigator.getInstance().navigateTo("owner-dashboard.fxml", "Dashboard Ristoratore");
+                } else if ("GESTORE".equalsIgnoreCase(ruolo)) {
+                    Navigator.getInstance().navigateTo("home-view-owner.fxml", "Home Ristoratore");
                 }
             } else {
                 showLoginError("Email non trovata!");
@@ -88,16 +96,22 @@ public class LoginController {
             return;
         }
 
-        // 2. Lettura del ruolo dai ToggleButton
+        // 2. Validazione email
+        if (!isValidEmail(email)) {
+            showRegError("Inserisci un'email valida (es: user@example.com)!");
+            return;
+        }
+
+        // 3. Lettura del ruolo dai ToggleButton
         String ruolo = "cliente";
         if (tipoAccountGroup.getSelectedToggle() == btnRistoratore) {
             ruolo = "gestore";
         }
 
-        // 3. Conversione data per PostgreSQL
+        // 4. Conversione data per PostgreSQL
         Date dataNascita = Date.valueOf(localDate);
 
-        // 4. Coordinate di default (Mock temporaneo in attesa di Geocoding)
+        // 5. Coordinate di default (Mock temporaneo in attesa di Geocoding)
         double latDomicilio = 45.4642;
         double lonDomicilio = 9.1900;
 
@@ -112,11 +126,19 @@ public class LoginController {
 
             if (righeInserite > 0) {
                 regErrorLabel.setStyle("-fx-text-fill: #2D6A4F;"); // Cambia colore in verde per successo
-                showRegError("Registrazione completata! Ora puoi effettuare il login.");
+                showRegError("Registrazione completata! Accedi ora con le tue credenziali.");
 
                 // Pulisce i campi di registrazione
                 regNome.clear(); regCognome.clear(); regEmail.clear();
                 regPassword.clear(); regLuogoDomicilio.clear(); regDataNascita.setValue(null);
+                
+                // Reindirizzamento automatico a login dopo 2 secondi
+                PauseTransition pause = new PauseTransition(javafx.util.Duration.seconds(1));
+                pause.setOnFinished(e -> {
+                    loginUsername.requestFocus();
+                    loginUsername.setText(email);
+                });
+                pause.play();
             } else {
                 showRegError("Errore durante la registrazione.");
             }
@@ -154,5 +176,13 @@ public class LoginController {
     @FXML
     private void handleGoToHome(javafx.scene.input.MouseEvent event) {
         project.demo.Navigator.getInstance().navigateToHome();
+    }
+
+    /**
+     * Valida il formato dell'email
+     */
+    private boolean isValidEmail(String email) {
+        String emailRegex = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$";
+        return Pattern.matches(emailRegex, email);
     }
 }

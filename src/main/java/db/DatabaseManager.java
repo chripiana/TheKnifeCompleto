@@ -7,10 +7,10 @@ import java.sql.Statement;
 
 public class DatabaseManager {
 
-    private static final String HOST     = "localhost";
-    private static final int    PORT     = 5432;
-    private static final String DB_NAME  = "theknife";
-    private static final String USER     = "postgres";
+    private static final String HOST = "localhost";
+    private static final int PORT = 5432;
+    private static final String DB_NAME = "theknife";
+    private static final String USER = "postgres";
     // ATTENZIONE: Assicurati che questa sia la password corretta del tuo PostgreSQL
     private static final String PASSWORD = "password";
 
@@ -48,7 +48,7 @@ public class DatabaseManager {
             boolean exists = false;
             String checkSql = "SELECT 1 FROM pg_database WHERE datname = '" + DB_NAME + "'";
             try (Statement stmt = admin.createStatement();
-                 var rs = stmt.executeQuery(checkSql)) {
+                    var rs = stmt.executeQuery(checkSql)) {
                 if (rs.next()) {
                     exists = true;
                 }
@@ -56,7 +56,8 @@ public class DatabaseManager {
 
             // 3. Se non esiste, lo creo
             if (!exists) {
-                // Il comando CREATE DATABASE non può essere eseguito in un blocco preparedStatement con parametri in alcuni casi
+                // Il comando CREATE DATABASE non può essere eseguito in un blocco
+                // preparedStatement con parametri in alcuni casi
                 try (Statement stmt = admin.createStatement()) {
                     stmt.executeUpdate("CREATE DATABASE " + DB_NAME);
                     System.out.println("[DB] Database '" + DB_NAME + "' creato con successo.");
@@ -66,7 +67,8 @@ public class DatabaseManager {
             }
 
         } catch (SQLException e) {
-            // Se l'errore è "password authentication failed", il problema è la variabile PASSWORD
+            // Se l'errore è "password authentication failed", il problema è la variabile
+            // PASSWORD
             System.err.println("ERRORE CRITICO: " + e.getMessage());
             throw new RuntimeException("Impossibile verificare/creare il database. Controlla password e permessi.", e);
         }

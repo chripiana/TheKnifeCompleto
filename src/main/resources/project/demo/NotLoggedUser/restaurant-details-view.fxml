@@ -16,13 +16,13 @@
 <BorderPane styleClass="restaurant-details-page" stylesheets="@../style.css" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="project.demo.RestaurantDetailsController">
 
     <top>
-        <HBox alignment="CENTER_LEFT" prefHeight="64.0" spacing="16.0" styleClass="navbar">
+        <HBox fx:id="hboxNavbar" alignment="CENTER_LEFT" prefHeight="64.0" spacing="16.0" styleClass="navbar">
             <padding><Insets left="24.0" right="24.0" /></padding>
             <children>
                 <HBox alignment="CENTER" styleClass="logo-container" onMouseClicked="#handleGoToHome" style="-fx-cursor: hand;">
                     <children>
-                        <Label styleClass="logo-text-main" text="The" />
-                        <Label styleClass="logo-text-sub" text="Knife" />
+                        <Label fx:id="lblLogoThe" styleClass="logo-text-main" text="The" />
+                        <Label fx:id="lblLogoKnife" styleClass="logo-text-sub" text="Knife" />
                     </children>
                 </HBox>
                 <Region HBox.hgrow="ALWAYS" />
@@ -31,7 +31,7 @@
 
                 <Region HBox.hgrow="ALWAYS" />
 
-                <Button text="← Torna ai risultati" onAction="#handleTornaRisultati"
+                <Button fx:id="btnTornaRisultati" text="← Torna ai risultati" onAction="#handleTornaRisultati"
                         style="-fx-background-color: #40916C; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 20px; -fx-padding: 8px 20px; -fx-cursor: hand; -fx-font-size: 13px;" />
             </children>
         </HBox>
@@ -68,12 +68,13 @@
                             </children>
                         </HBox>
 
-                        <HBox alignment="CENTER_LEFT" spacing="24.0" styleClass="hero-dash-morbida">
+                        <HBox fx:id="hboxHero" alignment="CENTER_LEFT" spacing="24.0" styleClass="hero-dash-morbida">
                             <padding><Insets top="32.0" bottom="32.0" left="32.0" right="32.0" /></padding>
                             <children>
                                 <VBox alignment="CENTER" styleClass="avatar-ristorante-container">
                                     <children>
-                                        <Label text="🍝" style="-fx-font-size: 32px;" />
+                                        <!-- AGGIUNTO fx:id="lblAvatarRistorante" per mostrare la pizza, il sushi, ecc. generati da getThumbIcon -->
+                                        <Label fx:id="lblAvatarRistorante" text="🍝" style="-fx-font-size: 32px;" />
                                     </children>
                                 </VBox>
                                 <VBox spacing="6.0" HBox.hgrow="ALWAYS">
@@ -154,9 +155,9 @@
                                                 <children>
                                                     <VBox alignment="CENTER" spacing="4.0">
                                                         <children>
-                                                            <Label text="4.2" styleClass="rating-big-number" />
-                                                            <Label text="★★★★☆" styleClass="stars-display-big" />
-                                                            <Label text="128 recensioni" styleClass="rating-muted-sm" />
+                                                            <Label fx:id="lblRatingBigNumber" text="-" styleClass="rating-big-number" />
+                                                            <Label fx:id="lblStarsDisplayBig" text="☆☆☆☆☆" styleClass="stars-display-big" />
+                                                            <Label fx:id="lblNumRecensioniBox" text="0 recensioni" styleClass="rating-muted-sm" />
                                                         </children>
                                                     </VBox>
                                                     <VBox spacing="6.0" HBox.hgrow="ALWAYS">
@@ -164,22 +165,36 @@
                                                             <HBox spacing="8.0" alignment="CENTER_LEFT">
                                                                 <children>
                                                                     <Label text="5 ★" styleClass="rating-muted-sm" minWidth="30" />
-                                                                    <ProgressBar progress="0.62" styleClass="rating-bar" HBox.hgrow="ALWAYS" maxWidth="Infinity" />
-                                                                    <Label text="62%" styleClass="rating-muted-sm" minWidth="36" />
+                                                                    <ProgressBar fx:id="barStelle5" progress="0.0" styleClass="rating-bar" HBox.hgrow="ALWAYS" maxWidth="Infinity" />
+                                                                    <Label fx:id="lblPctStelle5" text="0%" styleClass="rating-muted-sm" minWidth="36" />
                                                                 </children>
                                                             </HBox>
                                                             <HBox spacing="8.0" alignment="CENTER_LEFT">
                                                                 <children>
                                                                     <Label text="4 ★" styleClass="rating-muted-sm" minWidth="30" />
-                                                                    <ProgressBar progress="0.22" styleClass="rating-bar" HBox.hgrow="ALWAYS" maxWidth="Infinity" />
-                                                                    <Label text="22%" styleClass="rating-muted-sm" minWidth="36" />
+                                                                    <ProgressBar fx:id="barStelle4" progress="0.0" styleClass="rating-bar" HBox.hgrow="ALWAYS" maxWidth="Infinity" />
+                                                                    <Label fx:id="lblPctStelle4" text="0%" styleClass="rating-muted-sm" minWidth="36" />
                                                                 </children>
                                                             </HBox>
                                                             <HBox spacing="8.0" alignment="CENTER_LEFT">
                                                                 <children>
                                                                     <Label text="3 ★" styleClass="rating-muted-sm" minWidth="30" />
-                                                                    <ProgressBar progress="0.10" styleClass="rating-bar" HBox.hgrow="ALWAYS" maxWidth="Infinity" />
-                                                                    <Label text="10%" styleClass="rating-muted-sm" minWidth="36" />
+                                                                    <ProgressBar fx:id="barStelle3" progress="0.0" styleClass="rating-bar" HBox.hgrow="ALWAYS" maxWidth="Infinity" />
+                                                                    <Label fx:id="lblPctStelle3" text="0%" styleClass="rating-muted-sm" minWidth="36" />
+                                                                </children>
+                                                            </HBox>
+                                                            <HBox spacing="8.0" alignment="CENTER_LEFT">
+                                                                <children>
+                                                                    <Label text="2 ★" styleClass="rating-muted-sm" minWidth="30" />
+                                                                    <ProgressBar fx:id="barStelle2" progress="0.0" styleClass="rating-bar" HBox.hgrow="ALWAYS" maxWidth="Infinity" />
+                                                                    <Label fx:id="lblPctStelle2" text="0%" styleClass="rating-muted-sm" minWidth="36" />
+                                                                </children>
+                                                            </HBox>
+                                                            <HBox spacing="8.0" alignment="CENTER_LEFT">
+                                                                <children>
+                                                                    <Label text="1 ★" styleClass="rating-muted-sm" minWidth="30" />
+                                                                    <ProgressBar fx:id="barStelle1" progress="0.0" styleClass="rating-bar" HBox.hgrow="ALWAYS" maxWidth="Infinity" />
+                                                                    <Label fx:id="lblPctStelle1" text="0%" styleClass="rating-muted-sm" minWidth="36" />
                                                                 </children>
                                                             </HBox>
                                                         </children>
@@ -193,6 +208,16 @@
                                         <padding><Insets top="20.0" bottom="20.0" left="20.0" right="20.0" /></padding>
                                         <children>
                                             <Label styleClass="section-title" text="LASCIA UNA RECENSIONE" />
+                                            <Label text="LA TUA VALUTAZIONE" styleClass="filter-label" />
+                                            <HBox spacing="8" alignment="CENTER_LEFT">
+                                                <children>
+                                                    <Label fx:id="starRec1" text="★" onMouseClicked="#handleStarRec1" styleClass="star-input-icon" style="-fx-cursor: hand; -fx-font-size: 22px; -fx-text-fill: #CBD5E1;" />
+                                                    <Label fx:id="starRec2" text="★" onMouseClicked="#handleStarRec2" styleClass="star-input-icon" style="-fx-cursor: hand; -fx-font-size: 22px; -fx-text-fill: #CBD5E1;" />
+                                                    <Label fx:id="starRec3" text="★" onMouseClicked="#handleStarRec3" styleClass="star-input-icon" style="-fx-cursor: hand; -fx-font-size: 22px; -fx-text-fill: #CBD5E1;" />
+                                                    <Label fx:id="starRec4" text="★" onMouseClicked="#handleStarRec4" styleClass="star-input-icon" style="-fx-cursor: hand; -fx-font-size: 22px; -fx-text-fill: #CBD5E1;" />
+                                                    <Label fx:id="starRec5" text="★" onMouseClicked="#handleStarRec5" styleClass="star-input-icon" style="-fx-cursor: hand; -fx-font-size: 22px; -fx-text-fill: #CBD5E1;" />
+                                                </children>
+                                            </HBox>
                                             <TextArea fx:id="recensioneTextArea" prefRowCount="3" promptText="Com'è stato il pasto?" styleClass="modern-textarea" />
                                             <Button fx:id="btnPubblicaRecensione" text="Pubblica Recensione" onAction="#handlePubblicaRecensione" styleClass="btn-accent" />
                                         </children>

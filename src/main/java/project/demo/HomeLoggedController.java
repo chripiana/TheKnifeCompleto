@@ -10,11 +10,16 @@ import javafx.stage.Stage;
 
 public class HomeLoggedController {
 
-    @FXML private TextField searchField;
-    @FXML private TextField filterCitta;
-    @FXML private TextField filterPrezzo;
-    @FXML private ComboBox<String> filterStelle;
-    @FXML private ComboBox<String> filterOrdine;
+    @FXML
+    private TextField searchField;
+    @FXML
+    private TextField filterCitta;
+    @FXML
+    private TextField filterPrezzo;
+    @FXML
+    private ComboBox<String> filterStelle;
+    @FXML
+    private ComboBox<String> filterOrdine;
 
     /**
      * 1. BARRA DI RICERCA GLOBALE (Hero Section)
@@ -83,12 +88,32 @@ public class HomeLoggedController {
 
     @FXML
     private void handleGoToHome(javafx.scene.input.MouseEvent event) {
-        project.demo.Navigator.getInstance().navigateToHome();
+        project.demo.Navigator.getInstance().navigateToHomeIntelligent();
     }
 
     @FXML
     private void handleGoToProfile(javafx.scene.input.MouseEvent event) {
-        // Naviga verso il file del profilo impostando il titolo della finestra
-        project.demo.Navigator.getInstance().navigateTo("customer-profile-view.fxml", "Il Mio Profilo");
+        // Naviga verso il profilo corretto in base al ruolo
+        project.demo.Navigator.getInstance().navigateToProfile();
+    }
+
+    @FXML
+    private void visualizzaPreferiti(javafx.event.ActionEvent event) {
+        // Naviga verso la pagina dei preferiti impostando il titolo della finestra
+        project.demo.Navigator.getInstance().navigateTo("favorites-view.fxml", "I Miei Preferiti");
+    }
+
+    public void visualizzaRistoranti(javafx.event.ActionEvent actionEvent) {
+        String ruolo = project.demo.Navigator.getInstance().getRuoloUtenteLoggato();
+        if ("GESTORE".equalsIgnoreCase(ruolo)) {
+            Navigator.getInstance().navigateTo("owner-dashboard-view.fxml", "I Miei Ristoranti");
+        } else {
+            Navigator.getInstance().navigateToHomeIntelligent();
+        }
+    }
+
+    @FXML
+    private void handleGoToOwner(javafx.scene.input.MouseEvent event) {
+        project.demo.Navigator.getInstance().navigateToHomeIntelligent();
     }
 }

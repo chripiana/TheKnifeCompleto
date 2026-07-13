@@ -50,13 +50,13 @@ public class ReviewsController {
 
                 // Creazione dinamica del box recensione
                 VBox card = new VBox(8);
-                card.setStyle("-fx-background-color: #ffffff; -fx-background-radius: 8; -fx-padding: 15; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.05), 8, 0, 0, 2);");
+                card.getStyleClass().add("card-review");
 
                 HBox header = new HBox(12);
                 header.setAlignment(javafx.geometry.Pos.CENTER_LEFT);
 
                 Label lblRisto = new Label(ristorante);
-                lblRisto.setStyle("-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #1B4332;");
+                lblRisto.getStyleClass().add("label-card-title");
 
                 // Generazione dinamica delle stelle grafiche (es: ★★★★☆)
                 StringBuilder stelleStr = new StringBuilder();
@@ -76,7 +76,7 @@ public class ReviewsController {
 
                 Label lblTesto = new Label(testo);
                 lblTesto.setWrapText(true);
-                lblTesto.setStyle("-fx-font-size: 14px; -fx-text-fill: #444444; -fx-font-style: italic;");
+                lblTesto.getStyleClass().add("label-review-text");
 
                 card.getChildren().addAll(header, lblTesto);
                 containerRecensioni.getChildren().add(card);
@@ -101,11 +101,11 @@ public class ReviewsController {
 
     @FXML void handleCerca(ActionEvent event) { navigator.navigateTo("search-view-logged.fxml", "Cerca Ristoranti"); }
     @FXML void handlePreferiti(ActionEvent event) { navigator.navigateTo("favorites-view.fxml", "I Miei Preferiti"); }
-    @FXML void handleProfilo(ActionEvent event) { navigator.navigateTo("customer-profile-view.fxml", "Il Mio Profilo"); }
+    @FXML void handleProfilo(ActionEvent event) { navigator.navigateToProfile(); }
     @FXML void handleLogout(ActionEvent event) {
-        navigator.setIdUtenteLoggato(-1);
+        navigator.logout();
         navigator.navigateTo("login-view.fxml", "Accedi");
     }
     @FXML void handleVaiAllaRicerca(ActionEvent event) { handleCerca(event); }
-    @FXML private void handleGoToHome(javafx.scene.input.MouseEvent event) { navigator.navigateToHome(); }
+    @FXML private void handleGoToHome(javafx.scene.input.MouseEvent event) { navigator.navigateToHomeIntelligent(); }
 }

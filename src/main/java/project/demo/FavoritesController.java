@@ -43,23 +43,24 @@ public class FavoritesController {
 
             while (rs != null && rs.next()) {
                 haPreferiti = true;
+                // Modifica queste righe all'interno del ciclo while (rs.next())
                 String nome = rs.getString("nome");
                 String citta = rs.getString("citta");
-                String cucina = rs.getString("cucina");
-                double prezzo = rs.getDouble("prezzo");
+                String cucina = rs.getString("tipologia_cucina"); // <-- Modificato da "cucina"
+                double prezzo = rs.getDouble("prezzo_medio");    // <-- Modificato da "prezzo"
 
                 // Costruiamo la Card graficamente in modo dinamico
                 VBox card = new VBox(10);
-                card.setStyle("-fx-background-color: #ffffff; -fx-background-radius: 8; -fx-padding: 15; -fx-pref-width: 300; -fx-effect: dropshadow(three-pass-box, rgba(0,0,0,0.08), 10, 0, 0, 4);");
+                card.getStyleClass().add("card-favorites");
 
                 Label lblNome = new Label(nome);
-                lblNome.setStyle("-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #1B4332;");
+                lblNome.getStyleClass().add("label-card-title");
 
                 Label lblDettagli = new Label("📍 " + citta + "  •  🍳 " + cucina);
-                lblDettagli.setStyle("-fx-font-size: 13px; -fx-text-fill: #666666;");
+                lblDettagli.getStyleClass().add("label-card-details");
 
                 Label lblPrezzo = new Label("💰 Prezzo medio: " + prezzo + " €");
-                lblPrezzo.setStyle("-fx-font-size: 13px; -fx-font-weight: bold; -fx-text-fill: #2D6A4F;");
+                lblPrezzo.getStyleClass().add("label-card-price");
 
                 card.getChildren().addAll(lblNome, lblDettagli, lblPrezzo);
                 containerPreferiti.getChildren().add(card);
@@ -84,11 +85,11 @@ public class FavoritesController {
 
     @FXML void handleCerca(ActionEvent event) { navigator.navigateTo("search-view-logged.fxml", "Cerca Ristoranti"); }
     @FXML void handleRecensioni(ActionEvent event) { navigator.navigateTo("reviews-view.fxml", "Le Mie Recensioni"); }
-    @FXML void handleProfilo(ActionEvent event) { navigator.navigateTo("customer-profile-view.fxml", "Il Mio Profilo"); }
+    @FXML void handleProfilo(ActionEvent event) { navigator.navigateToProfile(); }
     @FXML void handleLogout(ActionEvent event) {
-        navigator.setIdUtenteLoggato(-1);
+        navigator.logout();
         navigator.navigateTo("login-view.fxml", "Accedi");
     }
     @FXML void handleVaiAllaRicerca(ActionEvent event) { handleCerca(event); }
-    @FXML private void handleGoToHome(javafx.scene.input.MouseEvent event) { navigator.navigateToHome(); }
+    @FXML private void handleGoToHome(javafx.scene.input.MouseEvent event) { navigator.navigateToHomeIntelligent(); }
 }

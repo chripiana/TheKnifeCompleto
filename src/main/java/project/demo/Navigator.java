@@ -51,10 +51,21 @@ public class Navigator {
         return dao;
     }
 
-    public int getIdUtenteLoggato() { return idUtenteLoggato; }
-    public void setIdUtenteLoggato(int idUtenteLoggato) { this.idUtenteLoggato = idUtenteLoggato; }
-    public String getRuoloUtenteLoggato() { return ruoloUtenteLoggato; }
-    public void setRuoloUtenteLoggato(String ruoloUtenteLoggato) { this.ruoloUtenteLoggato = ruoloUtenteLoggato; }
+    public int getIdUtenteLoggato() {
+        return idUtenteLoggato;
+    }
+
+    public void setIdUtenteLoggato(int idUtenteLoggato) {
+        this.idUtenteLoggato = idUtenteLoggato;
+    }
+
+    public String getRuoloUtenteLoggato() {
+        return ruoloUtenteLoggato;
+    }
+
+    public void setRuoloUtenteLoggato(String ruoloUtenteLoggato) {
+        this.ruoloUtenteLoggato = ruoloUtenteLoggato;
+    }
 
     public void logout() {
         this.idUtenteLoggato = -1;
@@ -67,7 +78,8 @@ public class Navigator {
      * Cerca il file in ordine di priorità nelle varie cartelle del progetto.
      */
     private URL risolviPercorsoFXML(String fxmlFile) {
-        if (fxmlFile == null || fxmlFile.trim().isEmpty()) return null;
+        if (fxmlFile == null || fxmlFile.trim().isEmpty())
+            return null;
 
         // Pulizia del nome del file da eventuali percorsi parziali già inseriti
         String nomeFilePuro = fxmlFile.substring(fxmlFile.lastIndexOf("/") + 1);
@@ -89,17 +101,20 @@ public class Navigator {
         return null;
     }
 
-
     /**
-     * Naviga alla Home corretta (pubblica o loggata) in base alla sessione corrente.
+     * Naviga alla Home corretta (pubblica o loggata) in base alla sessione
+     * corrente.
      */
     public void navigateToHome() {
         if (this.idUtenteLoggato == -1) {
             navigateTo("home-view.fxml", "Trova il tuo ristorante");
+        } else if ("GESTORE".equalsIgnoreCase(this.ruoloUtenteLoggato)) {
+            navigateTo("home-view-owner.fxml", "Home Ristoratore");
         } else {
             navigateTo("home-view-logged.fxml", "Benvenuto su TheKnife");
         }
     }
+
     /**
      * Navigazione generica (es. Login, Home, ecc.)
      */
@@ -189,7 +204,8 @@ public class Navigator {
         }
     }
 
-    public void navigateToSearchWithAdvancedFiltersLogged(String citta, String prezzoMax, String stelle, String ordine) {
+    public void navigateToSearchWithAdvancedFiltersLogged(String citta, String prezzoMax, String stelle,
+            String ordine) {
         URL fxmlUrl = risolviPercorsoFXML("search-view-logged.fxml");
         if (fxmlUrl == null) {
             System.err.println("[ERRORE] Impossibile trovare search-view-logged.fxml");
@@ -209,7 +225,12 @@ public class Navigator {
     }
 
     /**
-     * Naviga ai dettagli del ristorante salvando preventivamente lo stato visivo corrente
+     * Naviga ai dettagli del ristorante salvando preventivamente lo stato visivo
+     * corrente
+     */
+    /**
+     * Naviga ai dettagli del ristorante salvando preventivamente lo stato visivo
+     * corrente
      */
     public void navigateToRestaurantDetails(SearchController.RistoranteOggetto ristorante) {
         // Salva la schermata dei risultati prima di sovrascriverla
@@ -229,6 +250,13 @@ public class Navigator {
             Parent root = loader.load();
 
             RestaurantDetailsController controller = loader.getController();
+
+            // MODIFICA QUI: Passa il riferimento del DAO al controller prima di caricare i
+            // dati
+            controller.setDao(this.dao);
+
+            // Ora caricaDatiRistorante() funzionerà correttamente, incluse le statistiche
+            // dal DB
             controller.caricaDatiRistorante(ristorante);
 
             updateSceneRoot(root, "Dettagli — " + ristorante.nome);
@@ -239,7 +267,8 @@ public class Navigator {
     }
 
     /**
-     * Torna indietro istantaneamente ripristinando la ricerca precedente così com'era rimasta
+     * Torna indietro istantaneamente ripristinando la ricerca precedente così
+     * com'era rimasta
      */
     public void backToSearchResults() {
         if (cachedSearchView != null) {
@@ -247,6 +276,37 @@ public class Navigator {
             System.out.println("[NAVIGATOR] Schermata di ricerca precedente ripristinata con successo.");
         } else {
             navigateTo("search-view.fxml", "Cerca");
+        }
+    }
+
+    /**
+     * Naviga alla Home corretta in base allo stato della sessione, ma INTELLIGENTE
+     * Se loggato come CLIENTE -> home-view-logged
+     * Se loggato come GESTORE -> owner-dashboard-view
+     * Se NON loggato -> home-view
+     */
+    public void navigateToHomeIntelligent() {
+        if (this.idUtenteLoggato == -1) {
+            navigateTo("home-view.fxml", "Trova il tuo ristorante");
+        } else if ("CLIENTE".equalsIgnoreCase(this.ruoloUtenteLoggato)) {
+            navigateTo("home-view-logged.fxml", "Benvenuto su TheKnife");
+        } else if ("GESTORE".equalsIgnoreCase(this.ruoloUtenteLoggato)) {
+            navigateTo("home-view-owner.fxml", "Home Ristoratore");
+        } else {
+            navigateTo("home-view.fxml", "Home");
+        }
+    }
+
+    /**
+     * Naviga al profilo corretto in base al ruolo dell'utente loggato
+     */
+    public void navigateToProfile() {
+        if (this.idUtenteLoggato == -1) {
+            navigateTo("login-view.fxml", "Accedi");
+        } else if ("CLIENTE".equalsIgnoreCase(this.ruoloUtenteLoggato)) {
+            navigateTo("customer-profile-view.fxml", "Il Mio Profilo");
+        } else if ("GESTORE".equalsIgnoreCase(this.ruoloUtenteLoggato)) {
+            navigateTo("owner-dashboard-view.fxml", "Dashboard Ristoratore");
         }
     }
 
@@ -261,6 +321,5 @@ public class Navigator {
         stage.setTitle("TheKnife — " + title);
         stage.show();
     }
-
 
 }

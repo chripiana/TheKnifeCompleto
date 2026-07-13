@@ -22,11 +22,11 @@
             </HBox>
             <Region HBox.hgrow="ALWAYS" />
             <HBox spacing="15" alignment="CENTER">
-                <Hyperlink text="I miei preferiti" styleClass="nav-link" onAction="#visualizzaPreferiti"/>
+                <Hyperlink text="I miei ristoranti" styleClass="nav-link" onAction="#visualizzaRistoranti"/>
 
                 <Button  styleClass="user-avatar-btn">
                     <graphic>
-                        <StackPane onMouseClicked="#handleGoToProfile" style="-fx-cursor: hand;">
+                        <StackPane onMouseClicked="#handleGoToOwner" style="-fx-cursor: hand;">
                             <Circle radius="20" fill="white" stroke="#B7E4C7" strokeWidth="1" />
 
                             <SVGPath content="M12,2C14.2,2 16,3.8 16,6C16,8.2 14.2,10 12,10C9.8,10 8,8.2 8,6C8,3.8 9.8,2 12,2M12,12C7.6,12 4,13.8 4,16V18H20V16C20,13.8 16.4,12 12,12Z"
