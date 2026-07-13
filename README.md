@@ -1,3 +1,5 @@
+L'applicazione è stata sviluppata e ottimizzata principalmente per macOS. Sebbene sia utilizzabile anche su altri sistemi operativi, alcuni elementi dell'interfaccia grafica potrebbero presentare lievi differenze a causa delle specifiche modalità di rendering e delle caratteristiche proprie di ciascuna piattaforma.
+
 TheKnife - Guida rapida
 =======================
 
