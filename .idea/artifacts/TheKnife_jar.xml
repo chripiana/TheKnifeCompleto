@@ -1,8 +1,0 @@
-<component name="ArtifactManager">
-  <artifact type="jar" name="TheKnife:jar">
-    <output-path>$PROJECT_DIR$/out/artifacts/TheKnife_jar</output-path>
-    <root id="archive" name="TheKnife.jar">
-      <element id="module-output" name="TheKnife" />
-    </root>
-  </artifact>
-</component>
