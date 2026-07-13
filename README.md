@@ -1,53 +1,65 @@
-THEKNIFE - ISTRUZIONI DI INSTALLAZIONE E ESECUZIONE
+TheKnife - Guida rapida
+=======================
 
-1) Posizione dei file eseguibili
-- I jar eseguibili forniti nel repository sono:
-  - src/main/java/db/bin/bin/theknife-server.jar
-  - src/main/java/db/bin/bin/theknife-client.jar
-  Per comodità puoi copiare questi jar nella cartella `bin/` (già presente).
+Struttura del progetto
+- src/main/java: sorgenti Java del client, del server e del database layer
+- src/main/resources: file FXML, CSS, CSV e script SQL
+- bin: jar eseguibili prodotti dalla build
+- doc: manuale utente, manuale tecnico, Javadoc e diagrammi
 
-2) Build con Maven
-- Compilare e pacchettizzare il progetto:
+Prerequisiti
+- JDK 21 o superiore (consigliato Java 21 o 24)
+- Maven 3.8+ oppure Maven Wrapper incluso nel progetto (mvnw / mvnw.cmd)
+- PostgreSQL in esecuzione, con un database raggiungibile da localhost
+- Variabile d'ambiente JAVA_HOME impostata correttamente
+
+Installazione e preparazione dell'ambiente
+1. Installa JDK 21+ e assicurati che JAVA_HOME punti alla cartella del JDK.
+2. Installa Maven oppure usa il wrapper del progetto.
+3. Verifica che PostgreSQL sia attivo e che il database di destinazione esista oppure venga creato automaticamente dal server.
+4. Se usi Windows, puoi eseguire i comandi Maven con mvnw.cmd; su Linux/macOS usare ./mvnw.
+
+Compilazione
+Eseguire i seguenti comandi dalla cartella del progetto:
+
+- Test e verifica del progetto:
+  mvn clean test
+  oppure, se si usa il wrapper:
+  mvnw.cmd clean test
+
+- Build completa e produzione dei jar:
   mvn clean package
+  oppure:
+  mvnw.cmd clean package
 
-- Per copiare tutte le dipendenze nella cartella `lib/`:
-  mvn dependency:copy-dependencies -DoutputDirectory=lib
+- Generazione della documentazione Javadoc:
+  mvn javadoc:javadoc
+  oppure:
+  mvnw.cmd javadoc:javadoc
 
-- Nota: se vuoi creare un "fat-jar" (tutte le dipendenze in un singolo jar), puoi usare il plugin Shade:
-  mvn clean package
-  (configura il plugin `maven-shade-plugin` nel `pom.xml` se necessario)
+Artefatti prodotti
+- bin/clientTK.jar: eseguibile del client JavaFX
+- bin/serverTK.jar: eseguibile del server
+- doc/javadoc: documentazione Javadoc generata
 
-3) Esecuzione
-- Script Windows (già presenti in `bin/`):
-  bin\run-server.cmd
-  bin\run-client.cmd
+Eseguire il client
+Il client usa JavaFX e richiede il percorso delle librerie JavaFX in fase di esecuzione:
 
-- Script Unix (già presenti in `bin/`):
-  sh bin/run-server.sh
-  sh bin/run-client.sh
+java --module-path <path-to-javafx-libs> --add-modules javafx.controls,javafx.fxml,javafx.web -jar bin/clientTK.jar
 
-- Esempio di esecuzione diretto (se usi JavaFX SDK esterno):
-  java --module-path lib --add-modules javafx.controls,javafx.fxml -jar bin/theknife-client.jar
+Esempio su Windows:
+java --module-path C:\javafx-sdk-21\lib --add-modules javafx.controls,javafx.fxml,javafx.web -jar bin/clientTK.jar
 
-4) Librerie non standard / note su JavaFX
-- Il progetto utilizza JavaFX (moduli jar) forniti localmente in `src/main/java/db/bin/bin/lib/` nel repository.
-  Se il tuo JDK non include JavaFX, scarica JavaFX SDK (versione 21 consigliata) da https://openjfx.io/ e copia i jar in `lib/` oppure usa `mvn javafx:run` con la corretta configurazione.
+Eseguire il server
+Il server inizializza automaticamente il database e importa i dati iniziali se necessario:
 
-- Librerie esterne usate (possono trovarsi nella cartella di origine `src/main/java/db/bin/bin/lib/`):
-  - javafx-base, javafx-controls, javafx-fxml, javafx-graphics, javafx-media, javafx-swing, javafx-web
-  - controlsfx (controlsfx-11.2.1.jar)
-  - tilesfx (tilesfx-21.0.3.jar)
-  - validatorfx (validatorfx-0.5.0.jar)
-  - ikonli-javafx (ikonli-javafx-12.3.1.jar)
-  - fxgl (fxgl-17.3.jar)
-  - formsfx (formsfx-core-11.6.0.jar)
-  - bootstrapfx (bootstrapfx-core-0.4.0.jar)
+java -jar bin/serverTK.jar --host localhost --port 5432 --db theknife --user postgres --password password
 
-5) Suggerimenti
-- Se vuoi che `bin/` contenga effettivamente i jar, copia i file da `src/main/java/db/bin/bin/` in `bin/`:
-  copy "src\\main\\java\\db\\bin\\bin\\theknife-server.jar" "bin\\"
-  copy "src\\main\\java\\db\\bin\\bin\\theknife-client.jar" "bin\\"
+Librerie particolari e uso non standard
+- Il progetto usa JavaFX 21 tramite le dipendenze Maven org.openjfx; il suo avvio non è standard perché richiede il parametro --module-path e l'aggiunta esplicita dei moduli JavaFX.
+- Sono inoltre usate librerie UI esterne come controlsfx, formsfx, validatorfx, tilesfx, fxgl, bootstrapfx e ikonli: queste non fanno parte del JDK e vengono risolte tramite Maven durante la build.
+- Il backend usa PostgreSQL JDBC tramite org.postgresql e il server può creare/inizializzare lo schema del database automaticamente.
 
-- Se riscontri errori legati a JavaFX, assicurati che la versione di Java usata sia compatibile con JavaFX 21 (JDK 17+ consigliato).
-
-Per assistenza ulteriori, dimmi quale piattaforma usi (Windows/Linux) e se vuoi che copi i jar in `bin/` automaticamente.
+Note finali
+- Per un'avvio locale completo, assicurarsi che PostgreSQL sia raggiungibile e che le credenziali siano corrette.
+- Se il database non esiste, il server provvede a inizializzarlo e a caricare i dati iniziali dalle risorse interne.
