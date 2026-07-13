@@ -1,1 +1,30 @@
+# Librerie Esterne — Progetto TheKnife
+
+Elenco delle librerie esterne (non incluse nel JDK) necessarie per la compilazione e l'esecuzione dell'applicazione, dichiarate nel file `pom.xml`.
+
+## Gestione delle dipendenze
+
+Il progetto **non contiene una cartella `lib/`** con i file `.jar` delle librerie: la gestione delle dipendenze esterne è delegata interamente a **Maven**.
+
+Alla prima compilazione (`mvn clean package` oppure `mvn clean javafx:run`), Maven scarica automaticamente dal repository centrale tutti i `.jar` elencati nel `pom.xml` e li mette a disposizione del progetto nel repository locale (`~/.m2/repository`).
+
+## Elenco delle librerie esterne
+
+| Libreria (groupId:artifactId)              | Versione | Categoria                 | A cosa serve                                                                                                     |
+| ------------------------------------------ | -------- | ------------------------- | ---------------------------------------------------------------------------------------------------------------- |
+| `org.postgresql:postgresql`                | 42.7.3   | Driver JDBC               | Consente al server Java di connettersi e dialogare con il database PostgreSQL (query SQL, gestione connessioni). |
+| `org.openjfx:javafx-controls`              | 21       | UI Toolkit                | Componenti grafici di base di JavaFX (Button, TextField, ComboBox, TableView, ecc.) usati in tutte le schermate. |
+| `org.openjfx:javafx-fxml`                  | 21       | UI Toolkit                | Supporto al caricamento e parsing dei file `.fxml` che definiscono il layout delle viste (`FXMLLoader`).         |
+| `org.openjfx:javafx-web`                   | 21       | UI Toolkit                | Componente WebView di JavaFX, per l'eventuale visualizzazione di contenuti web/HTML integrati.                   |
+| `org.openjfx:javafx-swing`                 | 21       | UI Toolkit                | Livello di interoperabilità tra JavaFX e Swing (integrazione componenti AWT/Swing).                              |
+| `org.openjfx:javafx-media`                 | 21       | UI Toolkit                | Supporto alla riproduzione audio/video all'interno dell'applicazione JavaFX.                                     |
+| `org.controlsfx:controlsfx`                | 11.2.1   | Libreria UI               | Controlli grafici aggiuntivi non presenti nel JavaFX standard (es. notifiche, ricerca, range slider).            |
+| `com.dlsc.formsfx:formsfx-core`            | 11.6.0   | Libreria UI               | Framework per la creazione rapida di form/moduli di inserimento dati con validazione integrata.                  |
+| `net.synedra:validatorfx`                  | 0.5.0    | Libreria UI               | Libreria per la validazione dei campi di input nei form (es. formati email, campi obbligatori).                  |
+| `org.kordamp.ikonli:ikonli-javafx`         | 12.3.1   | Libreria UI               | Set di icone vettoriali (icon font) utilizzabili nei componenti JavaFX.                                          |
+| `org.kordamp.bootstrapfx:bootstrapfx-core` | 0.4.0    | Libreria UI               | Fogli di stile in stile Bootstrap per JavaFX, per uniformare l'aspetto grafico dei componenti.                   |
+| `eu.hansolo:tilesfx`                       | 21.0.3   | Libreria UI               | Componenti grafici a "tile" (pannelli/indicatori) per dashboard e visualizzazioni dati.                          |
+| `com.github.almasb:fxgl`                   | 17.3     | Game Engine / Libreria UI | Framework aggiuntivo basato su JavaFX, incluso tra le dipendenze del progetto.                                   |
+| `org.junit.jupiter:junit-jupiter-api`      | 5.10.2   | Test (`scope: test`)      | API per la scrittura dei test automatici (es. `ServerConfigTest`).                                               |
+| `org.junit.jupiter:junit-jupiter-engine`   | 5.10.2   | Test (`scope: test`)      | Motore di esecuzione dei test JUnit 5, usato in fase di build/verifica (`mvn test`).                             |
 
