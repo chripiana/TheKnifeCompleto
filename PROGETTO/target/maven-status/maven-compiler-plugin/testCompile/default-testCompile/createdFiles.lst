@@ -1,0 +1,5 @@
+project/shared/protocol/ProtocolMessageTest.class
+project/shared/validation/RequestValidatorTest.class
+theknife/IntelliJRuntimeConfigTest.class
+project/client/config/ServerConnectionConfigTest.class
+theknife/ServerConfigTest.class

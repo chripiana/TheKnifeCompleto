@@ -1,0 +1,21 @@
+-------------------------------------------------------------------------------
+Test set: theknife.IntelliJRuntimeConfigTest
+-------------------------------------------------------------------------------
+Tests run: 2, Failures: 0, Errors: 1, Skipped: 0, Time elapsed: 0.019 s <<< FAILURE! - in theknife.IntelliJRuntimeConfigTest
+theknife.IntelliJRuntimeConfigTest.intellijRunConfigsUseTheCorrectModules  Time elapsed: 0.011 s  <<< ERROR!
+java.nio.file.NoSuchFileException: .run/ServerMain.run.xml
+	at java.base/sun.nio.fs.UnixException.translateToIOException(UnixException.java:92)
+	at java.base/sun.nio.fs.UnixException.rethrowAsIOException(UnixException.java:108)
+	at java.base/sun.nio.fs.UnixException.rethrowAsIOException(UnixException.java:113)
+	at java.base/sun.nio.fs.UnixFileSystemProvider.newFileChannel(UnixFileSystemProvider.java:214)
+	at java.base/sun.nio.fs.UnixFileSystemProvider.newByteChannel(UnixFileSystemProvider.java:245)
+	at java.base/java.nio.file.Files.newByteChannel(Files.java:357)
+	at java.base/java.nio.file.Files.newByteChannel(Files.java:399)
+	at java.base/java.nio.file.Files.readAllBytes(Files.java:2977)
+	at java.base/java.nio.file.Files.readString(Files.java:3047)
+	at java.base/java.nio.file.Files.readString(Files.java:3010)
+	at theknife.IntelliJRuntimeConfigTest.intellijRunConfigsUseTheCorrectModules(IntelliJRuntimeConfigTest.java:22)
+	at java.base/java.lang.reflect.Method.invoke(Method.java:565)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1612)
+	at java.base/java.util.ArrayList.forEach(ArrayList.java:1612)
+

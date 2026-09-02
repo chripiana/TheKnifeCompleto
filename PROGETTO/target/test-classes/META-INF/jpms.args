@@ -1,0 +1,4 @@
+--patch-module
+theknife.app=_
+--add-reads
+theknife.app=ALL-UNNAMED

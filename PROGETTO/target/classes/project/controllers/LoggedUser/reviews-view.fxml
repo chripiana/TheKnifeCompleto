@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+<?import javafx.scene.text.*?>
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.shape.Circle?>
+<?import javafx.scene.shape.SVGPath?>
+
+<ScrollPane fitToWidth="true" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1"
+            fx:controller="project.controllers.ReviewsController" stylesheets="@../style.css" styleClass="modern-scrollpane">
+
+    <VBox spacing="0" styleClass="reviews-page" style="-fx-background-color: #F8F9FA;">
+
+        <HBox styleClass="navbar" alignment="CENTER_LEFT" prefHeight="64">
+            <padding><Insets left="60" right="60"/></padding>
+            <HBox alignment="CENTER_LEFT" onMouseClicked="#handleGoToHome" style="-fx-cursor: hand;">
+                <Text text="The" style="-fx-font-family: 'Playfair Display'; -fx-font-size: 26; -fx-font-weight: bold; -fx-fill: white;"/>
+                <Text text="Knife" style="-fx-font-family: 'Playfair Display'; -fx-font-size: 26; -fx-font-weight: bold; -fx-fill: #74C69D;"/>
+            </HBox>
+
+            <Region HBox.hgrow="ALWAYS" />
+
+            <Button onAction="#handleGoToProfile"
+                    style="-fx-background-color: transparent; -fx-padding: 0; -fx-cursor: hand;">
+                <graphic>
+                    <StackPane>
+                        <Circle radius="20" fill="white" stroke="#B7E4C7" strokeWidth="1" />
+                        <SVGPath content="M12,2C14.2,2 16,3.8 16,6C16,8.2 14.2,10 12,10C9.8,10 8,8.2 8,6C8,3.8 9.8,2 12,2M12,12C7.6,12 4,13.8 4,16V18H20V16C20,13.8 16.4,12 12,12Z"
+                                 fill="#4A6B57" scaleX="1.1" scaleY="1.1"/>
+                    </StackPane>
+                </graphic>
+            </Button>
+        </HBox>
+
+        <VBox spacing="22" style="-fx-padding: 40 60 54 60; -fx-background-color: linear-gradient(to bottom, #f5faf6 0%, #f7f9fa 100%);" maxWidth="1200">
+            <Text text="✍️ Le mie Recensioni" style="-fx-font-size: 30px; -fx-font-weight: bold; -fx-fill: #1B4332;" />
+            <Text text="Tieni traccia delle esperienze che hai vissuto e torna subito al locale che ti ha colpito." style="-fx-font-size: 13px; -fx-fill: #4A6B57;" />
+
+            <VBox fx:id="containerRecensioni" spacing="18" maxWidth="1100" />
+
+            <VBox fx:id="emptyReviewsBox" alignment="CENTER" spacing="12" visible="false" managed="false" style="-fx-padding: 60; -fx-background-color: white; -fx-background-radius: 16; -fx-border-color: #E6EFEA; -fx-border-width: 1; -fx-border-radius: 16; -fx-effect: dropshadow(three-pass-box, rgba(27,67,50,0.06), 12, 0, 0, 4);">
+                <Text text="✍️ Nessuna recensione ancora" style="-fx-font-size: 22px; -fx-font-weight: bold; -fx-fill: #1B4332;"/>
+                <Text text="Le recensioni che scriverai sui ristoranti visitati appariranno qui" style="-fx-font-size: 14px; -fx-fill: #526B62;"/>
+                <Button text="Vai alla ricerca" onAction="#handleVaiAllaRicerca" style="-fx-background-color: #2D6A4F; -fx-text-fill: white; -fx-padding: 10 20; -fx-cursor: hand; -fx-font-weight: bold; -fx-background-radius: 12;"/>
+            </VBox>
+        </VBox>
+    </VBox>
+</ScrollPane>
