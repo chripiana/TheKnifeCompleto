@@ -43,27 +43,9 @@ Per compilare ed eseguire il progetto sono necessari:
 - variabile d'ambiente `JAVA_HOME` configurata;
 - librerie JavaFX disponibili per l'esecuzione del client.
 
-## Struttura del progetto
-
-```text
-PROGETTO/
-├── pom.xml
-└── src/
-    ├── main/
-    │   ├── java/
-    │   │   ├── db/                  # Gestione database
-    │   │   ├── project/             # Client, server, controller e modelli condivisi
-    │   │   └── theknife/             # Classi di avvio
-    │   └── resources/
-    │       ├── project/controllers/ # File FXML e CSS
-    │       ├── ristoranti_clean.csv  # Dataset iniziale
-    │       └── theknife_create_db.sql
-    └── test/java/                   # Test automatici
-```
-
 ## Compilazione
 
-Aprire un terminale nella cartella `PROGETTO` ed eseguire:
+Aprire un terminale:
 
 ```bash
 mvn clean compile
