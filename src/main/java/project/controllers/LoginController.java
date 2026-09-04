@@ -10,33 +10,81 @@ import java.sql.Date;
 import java.time.LocalDate;
 import java.util.regex.Pattern;
 
+/**
+ * LoginController
+ *
+ * Controller che gestisce il flusso di autenticazione e registrazione degli
+ * utenti. Si occupa di validare input minimo lato client, inviare le
+ * richieste al ServerApiClient e instradare l'utente alla vista corretta
+ * in base al ruolo restituito dal server.
+ **/
+/**
+ * LoginController
+ *
+ * Purpose: Brief description of the class responsibilities and role in the application.
+ *
+ * Responsibilities/Usage:
+ * - Describe main responsibilities and how this class is used at a high level.
+ *
+ * Design notes / Dependencies:
+ * - List key dependencies and rationale for design choices (separation of concerns, performance, simplicity).
+ *
+ * Implementation details:
+ * - Mention important collaborators, expected inputs/outputs and lifecycle (initialization, cleanup, threading if relevant).
+ */
 public class LoginController {
 
-    // === API CLIENT ===
+    /** Client per comunicazione con il server.*/
     private ServerApiClient apiClient;
 
     // === ELEMENTI GRAFICI LOGIN ===
+    /** Campo username/email per il login (bindato da FXML).*/
     @FXML private TextField loginUsername; // Corrisponde all'email nel tuo DB
+    /** Campo password per il login (bindato da FXML).*/
     @FXML private PasswordField loginPassword;
+    /** Label per mostrare errori di login (bindato da FXML).*/
     @FXML private Label loginErrorLabel;
 
     // === ELEMENTI GRAFICI REGISTRAZIONE ===
+    /** Campo nome durante la registrazione.*/
     @FXML private TextField regNome;
+    /** Campo cognome durante la registrazione.*/
     @FXML private TextField regCognome;
+    /** Campo email durante la registrazione.*/
     @FXML private TextField regEmail;
+    /** Campo password durante la registrazione.*/
     @FXML private PasswordField regPassword;
+    /** Campo luogo di domicilio durante la registrazione.*/
     @FXML private TextField regLuogoDomicilio;
+    /** DatePicker per la data di nascita (registrazione).*/
     @FXML private DatePicker regDataNascita;
+    /** Gruppo toggle che seleziona il tipo di account (cliente/gestore).*/
     @FXML private ToggleGroup tipoAccountGroup;
+    /** ToggleButton che rappresenta la scelta 'ristoratore'.*/
     @FXML private ToggleButton btnRistoratore;
+    /** Label per mostrare errori durante la registrazione.*/
     @FXML private Label regErrorLabel;
 
+    /**
+     * Inizializzazione del controller — crea i client necessari.*/
     @FXML
+/**
+ * Method: initialize
+ * Purpose: describe what this method does, its inputs and observable effects.
+ * Parameters: document important parameters and expected formats.
+ * Returns: describe the return value or side-effects.
+ */
     public void initialize() {
         apiClient = new ServerApiClient();
     }
 
     @FXML
+/**
+ * Method: handleLogin
+ * Purpose: describe what this method does, its inputs and observable effects.
+ * Parameters: document important parameters and expected formats.
+ * Returns: describe the return value or side-effects.
+ */
     private void handleLogin() {
         String email = loginUsername.getText().trim();
         String passwordInserita = loginPassword.getText();
@@ -107,6 +155,12 @@ public class LoginController {
 
 
     @FXML
+/**
+ * Method: handleRegister
+ * Purpose: describe what this method does, its inputs and observable effects.
+ * Parameters: document important parameters and expected formats.
+ * Returns: describe the return value or side-effects.
+ */
     private void handleRegister() {
         String nome = regNome.getText().trim();
         String cognome = regCognome.getText().trim();
@@ -195,16 +249,34 @@ public class LoginController {
      * Gestisce il pulsante della barra in alto per tornare indietro.
      */
     @FXML
+/**
+ * Method: goToHome
+ * Purpose: describe what this method does, its inputs and observable effects.
+ * Parameters: document important parameters and expected formats.
+ * Returns: describe the return value or side-effects.
+ */
     private void goToHome() {
         Navigator.getInstance().navigateTo("home-view.fxml", "Home Page");
     }
 
+/**
+ * Method: showLoginError
+ * Purpose: describe what this method does, its inputs and observable effects.
+ * Parameters: document important parameters and expected formats.
+ * Returns: describe the return value or side-effects.
+ */
     private void showLoginError(String msg) {
         loginErrorLabel.setText(msg);
         loginErrorLabel.setVisible(true);
         loginErrorLabel.setManaged(true);
     }
 
+/**
+ * Method: showRegError
+ * Purpose: describe what this method does, its inputs and observable effects.
+ * Parameters: document important parameters and expected formats.
+ * Returns: describe the return value or side-effects.
+ */
     private void showRegError(String msg) {
         regErrorLabel.setText(msg);
         regErrorLabel.setVisible(true);
@@ -212,6 +284,12 @@ public class LoginController {
     }
 
     @FXML
+/**
+ * Method: handleGoToHome
+ * Purpose: describe what this method does, its inputs and observable effects.
+ * Parameters: document important parameters and expected formats.
+ * Returns: describe the return value or side-effects.
+ */
     private void handleGoToHome(javafx.scene.input.MouseEvent event) {
         project.controllers.Navigator.getInstance().navigateToHome();
     }
@@ -219,6 +297,12 @@ public class LoginController {
     /**
      * Valida il formato dell'email
      */
+/**
+ * Method: isValidEmail
+ * Purpose: describe what this method does, its inputs and observable effects.
+ * Parameters: document important parameters and expected formats.
+ * Returns: describe the return value or side-effects.
+ */
     private boolean isValidEmail(String email) {
         String emailRegex = "^[A-Za-z0-9+_.-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,}$";
         return Pattern.matches(emailRegex, email);

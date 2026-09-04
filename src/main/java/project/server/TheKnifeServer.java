@@ -72,9 +72,16 @@ public class TheKnifeServer {
                 ServerStatusRegistry.addClient(clientSocket.getInetAddress().getHostAddress());
                 threadPool.execute(new ClientHandler(clientSocket));
             }
+        } catch (java.net.BindException e) {
+            System.err.println("[Server] Porta " + port + " già in uso. Chiudi la vecchia istanza del server o usa una porta diversa.");
         } catch (IOException e) {
             if (running) {
                 System.err.println("[Server] Errore: " + e.getMessage());
+                e.printStackTrace();
+            }
+        } catch (RuntimeException e) {
+            if (running) {
+                System.err.println("[Server] Errore inizializzazione: " + e.getMessage());
                 e.printStackTrace();
             }
         } finally {

@@ -25,20 +25,62 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
 
+/**
+ * MyRestaurantController
+ *
+ * Controller che gestisce la vista dei ristoranti posseduti dal gestore.
+ * Fornisce funzionalità per:
+ * - elencare i ristoranti dell'utente (GET_OWNER_RESTAURANT)
+ * - aprire dialog di modifica per ogni ristorante
+ * - eliminare ristoranti
+ *
+ * Scelte di design:
+ * - UI generata dinamicamente per ciascuna card per mantenere il FXML
+ *   generale semplice e riutilizzabile. Le chiamate di rete sono delegate
+ *   a ServerApiClient.
+ **/
+/**
+ * MyRestaurantController
+ *
+ * Purpose: Brief description of the class responsibilities and role in the application.
+ *
+ * Responsibilities/Usage:
+ * - Describe main responsibilities and how this class is used at a high level.
+ *
+ * Design notes / Dependencies:
+ * - List key dependencies and rationale for design choices (separation of concerns, performance, simplicity).
+ *
+ * Implementation details:
+ * - Mention important collaborators, expected inputs/outputs and lifecycle (initialization, cleanup, threading if relevant).
+ */
 public class MyRestaurantController {
 
+    /** Contenitore delle card ristorante.*/
     @FXML
     private FlowPane containerRistoranti;
+    /** Box mostrato quando non ci sono ristoranti.*/
     @FXML
     private VBox emptyRistorantiBox;
+    /** Label che mostra il numero totale di ristoranti.*/
     @FXML
     private Label lblNumRistoranti;
 
+    /** Navigator per la navigazione tra view.*/
     private Navigator navigator;
+    /** Client di rete per comunicazione con il server.*/
     private ServerApiClient apiClient;
+    /** Id del gestore loggato, usato per richieste a server.*/
     private int idGestoreLoggato;
 
+    /**
+     * Inizializzazione del controller — recupera l'id gestore e carica i dati.*/
     @FXML
+/**
+ * Method: initialize
+ * Purpose: describe what this method does, its inputs and observable effects.
+ * Parameters: document important parameters and expected formats.
+ * Returns: describe the return value or side-effects.
+ */
     public void initialize() {
         this.navigator = Navigator.getInstance();
         this.apiClient = new ServerApiClient();
@@ -51,6 +93,12 @@ public class MyRestaurantController {
         }
     }
 
+/**
+ * Method: caricaRistoranti
+ * Purpose: describe what this method does, its inputs and observable effects.
+ * Parameters: document important parameters and expected formats.
+ * Returns: describe the return value or side-effects.
+ */
     private void caricaRistoranti() {
         containerRistoranti.getChildren().clear();
         int totale = 0;
@@ -148,6 +196,12 @@ public class MyRestaurantController {
         return card;
     }
 
+/**
+ * Method: apriDialogModifica
+ * Purpose: describe what this method does, its inputs and observable effects.
+ * Parameters: document important parameters and expected formats.
+ * Returns: describe the return value or side-effects.
+ */
     private void apriDialogModifica(String idRistorante) {
         try {
             if (!apiClient.isConnected()) {
@@ -263,6 +317,12 @@ public class MyRestaurantController {
         }
     }
 
+/**
+ * Method: confermaEliminazione
+ * Purpose: describe what this method does, its inputs and observable effects.
+ * Parameters: document important parameters and expected formats.
+ * Returns: describe the return value or side-effects.
+ */
     private void confermaEliminazione(String idRistorante, String nome) {
         Alert conferma = new Alert(AlertType.CONFIRMATION);
         conferma.setTitle("Elimina Ristorante");
@@ -292,6 +352,12 @@ public class MyRestaurantController {
         }
     }
 
+/**
+ * Method: mostraErrore
+ * Purpose: describe what this method does, its inputs and observable effects.
+ * Parameters: document important parameters and expected formats.
+ * Returns: describe the return value or side-effects.
+ */
     private void mostraErrore(String title, String messaggio) {
         Alert alert = new Alert(AlertType.ERROR);
         alert.setTitle(title);
@@ -300,6 +366,12 @@ public class MyRestaurantController {
         alert.showAndWait();
     }
 
+/**
+ * Method: mostraErrore
+ * Purpose: describe what this method does, its inputs and observable effects.
+ * Parameters: document important parameters and expected formats.
+ * Returns: describe the return value or side-effects.
+ */
     private void mostraErrore(String messaggio) {
         mostraErrore("Errore", messaggio);
     }
@@ -338,11 +410,23 @@ public class MyRestaurantController {
     }
 
     @FXML
+/**
+ * Method: handleGoToProfile
+ * Purpose: describe what this method does, its inputs and observable effects.
+ * Parameters: document important parameters and expected formats.
+ * Returns: describe the return value or side-effects.
+ */
     private void handleGoToProfile(ActionEvent event) {
         navigator.navigateToProfile();
     }
 
     @FXML
+/**
+ * Method: handleGoToHome
+ * Purpose: describe what this method does, its inputs and observable effects.
+ * Parameters: document important parameters and expected formats.
+ * Returns: describe the return value or side-effects.
+ */
     private void handleGoToHome(javafx.scene.input.MouseEvent event) {
         navigator.navigateToHomeIntelligent();
     }

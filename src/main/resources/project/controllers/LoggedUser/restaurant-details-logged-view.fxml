@@ -26,21 +26,6 @@
                     </children>
                 </HBox>
                 <Region HBox.hgrow="ALWAYS" />
-
-                <Label fx:id="lblBreadcrumb" styleClass="nav-breadcrumb" text="Home  ›  Esplora  ›  Dettagli" />
-
-                <Region HBox.hgrow="ALWAYS" />
-
-                <HBox spacing="10" alignment="CENTER">
-                    <Button text="Cerca" onAction="#handleCerca" style="-fx-background-color: transparent; -fx-text-fill: white; -fx-cursor: hand;" />
-                    <Button text="Preferiti" onAction="#handlePreferiti" style="-fx-background-color: transparent; -fx-text-fill: white; -fx-cursor: hand;" />
-                    <Button text="Recensioni" onAction="#handleRecensioni" style="-fx-background-color: transparent; -fx-text-fill: white; -fx-cursor: hand;" />
-                    <Button text="Profilo" onAction="#handleProfilo" style="-fx-background-color: transparent; -fx-text-fill: white; -fx-cursor: hand;" />
-                    <Button text="Esci" onAction="#handleLogout" style="-fx-background-color: transparent; -fx-text-fill: #FF6B6B; -fx-cursor: hand;" />
-                </HBox>
-
-                <Button text="← Torna ai risultati" onAction="#handleTornaRisultati"
-                        style="-fx-background-color: #40916C; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 20px; -fx-padding: 8px 20px; -fx-cursor: hand; -fx-font-size: 13px;" />
             </children>
         </HBox>
     </top>

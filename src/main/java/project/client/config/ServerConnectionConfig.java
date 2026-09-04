@@ -37,6 +37,14 @@ public class ServerConnectionConfig {
         saveToFile(config);
     }
 
+    /**
+     * Scrive su disco la configurazione passata come ServerConnection.
+     * Operazioni effettuate:
+     * - crea la directory di configurazione se non esiste
+     * - sovrascrive il file di configurazione con host e porta
+     * - dove possibile imposta permessi POSIX ristretti per sicurezza
+     * Motivazione: mantenere solo host/porta sul client riduce la superficie
+     * di attacco rispetto a memorizzare credenziali sensibili.*/
     private static void saveToFile(ServerConnection config) {
         try {
             Files.createDirectories(Paths.get(CONFIG_DIR));
@@ -59,6 +67,11 @@ public class ServerConnectionConfig {
         }
     }
 
+    /**
+     * Carica la configurazione dal file di configurazione se presente.
+     * Restituisce null se il file non esiste o si verifica un errore di I/O.
+     * Il parser ignora linee vuote e commentate (#). Per sicurezza vengono
+     * ignorati eventuali campi relativi al DB (non gestiti dal client).*/
     private static ServerConnection loadFromFile() {
         try {
             if (!Files.exists(Paths.get(CONFIG_FILE))) {

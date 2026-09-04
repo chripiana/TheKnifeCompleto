@@ -12,24 +12,109 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 import javafx.util.Duration;
 import project.shared.models.ServerConnection;
+/**
+ * ServerDashboardController
+ *
+ * Purpose: Brief description of the class responsibilities and role in the application.
+ *
+ * Responsibilities/Usage:
+ * - Describe main responsibilities and how this class is used at a high level.
+ *
+ * Design notes / Dependencies:
+ * - List key dependencies and rationale for design choices (separation of concerns, performance, simplicity).
+ *
+ * Implementation details:
+ * - Mention important collaborators, expected inputs/outputs and lifecycle (initialization, cleanup, threading if relevant).
+ */
 
 public class ServerDashboardController {
+/**
+ * Field: dbHostField
+ * Purpose: concise description of the fields role and how it is used by the class.
+ * Notes: mention nullability, lifecycle, and external dependencies if any.
+ */
     @FXML private TextField dbHostField;
+/**
+ * Field: dbPortField
+ * Purpose: concise description of the fields role and how it is used by the class.
+ * Notes: mention nullability, lifecycle, and external dependencies if any.
+ */
     @FXML private TextField dbPortField;
+/**
+ * Field: dbNameField
+ * Purpose: concise description of the fields role and how it is used by the class.
+ * Notes: mention nullability, lifecycle, and external dependencies if any.
+ */
     @FXML private TextField dbNameField;
+/**
+ * Field: dbUserField
+ * Purpose: concise description of the fields role and how it is used by the class.
+ * Notes: mention nullability, lifecycle, and external dependencies if any.
+ */
     @FXML private TextField dbUserField;
+/**
+ * Field: dbPasswordField
+ * Purpose: concise description of the fields role and how it is used by the class.
+ * Notes: mention nullability, lifecycle, and external dependencies if any.
+ */
     @FXML private PasswordField dbPasswordField;
+/**
+ * Field: serverPortField
+ * Purpose: concise description of the fields role and how it is used by the class.
+ * Notes: mention nullability, lifecycle, and external dependencies if any.
+ */
     @FXML private TextField serverPortField;
+/**
+ * Field: statusLabel
+ * Purpose: concise description of the fields role and how it is used by the class.
+ * Notes: mention nullability, lifecycle, and external dependencies if any.
+ */
     @FXML private Label statusLabel;
+/**
+ * Field: connectedClientsCountLabel
+ * Purpose: concise description of the fields role and how it is used by the class.
+ * Notes: mention nullability, lifecycle, and external dependencies if any.
+ */
     @FXML private Label connectedClientsCountLabel;
+/**
+ * Field: serverStateLabel
+ * Purpose: concise description of the fields role and how it is used by the class.
+ * Notes: mention nullability, lifecycle, and external dependencies if any.
+ */
     @FXML private Label serverStateLabel;
+/**
+ * Field: serverModeBadge
+ * Purpose: concise description of the fields role and how it is used by the class.
+ * Notes: mention nullability, lifecycle, and external dependencies if any.
+ */
     @FXML private Label serverModeBadge;
+/**
+ * Field: connectedClientsList
+ * Purpose: concise description of the fields role and how it is used by the class.
+ * Notes: mention nullability, lifecycle, and external dependencies if any.
+ */
     @FXML private ListView<String> connectedClientsList;
 
+/**
+ * Field: runningServer
+ * Purpose: concise description of the fields role and how it is used by the class.
+ * Notes: mention nullability, lifecycle, and external dependencies if any.
+ */
     private TheKnifeServer runningServer;
+/**
+ * Field: refreshTimeline
+ * Purpose: concise description of the fields role and how it is used by the class.
+ * Notes: mention nullability, lifecycle, and external dependencies if any.
+ */
     private Timeline refreshTimeline;
 
     @FXML
+/**
+ * Method: initialize
+ * Purpose: describe what this method does, its inputs and observable effects.
+ * Parameters: document important parameters and expected formats.
+ * Returns: describe the return value or side-effects.
+ */
     public void initialize() {
         dbHostField.setText("localhost");
         dbPortField.setText("5432");
@@ -48,6 +133,12 @@ public class ServerDashboardController {
     }
 
     @FXML
+/**
+ * Method: handleStartServer
+ * Purpose: describe what this method does, its inputs and observable effects.
+ * Parameters: document important parameters and expected formats.
+ * Returns: describe the return value or side-effects.
+ */
     private void handleStartServer() {
         try {
             String dbHost = dbHostField.getText().trim();
@@ -69,6 +160,13 @@ public class ServerDashboardController {
 
             if (dbPort < 1024 || dbPort > 65535) {
                 setStatus("La porta database deve essere compresa tra 1024 e 65535.", "#c0392b");
+                return;
+            }
+
+            if (!isPortAvailable(serverPort)) {
+                setStatus("La porta " + serverPort + " è già in uso. Chiudi l'istanza attiva del server o seleziona un'altra porta.", "#c0392b");
+                setServerOnlineState(false);
+                setModeBadge(false);
                 return;
             }
 
@@ -115,6 +213,12 @@ public class ServerDashboardController {
     }
 
     @FXML
+/**
+ * Method: handleStopServer
+ * Purpose: describe what this method does, its inputs and observable effects.
+ * Parameters: document important parameters and expected formats.
+ * Returns: describe the return value or side-effects.
+ */
     private void handleStopServer() {
         if (runningServer != null) {
             runningServer.stop();
@@ -131,12 +235,24 @@ public class ServerDashboardController {
         }
     }
 
+/**
+ * Method: startRefreshLoop
+ * Purpose: describe what this method does, its inputs and observable effects.
+ * Parameters: document important parameters and expected formats.
+ * Returns: describe the return value or side-effects.
+ */
     private void startRefreshLoop() {
         refreshTimeline = new Timeline(new KeyFrame(Duration.seconds(1), event -> refreshClientList()));
         refreshTimeline.setCycleCount(Timeline.INDEFINITE);
         refreshTimeline.play();
     }
 
+/**
+ * Method: refreshClientList
+ * Purpose: describe what this method does, its inputs and observable effects.
+ * Parameters: document important parameters and expected formats.
+ * Returns: describe the return value or side-effects.
+ */
     private void refreshClientList() {
         ObservableList<String> items = FXCollections.observableArrayList();
         ServerStatusRegistry.snapshot().forEach(client -> items.add(client.displayText()));
@@ -144,6 +260,28 @@ public class ServerDashboardController {
         connectedClientsCountLabel.setText(String.valueOf(items.size()));
     }
 
+/**
+ * Method: isPortAvailable
+ * Purpose: describe what this method does, its inputs and observable effects.
+ * Parameters: document important parameters and expected formats.
+ * Returns: describe the return value or side-effects.
+ */
+    private boolean isPortAvailable(int port) {
+        try (java.net.ServerSocket probe = new java.net.ServerSocket()) {
+            probe.setReuseAddress(true);
+            probe.bind(new java.net.InetSocketAddress(java.net.InetAddress.getByName("0.0.0.0"), port), 1);
+            return true;
+        } catch (Exception e) {
+            return false;
+        }
+    }
+
+/**
+ * Method: setStatus
+ * Purpose: describe what this method does, its inputs and observable effects.
+ * Parameters: document important parameters and expected formats.
+ * Returns: describe the return value or side-effects.
+ */
     private void setStatus(String message, String color) {
         Platform.runLater(() -> {
             statusLabel.setText(message);
@@ -151,6 +289,12 @@ public class ServerDashboardController {
         });
     }
 
+/**
+ * Method: setServerOnlineState
+ * Purpose: describe what this method does, its inputs and observable effects.
+ * Parameters: document important parameters and expected formats.
+ * Returns: describe the return value or side-effects.
+ */
     private void setServerOnlineState(boolean online) {
         Platform.runLater(() -> {
             serverStateLabel.getStyleClass().removeAll("online", "offline");
@@ -164,6 +308,12 @@ public class ServerDashboardController {
         });
     }
 
+/**
+ * Method: setModeBadge
+ * Purpose: describe what this method does, its inputs and observable effects.
+ * Parameters: document important parameters and expected formats.
+ * Returns: describe the return value or side-effects.
+ */
     private void setModeBadge(boolean online) {
         Platform.runLater(() -> {
             serverModeBadge.getStyleClass().removeAll("connected", "disconnected");

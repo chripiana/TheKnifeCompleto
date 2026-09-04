@@ -27,10 +27,29 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+/**
+ * SearchController
+ *
+ * Purpose: Brief description of the class responsibilities and role in the application.
+ *
+ * Responsibilities/Usage:
+ * - Describe main responsibilities and how this class is used at a high level.
+ *
+ * Design notes / Dependencies:
+ * - List key dependencies and rationale for design choices (separation of concerns, performance, simplicity).
+ *
+ * Implementation details:
+ * - Mention important collaborators, expected inputs/outputs and lifecycle (initialization, cleanup, threading if relevant).
+ */
 
 public class SearchController {
 
     // === API CLIENT ===
+/**
+ * Field: apiClient
+ * Purpose: concise description of the fields role and how it is used by the class.
+ * Notes: mention nullability, lifecycle, and external dependencies if any.
+ */
     private ServerApiClient apiClient;
 
     @FXML
@@ -42,32 +61,102 @@ public class SearchController {
 
     // Pannello laterale sinistro allineato allo schema definitivo
     @FXML
+/**
+ * Field: filterCitta
+ * Purpose: concise description of the fields role and how it is used by the class.
+ * Notes: mention nullability, lifecycle, and external dependencies if any.
+ */
     private TextField filterCitta;
     @FXML
+/**
+ * Field: filterPrezzo
+ * Purpose: concise description of the fields role and how it is used by the class.
+ * Notes: mention nullability, lifecycle, and external dependencies if any.
+ */
     private TextField filterPrezzo;
     @FXML
+/**
+ * Field: filterStelle
+ * Purpose: concise description of the fields role and how it is used by the class.
+ * Notes: mention nullability, lifecycle, and external dependencies if any.
+ */
     private ComboBox<String> filterStelle;
     @FXML
+/**
+ * Field: filterOrdine
+ * Purpose: concise description of the fields role and how it is used by the class.
+ * Notes: mention nullability, lifecycle, and external dependencies if any.
+ */
     private ComboBox<String> filterOrdine;
     @FXML
+/**
+ * Field: filterDelivery
+ * Purpose: concise description of the fields role and how it is used by the class.
+ * Notes: mention nullability, lifecycle, and external dependencies if any.
+ */
     private CheckBox filterDelivery;
     @FXML
+/**
+ * Field: filterPrenotazione
+ * Purpose: concise description of the fields role and how it is used by the class.
+ * Notes: mention nullability, lifecycle, and external dependencies if any.
+ */
     private CheckBox filterPrenotazione;
     @FXML
+/**
+ * Field: filterAperto
+ * Purpose: concise description of the fields role and how it is used by the class.
+ * Notes: mention nullability, lifecycle, and external dependencies if any.
+ */
     private CheckBox filterAperto;
     @FXML
+/**
+ * Field: nearbyRadiusCombo
+ * Purpose: concise description of the fields role and how it is used by the class.
+ * Notes: mention nullability, lifecycle, and external dependencies if any.
+ */
     private ComboBox<Integer> nearbyRadiusCombo;
 
+/**
+ * Field: tuttiIRistoranti
+ * Purpose: concise description of the fields role and how it is used by the class.
+ * Notes: mention nullability, lifecycle, and external dependencies if any.
+ */
     private final List<RistoranteOggetto> tuttiIRistoranti = new ArrayList<>();
+/**
+ * Field: paginaCorrente
+ * Purpose: concise description of the fields role and how it is used by the class.
+ * Notes: mention nullability, lifecycle, and external dependencies if any.
+ */
     private int paginaCorrente = 1;
+/**
+ * Field: ELEMENTI_PER_PAGINA
+ * Purpose: concise description of the fields role and how it is used by the class.
+ * Notes: mention nullability, lifecycle, and external dependencies if any.
+ */
     private static final int ELEMENTI_PER_PAGINA = 10;
+/**
+ * Field: toastPopup
+ * Purpose: concise description of the fields role and how it is used by the class.
+ * Notes: mention nullability, lifecycle, and external dependencies if any.
+ */
     private Popup toastPopup;
+/**
+ * Field: toastTimer
+ * Purpose: concise description of the fields role and how it is used by the class.
+ * Notes: mention nullability, lifecycle, and external dependencies if any.
+ */
     private PauseTransition toastTimer;
 
 
     public static class RistoranteOggetto {
         public String id, nome, citta, nazione, indirizzo, cucina;
         public int prezzo, stelleIntere, numRecensioni;
+/**
+ * Field: mediaStelleReale
+ * Purpose: concise description of the fields role and how it is used by the class.
+ * Notes: mention nullability, lifecycle, and external dependencies if any.
+ */
         public double mediaStelleReale;
         public double lat, lon, distanzaKm;
         public boolean delivery, prenotazioneOnline;
@@ -131,6 +220,12 @@ public class SearchController {
             this.numRecensioni = parseInt(data.getOrDefault("num_recensioni", "0"));
         }
 
+/**
+ * Method: parseInt
+ * Purpose: describe what this method does, its inputs and observable effects.
+ * Parameters: document important parameters and expected formats.
+ * Returns: describe the return value or side-effects.
+ */
         private static int parseInt(String value) {
             try {
                 return Integer.parseInt(value);
@@ -139,6 +234,12 @@ public class SearchController {
             }
         }
 
+/**
+ * Method: parseDouble
+ * Purpose: describe what this method does, its inputs and observable effects.
+ * Parameters: document important parameters and expected formats.
+ * Returns: describe the return value or side-effects.
+ */
             private static double parseDouble(String value) {
             try {
                 return Double.parseDouble(value);
@@ -147,11 +248,23 @@ public class SearchController {
             }
         }
 
+/**
+ * Method: parseBoolean
+ * Purpose: describe what this method does, its inputs and observable effects.
+ * Parameters: document important parameters and expected formats.
+ * Returns: describe the return value or side-effects.
+ */
         private static boolean parseBoolean(String value) {
             return "true".equalsIgnoreCase(value) || "1".equals(value);
         }
     }
 
+/**
+ * Method: parseDouble
+ * Purpose: describe what this method does, its inputs and observable effects.
+ * Parameters: document important parameters and expected formats.
+ * Returns: describe the return value or side-effects.
+ */
     private static double parseDouble(String value) {
         try {
             return Double.parseDouble(value);
@@ -161,6 +274,12 @@ public class SearchController {
     }
 
     @FXML
+/**
+ * Method: initialize
+ * Purpose: describe what this method does, its inputs and observable effects.
+ * Parameters: document important parameters and expected formats.
+ * Returns: describe the return value or side-effects.
+ */
     public void initialize() {
         apiClient = new ServerApiClient();
         if (filterStelle != null) {
@@ -185,11 +304,23 @@ public class SearchController {
     }
 
     @FXML
+/**
+ * Method: goToHome
+ * Purpose: describe what this method does, its inputs and observable effects.
+ * Parameters: document important parameters and expected formats.
+ * Returns: describe the return value or side-effects.
+ */
     private void goToHome(ActionEvent event) {
         Navigator.getInstance().navigateToHomeIntelligent();
     }
 
     @FXML
+/**
+ * Method: OnCercaPremuto
+ * Purpose: describe what this method does, its inputs and observable effects.
+ * Parameters: document important parameters and expected formats.
+ * Returns: describe the return value or side-effects.
+ */
     private void OnCercaPremuto() {
         if (searchInlineField == null)
             return;
@@ -203,6 +334,12 @@ public class SearchController {
     }
 
     @FXML
+/**
+ * Method: onAggiornaFiltriPremuto
+ * Purpose: describe what this method does, its inputs and observable effects.
+ * Parameters: document important parameters and expected formats.
+ * Returns: describe the return value or side-effects.
+ */
     private void onAggiornaFiltriPremuto() {
         String citta = (filterCitta != null) ? filterCitta.getText().trim() : null;
         String prezzoText = (filterPrezzo != null) ? filterPrezzo.getText().trim() : "";
@@ -234,6 +371,12 @@ public class SearchController {
     }
 
     @FXML
+/**
+ * Method: onResetFiltriPremuto
+ * Purpose: describe what this method does, its inputs and observable effects.
+ * Parameters: document important parameters and expected formats.
+ * Returns: describe the return value or side-effects.
+ */
     private void onResetFiltriPremuto() {
         if (filterCitta != null)
             filterCitta.clear();
@@ -255,6 +398,12 @@ public class SearchController {
     }
 
     @FXML
+/**
+ * Method: onNearbySearchPremuto
+ * Purpose: describe what this method does, its inputs and observable effects.
+ * Parameters: document important parameters and expected formats.
+ * Returns: describe the return value or side-effects.
+ */
     private void onNearbySearchPremuto() {
         int userId = Navigator.getInstance().getIdUtenteLoggato();
         if (userId <= 0) {
@@ -301,12 +450,24 @@ public class SearchController {
         // Note: Don't set filterOrdine here - it triggers onAggiornaFiltriPremuto which overwrites geo search results!
     }
 
+/**
+ * Method: inizializzaRicercaGlobale
+ * Purpose: describe what this method does, its inputs and observable effects.
+ * Parameters: document important parameters and expected formats.
+ * Returns: describe the return value or side-effects.
+ */
     public void inizializzaRicercaGlobale(String testoCercato) {
         if (searchInlineField != null)
             searchInlineField.setText(testoCercato);
         eseguiRicercaDinamica(null, testoCercato, null, null, null, null);
     }
 
+/**
+ * Method: inizializzaRicercaAvanzata
+ * Purpose: describe what this method does, its inputs and observable effects.
+ * Parameters: document important parameters and expected formats.
+ * Returns: describe the return value or side-effects.
+ */
     public void inizializzaRicercaAvanzata(String citta, String prezzoMax, String stelle, String ordine) {
         if (filterCitta != null)
             filterCitta.setText(citta);
@@ -429,6 +590,12 @@ public class SearchController {
         Platform.runLater(() -> aggiornaInterfacciaVisiva());
     }
 
+/**
+ * Method: applicaOrdinamento
+ * Purpose: describe what this method does, its inputs and observable effects.
+ * Parameters: document important parameters and expected formats.
+ * Returns: describe the return value or side-effects.
+ */
     private void applicaOrdinamento(String ordine) {
         if (ordine == null || ordine.isEmpty() || ordine.contains("Predefinito")) {
             if (tuttiIRistoranti.stream().anyMatch(r -> r.distanzaKm > 0)) {
@@ -460,14 +627,32 @@ public class SearchController {
         }
     }
 
+/**
+ * Method: cittaParam
+ * Purpose: describe what this method does, its inputs and observable effects.
+ * Parameters: document important parameters and expected formats.
+ * Returns: describe the return value or side-effects.
+ */
     private String cittaParam(String c) {
         return (c == null || c.isEmpty()) ? null : c;
     }
 
+/**
+ * Method: cucinaParam
+ * Purpose: describe what this method does, its inputs and observable effects.
+ * Parameters: document important parameters and expected formats.
+ * Returns: describe the return value or side-effects.
+ */
     private String cucinaParam(String c) {
         return (c == null || c.isEmpty()) ? null : c;
     }
 
+/**
+ * Method: handleTogglePreferito
+ * Purpose: describe what this method does, its inputs and observable effects.
+ * Parameters: document important parameters and expected formats.
+ * Returns: describe the return value or side-effects.
+ */
     private void handleTogglePreferito(RistoranteOggetto r, Button btnFav) {
         try {
             int idUtenteLoggato = Navigator.getInstance().getIdUtenteLoggato();
@@ -554,6 +739,12 @@ public class SearchController {
         }
     }
 
+/**
+ * Method: showToast
+ * Purpose: describe what this method does, its inputs and observable effects.
+ * Parameters: document important parameters and expected formats.
+ * Returns: describe the return value or side-effects.
+ */
     private void showToast(String message) {
         if (message == null || message.isBlank()) return;
         if (containerRisultati == null || containerRisultati.getScene() == null) {
@@ -586,6 +777,12 @@ public class SearchController {
         toastTimer.play();
     }
 
+/**
+ * Method: showError
+ * Purpose: describe what this method does, its inputs and observable effects.
+ * Parameters: document important parameters and expected formats.
+ * Returns: describe the return value or side-effects.
+ */
     private void showError(String msg) {
         javafx.scene.control.Alert alert = new javafx.scene.control.Alert(javafx.scene.control.Alert.AlertType.ERROR);
         alert.setTitle("Errore");
@@ -593,6 +790,12 @@ public class SearchController {
         alert.showAndWait();
     }
 
+/**
+ * Method: showError
+ * Purpose: describe what this method does, its inputs and observable effects.
+ * Parameters: document important parameters and expected formats.
+ * Returns: describe the return value or side-effects.
+ */
     private void showError(String title, String message) {
         javafx.scene.control.Alert alert = new javafx.scene.control.Alert(javafx.scene.control.Alert.AlertType.ERROR);
         alert.setTitle(title == null || title.isEmpty() ? "Errore" : title);
@@ -600,6 +803,12 @@ public class SearchController {
         alert.showAndWait();
     }
 
+/**
+ * Method: aggiornaInterfacciaVisiva
+ * Purpose: describe what this method does, its inputs and observable effects.
+ * Parameters: document important parameters and expected formats.
+ * Returns: describe the return value or side-effects.
+ */
     private void aggiornaInterfacciaVisiva() {
         System.out.println("[SearchController] aggiornaInterfacciaVisiva called. Ristoranti: " + tuttiIRistoranti.size());
         System.out.println("[SearchController]   containerRisultati is: " + (containerRisultati == null ? "NULL" : "OK"));
@@ -800,12 +1009,24 @@ public class SearchController {
 
     // 1. Gestisce il click sulla card del ristorante rimandando al Navigator
     // modificato
+/**
+ * Method: navigaADettagli
+ * Purpose: describe what this method does, its inputs and observable effects.
+ * Parameters: document important parameters and expected formats.
+ * Returns: describe the return value or side-effects.
+ */
     private void navigaADettagli(RistoranteOggetto r) {
         System.out.println("[NAVIGAZIONE] Richiesta apertura dettagli per: " + r.nome);
         Navigator.getInstance().navigateToRestaurantDetails(r);
     }
 
     // Mappa capillarmente la stringa del DB a una classe CSS con colori dedicati
+/**
+ * Method: getThumbClass
+ * Purpose: describe what this method does, its inputs and observable effects.
+ * Parameters: document important parameters and expected formats.
+ * Returns: describe the return value or side-effects.
+ */
     private String getThumbClass(String cucina) {
         if (cucina == null)
             return "thumb-altro";
@@ -876,6 +1097,12 @@ public class SearchController {
     }
 
 
+/**
+ * Method: getThumbIcon
+ * Purpose: describe what this method does, its inputs and observable effects.
+ * Parameters: document important parameters and expected formats.
+ * Returns: describe the return value or side-effects.
+ */
     private String getThumbIcon(String cucina) {
         if (cucina == null)
             return "👨‍🍳";
@@ -962,6 +1189,12 @@ public class SearchController {
         return "👨‍🍳"; // Estremo ripiego: il cuoco al posto del piatto piatto 🍽️
     }
 
+/**
+ * Method: disegnaBarraPaginazione
+ * Purpose: describe what this method does, its inputs and observable effects.
+ * Parameters: document important parameters and expected formats.
+ * Returns: describe the return value or side-effects.
+ */
     private void disegnaBarraPaginazione() {
         if (containerPaginazione == null)
             return;
@@ -1011,11 +1244,23 @@ public class SearchController {
     }
 
     @FXML
+/**
+ * Method: handleGoToHome
+ * Purpose: describe what this method does, its inputs and observable effects.
+ * Parameters: document important parameters and expected formats.
+ * Returns: describe the return value or side-effects.
+ */
     private void handleGoToHome(javafx.scene.input.MouseEvent event) {
         project.controllers.Navigator.getInstance().navigateToHomeIntelligent();
     }
 
     @FXML
+/**
+ * Method: handleGoToProfile
+ * Purpose: describe what this method does, its inputs and observable effects.
+ * Parameters: document important parameters and expected formats.
+ * Returns: describe the return value or side-effects.
+ */
     private void handleGoToProfile(javafx.event.ActionEvent event) {
         project.controllers.Navigator.getInstance().navigateToProfile();
     }

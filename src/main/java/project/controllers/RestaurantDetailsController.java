@@ -3,48 +3,131 @@ package project.controllers;
 import project.client.services.ServerApiClient;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.GridPane;
 import javafx.scene.layout.HBox;
+import javafx.scene.layout.VBox;
+import javafx.stage.Stage;
 import java.io.IOException;
+import java.net.URL;
 import java.util.HashMap;
 import java.util.Map;
+/**
+ * RestaurantDetailsController
+ *
+ * Purpose: Brief description of the class responsibilities and role in the application.
+ *
+ * Responsibilities/Usage:
+ * - Describe main responsibilities and how this class is used at a high level.
+ *
+ * Design notes / Dependencies:
+ * - List key dependencies and rationale for design choices (separation of concerns, performance, simplicity).
+ *
+ * Implementation details:
+ * - Mention important collaborators, expected inputs/outputs and lifecycle (initialization, cleanup, threading if relevant).
+ */
 
 public class RestaurantDetailsController {
 
     // Elementi dell'HBox Hero e informazioni principali
     @FXML
+/**
+ * Field: lblBreadcrumb
+ * Purpose: concise description of the fields role and how it is used by the class.
+ * Notes: mention nullability, lifecycle, and external dependencies if any.
+ */
     private Label lblBreadcrumb;
     @FXML
+/**
+ * Field: lblNomeRistorante
+ * Purpose: concise description of the fields role and how it is used by the class.
+ * Notes: mention nullability, lifecycle, and external dependencies if any.
+ */
     private Label lblNomeRistorante;
     @FXML
+/**
+ * Field: lblCitta
+ * Purpose: concise description of the fields role and how it is used by the class.
+ * Notes: mention nullability, lifecycle, and external dependencies if any.
+ */
     private Label lblCitta;
     @FXML
+/**
+ * Field: lblCucina
+ * Purpose: concise description of the fields role and how it is used by the class.
+ * Notes: mention nullability, lifecycle, and external dependencies if any.
+ */
     private Label lblCucina;
     @FXML
+/**
+ * Field: lblPrezzo
+ * Purpose: concise description of the fields role and how it is used by the class.
+ * Notes: mention nullability, lifecycle, and external dependencies if any.
+ */
     private Label lblPrezzo;
     @FXML
+/**
+ * Field: hboxHero
+ * Purpose: concise description of the fields role and how it is used by the class.
+ * Notes: mention nullability, lifecycle, and external dependencies if any.
+ */
     private HBox hboxHero;
     @FXML
+/**
+ * Field: lblAvatarRistorante
+ * Purpose: concise description of the fields role and how it is used by the class.
+ * Notes: mention nullability, lifecycle, and external dependencies if any.
+ */
     private Label lblAvatarRistorante;
 
     // Riferimenti alla navbar (resta sempre verde, come tutte le altre pagine:
     // nessuna colorazione dinamica)
     @FXML
+/**
+ * Field: hboxNavbar
+ * Purpose: concise description of the fields role and how it is used by the class.
+ * Notes: mention nullability, lifecycle, and external dependencies if any.
+ */
     private HBox hboxNavbar;
     @FXML
+/**
+ * Field: lblLogoThe
+ * Purpose: concise description of the fields role and how it is used by the class.
+ * Notes: mention nullability, lifecycle, and external dependencies if any.
+ */
     private Label lblLogoThe;
     @FXML
+/**
+ * Field: lblLogoKnife
+ * Purpose: concise description of the fields role and how it is used by the class.
+ * Notes: mention nullability, lifecycle, and external dependencies if any.
+ */
     private Label lblLogoKnife;
     @FXML
+/**
+ * Field: btnTornaRisultati
+ * Purpose: concise description of the fields role and how it is used by the class.
+ * Notes: mention nullability, lifecycle, and external dependencies if any.
+ */
     private Button btnTornaRisultati;
 
     // Allineato all'fx:id dell'FXML per evitare disallineamenti di mancato
     // aggiornamento delle recensioni
     @FXML
+/**
+ * Field: lblStelleMedia
+ * Purpose: concise description of the fields role and how it is used by the class.
+ * Notes: mention nullability, lifecycle, and external dependencies if any.
+ */
     private Label lblStelleMedia;
     @FXML
+/**
+ * Field: lblNumRecensioni
+ * Purpose: concise description of the fields role and how it is used by the class.
+ * Notes: mention nullability, lifecycle, and external dependencies if any.
+ */
     private Label lblNumRecensioni;
 
     // Card "VALUTAZIONI": numero grande, stelle e distribuzione 1★-5★ (presenti in
@@ -52,82 +135,257 @@ public class RestaurantDetailsController {
     // nella vista loggata questi stessi fx:id sostituiscono anche
     // lblStelleMedia/lblNumRecensioni nell'hero)
     @FXML
+/**
+ * Field: lblRatingBigNumber
+ * Purpose: concise description of the fields role and how it is used by the class.
+ * Notes: mention nullability, lifecycle, and external dependencies if any.
+ */
     private Label lblRatingBigNumber;
     @FXML
+/**
+ * Field: lblStarsDisplayBig
+ * Purpose: concise description of the fields role and how it is used by the class.
+ * Notes: mention nullability, lifecycle, and external dependencies if any.
+ */
     private Label lblStarsDisplayBig;
     @FXML
+/**
+ * Field: lblNumRecensioniBox
+ * Purpose: concise description of the fields role and how it is used by the class.
+ * Notes: mention nullability, lifecycle, and external dependencies if any.
+ */
     private Label lblNumRecensioniBox;
     @FXML
+/**
+ * Field: barStelle1
+ * Purpose: concise description of the fields role and how it is used by the class.
+ * Notes: mention nullability, lifecycle, and external dependencies if any.
+ */
     private ProgressBar barStelle1;
     @FXML
+/**
+ * Field: barStelle2
+ * Purpose: concise description of the fields role and how it is used by the class.
+ * Notes: mention nullability, lifecycle, and external dependencies if any.
+ */
     private ProgressBar barStelle2;
     @FXML
+/**
+ * Field: barStelle3
+ * Purpose: concise description of the fields role and how it is used by the class.
+ * Notes: mention nullability, lifecycle, and external dependencies if any.
+ */
     private ProgressBar barStelle3;
     @FXML
+/**
+ * Field: barStelle4
+ * Purpose: concise description of the fields role and how it is used by the class.
+ * Notes: mention nullability, lifecycle, and external dependencies if any.
+ */
     private ProgressBar barStelle4;
     @FXML
+/**
+ * Field: barStelle5
+ * Purpose: concise description of the fields role and how it is used by the class.
+ * Notes: mention nullability, lifecycle, and external dependencies if any.
+ */
     private ProgressBar barStelle5;
     @FXML
+/**
+ * Field: lblPctStelle1
+ * Purpose: concise description of the fields role and how it is used by the class.
+ * Notes: mention nullability, lifecycle, and external dependencies if any.
+ */
     private Label lblPctStelle1;
     @FXML
+/**
+ * Field: lblPctStelle2
+ * Purpose: concise description of the fields role and how it is used by the class.
+ * Notes: mention nullability, lifecycle, and external dependencies if any.
+ */
     private Label lblPctStelle2;
     @FXML
+/**
+ * Field: lblPctStelle3
+ * Purpose: concise description of the fields role and how it is used by the class.
+ * Notes: mention nullability, lifecycle, and external dependencies if any.
+ */
     private Label lblPctStelle3;
     @FXML
+/**
+ * Field: lblPctStelle4
+ * Purpose: concise description of the fields role and how it is used by the class.
+ * Notes: mention nullability, lifecycle, and external dependencies if any.
+ */
     private Label lblPctStelle4;
     @FXML
+/**
+ * Field: lblPctStelle5
+ * Purpose: concise description of the fields role and how it is used by the class.
+ * Notes: mention nullability, lifecycle, and external dependencies if any.
+ */
     private Label lblPctStelle5;
 
     // Scheda Informazioni Generali
     @FXML
+/**
+ * Field: lblNazione
+ * Purpose: concise description of the fields role and how it is used by the class.
+ * Notes: mention nullability, lifecycle, and external dependencies if any.
+ */
     private Label lblNazione;
     @FXML
+/**
+ * Field: lblCittaVal
+ * Purpose: concise description of the fields role and how it is used by the class.
+ * Notes: mention nullability, lifecycle, and external dependencies if any.
+ */
     private Label lblCittaVal;
     @FXML
+/**
+ * Field: lblIndirizzo
+ * Purpose: concise description of the fields role and how it is used by the class.
+ * Notes: mention nullability, lifecycle, and external dependencies if any.
+ */
     private Label lblIndirizzo;
     @FXML
+/**
+ * Field: lblTipologiaCucinaBox
+ * Purpose: concise description of the fields role and how it is used by the class.
+ * Notes: mention nullability, lifecycle, and external dependencies if any.
+ */
     private Label lblTipologiaCucinaBox;
     @FXML
+/**
+ * Field: lblPrezzoMedioBox
+ * Purpose: concise description of the fields role and how it is used by the class.
+ * Notes: mention nullability, lifecycle, and external dependencies if any.
+ */
     private Label lblPrezzoMedioBox;
 
     // Mappa e Posizione
     @FXML
+/**
+ * Field: lblMappaTestoIndirizzo
+ * Purpose: concise description of the fields role and how it is used by the class.
+ * Notes: mention nullability, lifecycle, and external dependencies if any.
+ */
     private Label lblMappaTestoIndirizzo;
     @FXML
+/**
+ * Field: lblLatitudine
+ * Purpose: concise description of the fields role and how it is used by the class.
+ * Notes: mention nullability, lifecycle, and external dependencies if any.
+ */
     private Label lblLatitudine;
     @FXML
+/**
+ * Field: lblLongitudine
+ * Purpose: concise description of the fields role and how it is used by the class.
+ * Notes: mention nullability, lifecycle, and external dependencies if any.
+ */
     private Label lblLongitudine;
     @FXML
+/**
+ * Field: btnPrenotaOra
+ * Purpose: concise description of the fields role and how it is used by the class.
+ * Notes: mention nullability, lifecycle, and external dependencies if any.
+ */
     private Button btnPrenotaOra;
     @FXML
+/**
+ * Field: btnAggiungiPreferiti
+ * Purpose: concise description of the fields role and how it is used by the class.
+ * Notes: mention nullability, lifecycle, and external dependencies if any.
+ */
     private Button btnAggiungiPreferiti;
 
     // Componenti interattivi per lasciare una recensione
     @FXML
+/**
+ * Field: starRec1
+ * Purpose: concise description of the fields role and how it is used by the class.
+ * Notes: mention nullability, lifecycle, and external dependencies if any.
+ */
     private Label starRec1;
     @FXML
+/**
+ * Field: starRec2
+ * Purpose: concise description of the fields role and how it is used by the class.
+ * Notes: mention nullability, lifecycle, and external dependencies if any.
+ */
     private Label starRec2;
     @FXML
+/**
+ * Field: starRec3
+ * Purpose: concise description of the fields role and how it is used by the class.
+ * Notes: mention nullability, lifecycle, and external dependencies if any.
+ */
     private Label starRec3;
     @FXML
+/**
+ * Field: starRec4
+ * Purpose: concise description of the fields role and how it is used by the class.
+ * Notes: mention nullability, lifecycle, and external dependencies if any.
+ */
     private Label starRec4;
     @FXML
+/**
+ * Field: starRec5
+ * Purpose: concise description of the fields role and how it is used by the class.
+ * Notes: mention nullability, lifecycle, and external dependencies if any.
+ */
     private Label starRec5;
     @FXML
+/**
+ * Field: recensioneTextArea
+ * Purpose: concise description of the fields role and how it is used by the class.
+ * Notes: mention nullability, lifecycle, and external dependencies if any.
+ */
     private TextArea recensioneTextArea;
     @FXML
+/**
+ * Field: btnPubblicaRecensione
+ * Purpose: concise description of the fields role and how it is used by the class.
+ * Notes: mention nullability, lifecycle, and external dependencies if any.
+ */
     private Button btnPubblicaRecensione;
 
     // Riepilogo Laterale Destro
     @FXML
+/**
+ * Field: lblRiepilogoStelle
+ * Purpose: concise description of the fields role and how it is used by the class.
+ * Notes: mention nullability, lifecycle, and external dependencies if any.
+ */
     private Label lblRiepilogoStelle;
     @FXML
+/**
+ * Field: lblRiepilogoPrezzo
+ * Purpose: concise description of the fields role and how it is used by the class.
+ * Notes: mention nullability, lifecycle, and external dependencies if any.
+ */
     private Label lblRiepilogoPrezzo;
     @FXML
+/**
+ * Field: lblRiepilogoCucina
+ * Purpose: concise description of the fields role and how it is used by the class.
+ * Notes: mention nullability, lifecycle, and external dependencies if any.
+ */
     private Label lblRiepilogoCucina;
 
     private SearchController.RistoranteOggetto ristoranteCorrente;
+/**
+ * Field: apiClient
+ * Purpose: concise description of the fields role and how it is used by the class.
+ * Notes: mention nullability, lifecycle, and external dependencies if any.
+ */
     private ServerApiClient apiClient;
+/**
+ * Field: votoSelezionato
+ * Purpose: concise description of the fields role and how it is used by the class.
+ * Notes: mention nullability, lifecycle, and external dependencies if any.
+ */
     private int votoSelezionato = 0;
 
     public RestaurantDetailsController() {
@@ -138,6 +396,12 @@ public class RestaurantDetailsController {
      * Cambia visivamente il colore delle stelle da grigio a oro quando l'utente
      * clicca.
      */
+/**
+ * Method: aggiornaVisualizzazioneStelleInput
+ * Purpose: describe what this method does, its inputs and observable effects.
+ * Parameters: document important parameters and expected formats.
+ * Returns: describe the return value or side-effects.
+ */
     private void aggiornaVisualizzazioneStelleInput(int voto) {
         this.votoSelezionato = voto;
         Label[] stelle = { starRec1, starRec2, starRec3, starRec4, starRec5 };
@@ -157,26 +421,56 @@ public class RestaurantDetailsController {
     }
 
     @FXML
+/**
+ * Method: handleStarRec1
+ * Purpose: describe what this method does, its inputs and observable effects.
+ * Parameters: document important parameters and expected formats.
+ * Returns: describe the return value or side-effects.
+ */
     private void handleStarRec1(MouseEvent event) {
         aggiornaVisualizzazioneStelleInput(1);
     }
 
     @FXML
+/**
+ * Method: handleStarRec2
+ * Purpose: describe what this method does, its inputs and observable effects.
+ * Parameters: document important parameters and expected formats.
+ * Returns: describe the return value or side-effects.
+ */
     private void handleStarRec2(MouseEvent event) {
         aggiornaVisualizzazioneStelleInput(2);
     }
 
     @FXML
+/**
+ * Method: handleStarRec3
+ * Purpose: describe what this method does, its inputs and observable effects.
+ * Parameters: document important parameters and expected formats.
+ * Returns: describe the return value or side-effects.
+ */
     private void handleStarRec3(MouseEvent event) {
         aggiornaVisualizzazioneStelleInput(3);
     }
 
     @FXML
+/**
+ * Method: handleStarRec4
+ * Purpose: describe what this method does, its inputs and observable effects.
+ * Parameters: document important parameters and expected formats.
+ * Returns: describe the return value or side-effects.
+ */
     private void handleStarRec4(MouseEvent event) {
         aggiornaVisualizzazioneStelleInput(4);
     }
 
     @FXML
+/**
+ * Method: handleStarRec5
+ * Purpose: describe what this method does, its inputs and observable effects.
+ * Parameters: document important parameters and expected formats.
+ * Returns: describe the return value or side-effects.
+ */
     private void handleStarRec5(MouseEvent event) {
         aggiornaVisualizzazioneStelleInput(5);
     }
@@ -257,6 +551,12 @@ public class RestaurantDetailsController {
     }
 
     @FXML
+/**
+ * Method: handlePrenotaOra
+ * Purpose: describe what this method does, its inputs and observable effects.
+ * Parameters: document important parameters and expected formats.
+ * Returns: describe the return value or side-effects.
+ */
     private void handlePrenotaOra(ActionEvent event) {
         if (ristoranteCorrente == null) {
             return;
@@ -264,18 +564,45 @@ public class RestaurantDetailsController {
 
         int idUtente = Navigator.getInstance().getIdUtenteLoggato();
         if (idUtente == -1) {
-            Alert alert = new Alert(Alert.AlertType.WARNING);
-            alert.setTitle("Accesso richiesto");
-            alert.setHeaderText("Devi effettuare il login");
-            alert.setContentText("Per prenotare un tavolo devi essere registrato e autenticato.");
-            alert.showAndWait();
+            showStyledReservationStage("Accesso richiesto",
+                    "Per prenotare un tavolo devi essere registrato e autenticato.",
+                    "Effettua il login",
+                    "login-view.fxml");
             Navigator.getInstance().navigateTo("login-view.fxml", "Accedi");
             return;
         }
 
-        Dialog<ButtonType> dialog = new Dialog<>();
-        dialog.setTitle("Prenota un tavolo");
-        dialog.setHeaderText("Prenotazione per: " + ristoranteCorrente.nome);
+        showReservationFormStage(idUtente);
+    }
+
+/**
+ * Method: showReservationFormStage
+ * Purpose: describe what this method does, its inputs and observable effects.
+ * Parameters: document important parameters and expected formats.
+ * Returns: describe the return value or side-effects.
+ */
+    private void showReservationFormStage(int idUtente) {
+        Stage ownerStage = btnPrenotaOra != null && btnPrenotaOra.getScene() != null ?
+                (Stage) btnPrenotaOra.getScene().getWindow() : null;
+
+        Stage stage = new Stage();
+        if (ownerStage != null) {
+            stage.initOwner(ownerStage);
+            stage.initModality(javafx.stage.Modality.WINDOW_MODAL);
+        }
+        stage.setTitle("Prenota un tavolo");
+
+        VBox root = new VBox(18);
+        root.getStyleClass().add("reservation-stage-shell");
+
+        VBox card = new VBox(18);
+        card.getStyleClass().add("reservation-stage-card");
+
+        Label title = new Label("Prenota un tavolo");
+        title.getStyleClass().add("reservation-stage-title");
+
+        Label subtitle = new Label("Prenotazione per: " + ristoranteCorrente.nome);
+        subtitle.getStyleClass().add("reservation-stage-subtitle");
 
         DatePicker datePicker = new DatePicker(java.time.LocalDate.now().plusDays(1));
         ComboBox<String> timeCombo = new ComboBox<>();
@@ -285,11 +612,11 @@ public class RestaurantDetailsController {
         Spinner<Integer> guestsSpinner = new Spinner<>(1, 20, 2);
         TextArea noteArea = new TextArea();
         noteArea.setPromptText("Eventuali note (es. allergeni, accessibilità, ecc.)");
+        noteArea.setPrefRowCount(5);
 
         GridPane grid = new GridPane();
-        grid.setHgap(12);
-        grid.setVgap(12);
-        grid.setPadding(new javafx.geometry.Insets(20, 10, 10, 10));
+        grid.getStyleClass().add("reservation-form-grid");
+        grid.setPadding(new javafx.geometry.Insets(8, 0, 0, 0));
         grid.add(new Label("Data:"), 0, 0);
         grid.add(datePicker, 1, 0);
         grid.add(new Label("Ora:"), 0, 1);
@@ -299,35 +626,31 @@ public class RestaurantDetailsController {
         grid.add(new Label("Note:"), 0, 3);
         grid.add(noteArea, 1, 3);
 
-        dialog.getDialogPane().setContent(grid);
-        dialog.getDialogPane().getButtonTypes().addAll(ButtonType.OK, ButtonType.CANCEL);
+        HBox actions = new HBox(12);
+        actions.setAlignment(javafx.geometry.Pos.CENTER_RIGHT);
 
-        dialog.setResultConverter(buttonType -> {
-            if (buttonType == ButtonType.OK) {
-                return buttonType;
-            }
-            return null;
-        });
+        Button cancelBtn = new Button("Annulla");
+        cancelBtn.setStyle("-fx-background-color: transparent; -fx-border-color: #D7E5DD; -fx-border-radius: 10px; -fx-padding: 10 16; -fx-cursor: hand;");
+        cancelBtn.setOnAction(e -> stage.close());
 
-        dialog.showAndWait().ifPresent(buttonType -> {
-            if (buttonType != ButtonType.OK) {
-                return;
-            }
-
+        Button confirmBtn = new Button("Conferma prenotazione");
+        confirmBtn.getStyleClass().add("btn-primary");
+        confirmBtn.setOnAction(e -> {
             try {
+                if (datePicker.getValue() == null) {
+                    showStyledReservationStage("Data mancante", "Seleziona una data valida per la prenotazione.", "Riprova", null);
+                    return;
+                }
+
                 if (!apiClient.isConnected()) {
                     if (!apiClient.ensureConnected()) {
-                        Alert err = new Alert(Alert.AlertType.ERROR);
-                        err.setTitle("Errore di connessione");
-                        err.setHeaderText("Impossibile contattare il server");
-                        err.setContentText("Riprova più tardi.");
-                        err.showAndWait();
+                        showStyledReservationStage("Connessione assente", "Impossibile contattare il server.", "Riprova più tardi", null);
                         return;
                     }
                 }
 
                 String selectedDate = datePicker.getValue().toString();
-                String selectedTime = timeCombo.getValue().replace(":", "");
+                String selectedTime = timeCombo.getValue() == null ? "20:00" : timeCombo.getValue().replace(":", "");
                 String note = noteArea.getText() == null ? "" : noteArea.getText().replace(";", ",");
                 String response = apiClient.sendRequest(
                         "CREATE_RESERVATION:" + idUtente + ":" + ristoranteCorrente.id + ":" + selectedDate + ":"
@@ -336,54 +659,197 @@ public class RestaurantDetailsController {
 
                 if (response != null && response.startsWith("CREATE_RESERVATION_OK:")) {
                     String codice = response.substring("CREATE_RESERVATION_OK:".length());
-                    Alert ok = new Alert(Alert.AlertType.INFORMATION);
-                    ok.setTitle("Prenotazione confermata");
-                    ok.setHeaderText("Codice prenotazione: " + codice);
-                    ok.setContentText("La tua prenotazione per " + ristoranteCorrente.nome + " è stata registrata.");
-                    ok.showAndWait();
-                    Navigator.getInstance().navigateToReservations();
+                    stage.close();
+                    showSuccessReservationStage(codice);
                 } else {
-                    Alert err = new Alert(Alert.AlertType.ERROR);
-                    err.setTitle("Prenotazione non completata");
-                    err.setHeaderText("Impossibile creare la prenotazione");
-                    err.setContentText(response != null ? response.replace("CREATE_RESERVATION_FAIL:", "") : "Contatta il supporto.");
-                    err.showAndWait();
+                    showStyledReservationStage("Prenotazione non completata",
+                            response != null ? response.replace("CREATE_RESERVATION_FAIL:", "") : "Contatta il supporto.",
+                            "Riprova", null);
                 }
-            } catch (Exception e) {
-                Alert err = new Alert(Alert.AlertType.ERROR);
-                err.setTitle("Errore");
-                err.setHeaderText("Problema durante la prenotazione");
-                err.setContentText(e.getMessage());
-                err.showAndWait();
+            } catch (Exception ex) {
+                showStyledReservationStage("Errore durante la prenotazione", ex.getMessage(), "Riprova", null);
             }
         });
+
+        actions.getChildren().addAll(cancelBtn, confirmBtn);
+        card.getChildren().addAll(title, subtitle, grid, actions);
+        root.getChildren().add(card);
+
+        Scene scene = new Scene(root, 760, 600);
+        URL css = getClass().getResource("/project/controllers/style.css");
+        if (css != null) {
+            scene.getStylesheets().add(css.toExternalForm());
+        }
+
+        stage.setScene(scene);
+        stage.setResizable(false);
+        stage.show();
+    }
+
+/**
+ * Method: showSuccessReservationStage
+ * Purpose: describe what this method does, its inputs and observable effects.
+ * Parameters: document important parameters and expected formats.
+ * Returns: describe the return value or side-effects.
+ */
+    private void showSuccessReservationStage(String codice) {
+        Stage stage = new Stage();
+        stage.setTitle("Prenotazione inviata");
+
+        VBox root = new VBox(18);
+        root.getStyleClass().add("reservation-stage-shell");
+
+        VBox card = new VBox(20);
+        card.getStyleClass().add("reservation-stage-card");
+        card.setAlignment(javafx.geometry.Pos.CENTER_LEFT);
+
+        Label badge = new Label("In attesa");
+        badge.setStyle("-fx-background-color: #FFF3CD; -fx-text-fill: #8A6D00; -fx-padding: 8 14 8 14; -fx-background-radius: 999px; -fx-font-weight: bold;");
+
+        Label title = new Label("Prenotazione ricevuta");
+        title.getStyleClass().add("reservation-stage-title");
+
+        Label subtitle = new Label("La tua richiesta è stata inviata al ristorante. Potrai seguire lo stato nelle tue prenotazioni.");
+        subtitle.getStyleClass().add("reservation-stage-subtitle");
+        subtitle.setWrapText(true);
+
+        Label code = new Label("Codice prenotazione: " + codice);
+        code.setStyle("-fx-font-size: 16px; -fx-font-weight: bold; -fx-text-fill: #163d2f;");
+
+        HBox actions = new HBox(12);
+        actions.setAlignment(javafx.geometry.Pos.CENTER_LEFT);
+
+        Button viewBtn = new Button("Vedi prenotazioni");
+        viewBtn.getStyleClass().add("btn-primary");
+        viewBtn.setOnAction(e -> {
+            stage.close();
+            Navigator.getInstance().navigateToReservations();
+        });
+
+        Button closeBtn = new Button("Chiudi");
+        closeBtn.setStyle("-fx-background-color: transparent; -fx-border-color: #D7E5DD; -fx-border-radius: 10px; -fx-padding: 10 16; -fx-cursor: hand;");
+        closeBtn.setOnAction(e -> stage.close());
+
+        actions.getChildren().addAll(viewBtn, closeBtn);
+        card.getChildren().addAll(badge, title, subtitle, code, actions);
+        root.getChildren().add(card);
+
+        Scene scene = new Scene(root, 640, 480);
+        URL css = getClass().getResource("/project/controllers/style.css");
+        if (css != null) {
+            scene.getStylesheets().add(css.toExternalForm());
+        }
+        stage.setScene(scene);
+        stage.setResizable(false);
+        stage.show();
+    }
+
+/**
+ * Method: showStyledReservationStage
+ * Purpose: describe what this method does, its inputs and observable effects.
+ * Parameters: document important parameters and expected formats.
+ * Returns: describe the return value or side-effects.
+ */
+    private void showStyledReservationStage(String titleText, String message, String actionText, String redirectPage) {
+        Stage stage = new Stage();
+        stage.setTitle(titleText);
+
+        VBox root = new VBox(18);
+        root.getStyleClass().add("reservation-stage-shell");
+
+        VBox card = new VBox(18);
+        card.getStyleClass().add("reservation-stage-card");
+
+        Label title = new Label(titleText);
+        title.getStyleClass().add("reservation-stage-title");
+
+        Label messageLabel = new Label(message);
+        messageLabel.setWrapText(true);
+        messageLabel.setStyle("-fx-font-size: 13px; -fx-text-fill: #4A6B57;");
+
+        Button action = new Button(actionText);
+        action.getStyleClass().add("btn-primary");
+        action.setOnAction(e -> {
+            stage.close();
+            if (redirectPage != null && !redirectPage.isBlank()) {
+                Navigator.getInstance().navigateTo(redirectPage, "Accedi");
+            }
+        });
+
+        card.getChildren().addAll(title, messageLabel, action);
+        root.getChildren().add(card);
+
+        Scene scene = new Scene(root, 560, 300);
+        URL css = getClass().getResource("/project/controllers/style.css");
+        if (css != null) {
+            scene.getStylesheets().add(css.toExternalForm());
+        }
+        stage.setScene(scene);
+        stage.setResizable(false);
+        stage.show();
     }
 
     @FXML
+/**
+ * Method: handleCerca
+ * Purpose: describe what this method does, its inputs and observable effects.
+ * Parameters: document important parameters and expected formats.
+ * Returns: describe the return value or side-effects.
+ */
     private void handleCerca(ActionEvent event) {
         Navigator.getInstance().navigateTo("search-view-logged.fxml", "Cerca Ristoranti");
     }
 
     @FXML
+/**
+ * Method: handlePreferiti
+ * Purpose: describe what this method does, its inputs and observable effects.
+ * Parameters: document important parameters and expected formats.
+ * Returns: describe the return value or side-effects.
+ */
     private void handlePreferiti(ActionEvent event) {
         Navigator.getInstance().navigateTo("favorites-view.fxml", "I Miei Preferiti");
     }
 
     @FXML
+/**
+ * Method: handleTogglePreferiti
+ * Purpose: describe what this method does, its inputs and observable effects.
+ * Parameters: document important parameters and expected formats.
+ * Returns: describe the return value or side-effects.
+ */
     private void handleTogglePreferiti(ActionEvent event) {
         togglePreferito();
     }
 
     @FXML
+/**
+ * Method: handleTogglePreferito
+ * Purpose: describe what this method does, its inputs and observable effects.
+ * Parameters: document important parameters and expected formats.
+ * Returns: describe the return value or side-effects.
+ */
     private void handleTogglePreferito(ActionEvent event) {
         togglePreferito();
     }
 
     @FXML
+/**
+ * Method: handleRecensioni
+ * Purpose: describe what this method does, its inputs and observable effects.
+ * Parameters: document important parameters and expected formats.
+ * Returns: describe the return value or side-effects.
+ */
     private void handleRecensioni(ActionEvent event) {
         Navigator.getInstance().navigateTo("reviews-view.fxml", "Le Mie Recensioni");
     }
 
+/**
+ * Method: togglePreferito
+ * Purpose: describe what this method does, its inputs and observable effects.
+ * Parameters: document important parameters and expected formats.
+ * Returns: describe the return value or side-effects.
+ */
     private void togglePreferito() {
         if (ristoranteCorrente == null) {
             return;
@@ -468,28 +934,58 @@ public class RestaurantDetailsController {
     }
 
     @FXML
+/**
+ * Method: handleProfilo
+ * Purpose: describe what this method does, its inputs and observable effects.
+ * Parameters: document important parameters and expected formats.
+ * Returns: describe the return value or side-effects.
+ */
     private void handleProfilo(ActionEvent event) {
         Navigator.getInstance().navigateToProfile();
     }
 
     @FXML
+/**
+ * Method: handleLogout
+ * Purpose: describe what this method does, its inputs and observable effects.
+ * Parameters: document important parameters and expected formats.
+ * Returns: describe the return value or side-effects.
+ */
     private void handleLogout(ActionEvent event) {
         Navigator.getInstance().logout();
         Navigator.getInstance().navigateTo("login-view.fxml", "Accedi");
     }
 
     @FXML
+/**
+ * Method: handleTornaRisultati
+ * Purpose: describe what this method does, its inputs and observable effects.
+ * Parameters: document important parameters and expected formats.
+ * Returns: describe the return value or side-effects.
+ */
     private void handleTornaRisultati(ActionEvent event) {
         System.out.println("[NAVIGAZIONE] Ritorno ai risultati di ricerca.");
         Navigator.getInstance().backToSearchResults();
     }
 
     @FXML
+/**
+ * Method: handleGoToHome
+ * Purpose: describe what this method does, its inputs and observable effects.
+ * Parameters: document important parameters and expected formats.
+ * Returns: describe the return value or side-effects.
+ */
     private void handleGoToHome(MouseEvent event) {
         System.out.println("[NAVIGAZIONE] Ritorno alla Home principale.");
         Navigator.getInstance().navigateToHomeIntelligent();
     }
 
+/**
+ * Method: caricaDatiRistorante
+ * Purpose: describe what this method does, its inputs and observable effects.
+ * Parameters: document important parameters and expected formats.
+ * Returns: describe the return value or side-effects.
+ */
     public void caricaDatiRistorante(SearchController.RistoranteOggetto r) {
         if (r == null)
             return;
@@ -549,6 +1045,12 @@ public class RestaurantDetailsController {
         aggiornaStatoPreferiti();
     }
 
+/**
+ * Method: aggiornaStatoPreferiti
+ * Purpose: describe what this method does, its inputs and observable effects.
+ * Parameters: document important parameters and expected formats.
+ * Returns: describe the return value or side-effects.
+ */
     private void aggiornaStatoPreferiti() {
         if (btnAggiungiPreferiti == null || ristoranteCorrente == null) {
             return;
@@ -576,6 +1078,12 @@ public class RestaurantDetailsController {
         }
     }
 
+/**
+ * Method: impostaStileCucinaDinamico
+ * Purpose: describe what this method does, its inputs and observable effects.
+ * Parameters: document important parameters and expected formats.
+ * Returns: describe the return value or side-effects.
+ */
     public void impostaStileCucinaDinamico(String cucina) {
         if (cucina == null)
             cucina = "";
@@ -616,6 +1124,12 @@ public class RestaurantDetailsController {
      * Tutti i colori mantengono una luminosità media per garantire ottima leggibilità
      * sia con testo BIANCO che con testo NERO.
      */
+/**
+ * Method: getCucinaColor
+ * Purpose: describe what this method does, its inputs and observable effects.
+ * Parameters: document important parameters and expected formats.
+ * Returns: describe the return value or side-effects.
+ */
     private String getCucinaColor(String lower) {
         if (lower.contains("pizza"))
             return "#FF7B6B"; // Corallo pastello acceso
@@ -660,6 +1174,12 @@ public class RestaurantDetailsController {
             return "#8377D1"; // Viola mirtillo pastello
         return "#52B788"; // Default: Menta TheKnife
     }
+/**
+ * Method: getEmojiCucina
+ * Purpose: describe what this method does, its inputs and observable effects.
+ * Parameters: document important parameters and expected formats.
+ * Returns: describe the return value or side-effects.
+ */
     private String getEmojiCucina(String lower) {
         if (lower == null || lower.isEmpty())
             return "👨‍🍳";
@@ -745,6 +1265,12 @@ public class RestaurantDetailsController {
         return "👨‍🍳";
     }
 
+/**
+ * Method: aggiornaValutazioniDaDB
+ * Purpose: describe what this method does, its inputs and observable effects.
+ * Parameters: document important parameters and expected formats.
+ * Returns: describe the return value or side-effects.
+ */
     private void aggiornaValutazioniDaDB() {
         if (ristoranteCorrente == null)
             return;
@@ -797,6 +1323,12 @@ public class RestaurantDetailsController {
      * Costruisce la stringa di 5 caratteri (★ piene / ☆ vuote) corrispondente alla
      * media arrotondata.
      */
+/**
+ * Method: costruisciStelleTesto
+ * Purpose: describe what this method does, its inputs and observable effects.
+ * Parameters: document important parameters and expected formats.
+ * Returns: describe the return value or side-effects.
+ */
     private String costruisciStelleTesto(double media) {
         int piene = (int) Math.round(media);
         piene = Math.max(0, Math.min(5, piene));
@@ -810,6 +1342,12 @@ public class RestaurantDetailsController {
      * Recupera dal server quante recensioni ci sono per ogni valore di stelle (1-5) e
      * aggiorna le progress bar e le percentuali della card "VALUTAZIONI".
      */
+/**
+ * Method: aggiornaDistribuzioneStelle
+ * Purpose: describe what this method does, its inputs and observable effects.
+ * Parameters: document important parameters and expected formats.
+ * Returns: describe the return value or side-effects.
+ */
     private void aggiornaDistribuzioneStelle(int totaleRecensioni) {
         if (ristoranteCorrente == null)
             return;
@@ -856,6 +1394,12 @@ public class RestaurantDetailsController {
         aggiornaBarraStella(barStelle1, lblPctStelle1, conteggi[1], totaleRecensioni);
     }
 
+/**
+ * Method: aggiornaBarraStella
+ * Purpose: describe what this method does, its inputs and observable effects.
+ * Parameters: document important parameters and expected formats.
+ * Returns: describe the return value or side-effects.
+ */
     private void aggiornaBarraStella(ProgressBar barra, Label percentualeLabel, int conteggio, int totale) {
         double percentuale = (totale > 0) ? (double) conteggio / totale : 0.0;
         if (barra != null)

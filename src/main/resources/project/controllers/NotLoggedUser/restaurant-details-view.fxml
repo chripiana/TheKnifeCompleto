@@ -26,13 +26,6 @@
                     </children>
                 </HBox>
                 <Region HBox.hgrow="ALWAYS" />
-
-                <Label fx:id="lblBreadcrumb" styleClass="nav-breadcrumb" text="Home  ›  Esplora  ›  Dettagli" />
-
-                <Region HBox.hgrow="ALWAYS" />
-
-                <Button fx:id="btnTornaRisultati" text="← Torna ai risultati" onAction="#handleTornaRisultati"
-                        style="-fx-background-color: #40916C; -fx-text-fill: white; -fx-font-weight: bold; -fx-background-radius: 20px; -fx-padding: 8px 20px; -fx-cursor: hand; -fx-font-size: 13px;" />
             </children>
         </HBox>
     </top>

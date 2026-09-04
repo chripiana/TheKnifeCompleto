@@ -12,22 +12,82 @@ import java.sql.ResultSet;
 
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
+/**
+ * DatabaseManager
+ *
+ * Purpose: Brief description of the class responsibilities and role in the application.
+ *
+ * Responsibilities/Usage:
+ * - Describe main responsibilities and how this class is used at a high level.
+ *
+ * Design notes / Dependencies:
+ * - List key dependencies and rationale for design choices (separation of concerns, performance, simplicity).
+ *
+ * Implementation details:
+ * - Mention important collaborators, expected inputs/outputs and lifecycle (initialization, cleanup, threading if relevant).
+ */
 
 public class DatabaseManager {
 
+/**
+ * Field: host
+ * Purpose: concise description of the fields role and how it is used by the class.
+ * Notes: mention nullability, lifecycle, and external dependencies if any.
+ */
     private static String host = "localhost";
+/**
+ * Field: port
+ * Purpose: concise description of the fields role and how it is used by the class.
+ * Notes: mention nullability, lifecycle, and external dependencies if any.
+ */
     private static int port = 5432;
+/**
+ * Field: dbName
+ * Purpose: concise description of the fields role and how it is used by the class.
+ * Notes: mention nullability, lifecycle, and external dependencies if any.
+ */
     private static String dbName = "theknife";
+/**
+ * Field: user
+ * Purpose: concise description of the fields role and how it is used by the class.
+ * Notes: mention nullability, lifecycle, and external dependencies if any.
+ */
     private static String user = "postgres";
+/**
+ * Field: password
+ * Purpose: concise description of the fields role and how it is used by the class.
+ * Notes: mention nullability, lifecycle, and external dependencies if any.
+ */
     private static String password = "";
 
+/**
+ * Field: url
+ * Purpose: concise description of the fields role and how it is used by the class.
+ * Notes: mention nullability, lifecycle, and external dependencies if any.
+ */
     private static String url;
 
+/**
+ * Field: dataSource
+ * Purpose: concise description of the fields role and how it is used by the class.
+ * Notes: mention nullability, lifecycle, and external dependencies if any.
+ */
     private static HikariDataSource dataSource = null;
 
     // PostGIS availability flag
+/**
+ * Field: postGisAvailable
+ * Purpose: concise description of the fields role and how it is used by the class.
+ * Notes: mention nullability, lifecycle, and external dependencies if any.
+ */
     private static boolean postGisAvailable = false;
 
+/**
+ * Method: configure
+ * Purpose: describe what this method does, its inputs and observable effects.
+ * Parameters: document important parameters and expected formats.
+ * Returns: describe the return value or side-effects.
+ */
     public static void configure(String host, int port, String dbName, String user, String password) {
         DatabaseManager.host = host;
         DatabaseManager.port = port;
@@ -65,6 +125,12 @@ public class DatabaseManager {
         return dataSource.getConnection();
     }
 
+/**
+ * Method: initialize
+ * Purpose: describe what this method does, its inputs and observable effects.
+ * Parameters: document important parameters and expected formats.
+ * Returns: describe the return value or side-effects.
+ */
     public static void initialize() {
         if (url == null) {
             configure(host, port, dbName, user, password);
@@ -81,6 +147,12 @@ public class DatabaseManager {
         }
     }
 
+/**
+ * Method: ensureDatabaseExists
+ * Purpose: describe what this method does, its inputs and observable effects.
+ * Parameters: document important parameters and expected formats.
+ * Returns: describe the return value or side-effects.
+ */
     private static void ensureDatabaseExists() {
         String adminUrl = "jdbc:postgresql://" + host + ":" + port + "/postgres";
 
@@ -124,6 +196,12 @@ public class DatabaseManager {
         }
     }
 
+/**
+ * Method: detectPostGis
+ * Purpose: describe what this method does, its inputs and observable effects.
+ * Parameters: document important parameters and expected formats.
+ * Returns: describe the return value or side-effects.
+ */
     private static void detectPostGis() {
         try (Connection c = getConnection(); Statement stmt = c.createStatement()) {
             String sql = "SELECT EXISTS(SELECT 1 FROM pg_extension WHERE extname = 'postgis')";
@@ -140,6 +218,12 @@ public class DatabaseManager {
         }
     }
 
+/**
+ * Method: isPostGisAvailable
+ * Purpose: describe what this method does, its inputs and observable effects.
+ * Parameters: document important parameters and expected formats.
+ * Returns: describe the return value or side-effects.
+ */
     public static boolean isPostGisAvailable() {
         return postGisAvailable;
     }

@@ -257,6 +257,102 @@
     -fx-effect: dropshadow(three-pass-box, rgba(45,106,79,0.18), 8, 0, 0, 3);
 }
 
+.reservation-card {
+    -fx-background-color: linear-gradient(to bottom, #FFFFFF 0%, #F8FBF9 100%);
+    -fx-background-radius: 16px;
+    -fx-padding: 14 16 14 16;
+    -fx-border-color: #E6EFEA;
+    -fx-border-width: 1px;
+    -fx-border-radius: 16px;
+    -fx-effect: dropshadow(three-pass-box, rgba(27,67,50,0.06), 12, 0, 0, 4);
+}
+
+.reservation-status-pill {
+    -fx-padding: 6 10 6 10;
+    -fx-background-radius: 999px;
+    -fx-font-size: 11px;
+    -fx-font-weight: bold;
+}
+
+.status-pending {
+    -fx-background-color: #FFF3CD;
+    -fx-text-fill: #8A6D00;
+}
+
+.status-accepted {
+    -fx-background-color: #DFF7E7;
+    -fx-text-fill: #1F7A4E;
+}
+
+.status-rejected {
+    -fx-background-color: #FDECEC;
+    -fx-text-fill: #B42318;
+}
+
+.owner-reservation-card {
+    -fx-background-color: linear-gradient(to bottom, #ffffff 0%, #f6faf7 100%);
+    -fx-background-radius: 16px;
+    -fx-padding: 16;
+    -fx-border-color: #E5F0EA;
+    -fx-border-width: 1px;
+    -fx-border-radius: 16px;
+    -fx-effect: dropshadow(three-pass-box, rgba(27,67,50,0.05), 10, 0, 0, 3);
+}
+
+.owner-btn-accept {
+    -fx-background-color: #2D6A4F;
+    -fx-text-fill: white;
+    -fx-font-weight: bold;
+    -fx-cursor: hand;
+    -fx-background-radius: 10px;
+    -fx-padding: 8 12 8 12;
+}
+
+.owner-btn-reject {
+    -fx-background-color: #FDECEC;
+    -fx-text-fill: #B42318;
+    -fx-font-weight: bold;
+    -fx-cursor: hand;
+    -fx-background-radius: 10px;
+    -fx-padding: 8 12 8 12;
+}
+
+.reservation-stage-shell {
+    /* leggero sfondo verdognolo per riempire la finestra e non sembrare un "div" isolato */
+    -fx-background-color: linear-gradient(to bottom, rgba(116,198,157,0.06) 0%, rgba(116,198,157,0.03) 100%);
+    -fx-padding: 14;
+    -fx-alignment: center;
+}
+
+.reservation-stage-card {
+    /* card più grande, bordo e ombra verdi più evidenti */
+    -fx-background-color: linear-gradient(to bottom, #FFFFFF 0%, #FBFFFD 100%);
+    -fx-background-radius: 26px;
+    -fx-border-color: #74C69D;
+    -fx-border-width: 2px;
+    -fx-border-radius: 26px;
+    -fx-padding: 28;
+    -fx-effect: dropshadow(three-pass-box, rgba(116,198,157,0.22), 24, 0, 0, 10);
+    -fx-min-width: 640px;
+    -fx-min-height: 420px;
+}
+
+.reservation-stage-title {
+    -fx-font-size: 28px;
+    -fx-font-weight: bold;
+    -fx-text-fill: #163d2f;
+}
+
+.reservation-stage-subtitle {
+    -fx-font-size: 13px;
+    -fx-text-fill: #4A6B57;
+}
+
+.reservation-form-grid {
+    -fx-hgap: 12;
+    -fx-vgap: 12;
+}
+
 .favorites-page .empty-state-button:hover,
 .search-page .btn-primary:hover,
 .home-page .btn-search:hover,

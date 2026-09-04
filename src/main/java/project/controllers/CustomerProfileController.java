@@ -13,20 +13,129 @@ import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * Controller per la gestione del profilo cliente nell'interfaccia JavaFX.
+ *
+ * Responsabilità:
+ * - caricare i dati del profilo utente dal server
+ * - permettere la modifica dei campi profilo e l'aggiornamento remoto
+ * - fornire feedback all'utente tramite alert
+ *
+ * Dipendenze principali: ServerApiClient per comunicazione con il server,
+ * Navigator per operazioni di navigazione tra viste.
+ *
+ * Motivazione delle scelte:
+ * - Logica di I/O delegata al ServerApiClient per separare UI e networking
+ * - Validazioni minime lato client: lasciare controlli più robusti al server
+ **/
+/**
+ * CustomerProfileController
+ *
+ * Purpose: Brief description of the class responsibilities and role in the application.
+ *
+ * Responsibilities/Usage:
+ * - Describe main responsibilities and how this class is used at a high level.
+ *
+ * Design notes / Dependencies:
+ * - List key dependencies and rationale for design choices (separation of concerns, performance, simplicity).
+ *
+ * Implementation details:
+ * - Mention important collaborators, expected inputs/outputs and lifecycle (initialization, cleanup, threading if relevant).
+ */
 public class CustomerProfileController {
 
+    /**
+     * Campo testo per il nome dell'utente (bindato dalla view FXML)*/
+/**
+ * Field: nomeField
+ * Purpose: concise description of the fields role and how it is used by the class.
+ * Notes: mention nullability, lifecycle, and external dependencies if any.
+ */
     @FXML private TextField nomeField;
+
+    /**
+     * Campo testo per il cognome dell'utente (bindato dalla view FXML)*/
+/**
+ * Field: cognomeField
+ * Purpose: concise description of the fields role and how it is used by the class.
+ * Notes: mention nullability, lifecycle, and external dependencies if any.
+ */
     @FXML private TextField cognomeField;
+
+    /**
+     * DatePicker per la data di nascita (bindato dalla view FXML)*/
+/**
+ * Field: dataNascitaPicker
+ * Purpose: concise description of the fields role and how it is used by the class.
+ * Notes: mention nullability, lifecycle, and external dependencies if any.
+ */
     @FXML private DatePicker dataNascitaPicker;
+
+    /**
+     * Campo testo per il domicilio dell'utente*/
+/**
+ * Field: domicilioField
+ * Purpose: concise description of the fields role and how it is used by the class.
+ * Notes: mention nullability, lifecycle, and external dependencies if any.
+ */
     @FXML private TextField domicilioField;
+
+    /**
+     * Campo per l'inserimento della nuova password (se richiesta)*/
+/**
+ * Field: passwordField
+ * Purpose: concise description of the fields role and how it is used by the class.
+ * Notes: mention nullability, lifecycle, and external dependencies if any.
+ */
     @FXML private PasswordField passwordField;
+
+    /**
+     * Bottone che attiva il salvataggio delle modifiche*/
+/**
+ * Field: btnSalvaModifiche
+ * Purpose: concise description of the fields role and how it is used by the class.
+ * Notes: mention nullability, lifecycle, and external dependencies if any.
+ */
     @FXML private Button btnSalvaModifiche;
 
+    /**
+     * Istanza condivisa del Navigator per la navigazione tra viste*/
+/**
+ * Field: navigator
+ * Purpose: concise description of the fields role and how it is used by the class.
+ * Notes: mention nullability, lifecycle, and external dependencies if any.
+ */
     private Navigator navigator;
+
+    /**
+     * Client di rete per comunicare con il server*/
+/**
+ * Field: apiClient
+ * Purpose: concise description of the fields role and how it is used by the class.
+ * Notes: mention nullability, lifecycle, and external dependencies if any.
+ */
     private ServerApiClient apiClient;
+
+    /**
+     * Id dell'utente loggato (ottenuto dal Navigator)*/
+/**
+ * Field: idUtenteLoggato
+ * Purpose: concise description of the fields role and how it is used by the class.
+ * Notes: mention nullability, lifecycle, and external dependencies if any.
+ */
     private int idUtenteLoggato;
 
+    /**
+     * Metodo di inizializzazione invocato da JavaFX dopo il caricamento della view.
+     * - istanzia navigator e apiClient
+     * - recupera l'id utente loggato e carica il profilo se presente*/
     @FXML
+/**
+ * Method: initialize
+ * Purpose: describe what this method does, its inputs and observable effects.
+ * Parameters: document important parameters and expected formats.
+ * Returns: describe the return value or side-effects.
+ */
     public void initialize() {
         this.navigator = Navigator.getInstance();
         this.apiClient = new ServerApiClient();
@@ -40,6 +149,16 @@ public class CustomerProfileController {
         }
     }
 
+    /**
+     * Recupera i dati del profilo dell'utente loggato dal server e popola i
+     * campi della view. Esegue controlli di connettività e mostra alert in
+     * caso di errore.*/
+/**
+ * Method: caricaDatiProfilo
+ * Purpose: describe what this method does, its inputs and observable effects.
+ * Parameters: document important parameters and expected formats.
+ * Returns: describe the return value or side-effects.
+ */
     private void caricaDatiProfilo() {
         try {
             if (!apiClient.isConnected()) {
@@ -82,6 +201,10 @@ public class CustomerProfileController {
         }
     }
 
+    /**
+     * Handler invocato dal bottone "Salva Modifiche". Esegue validazioni
+     * basilari sui campi, invia eventuale richiesta di cambio password e
+     * quindi aggiorna il profilo utente sul server.*/
     @FXML
     void handleSalvaModifiche(ActionEvent event) {
         String nome = nomeField.getText().trim();
@@ -130,11 +253,23 @@ public class CustomerProfileController {
         }
     }
 
+    /**
+     * Navigazione alla Home intelligente (scelta della view in base al ruolo).*/
     @FXML
+/**
+ * Method: handleGoToHome
+ * Purpose: describe what this method does, its inputs and observable effects.
+ * Parameters: document important parameters and expected formats.
+ * Returns: describe the return value or side-effects.
+ */
     private void handleGoToHome(javafx.scene.input.MouseEvent event) {
         navigator.navigateToHomeIntelligent();
     }
 
+    /**
+     * Parser semplice per convertire una riga di risposta del server nel formato
+     * key=value|key2=value2 in una mappa. Non fa validazioni avanzate,
+     * assume che il server rispetti il formato atteso.*/
     private Map<String, String> parseRowData(String row) {
         Map<String, String> data = new HashMap<>();
         String[] fields = row.split("\\|");
@@ -147,6 +282,14 @@ public class CustomerProfileController {
         return data;
     }
 
+    /**
+     * Mostra un alert modale semplice all'utente.*/
+/**
+ * Method: mostraAllerta
+ * Purpose: describe what this method does, its inputs and observable effects.
+ * Parameters: document important parameters and expected formats.
+ * Returns: describe the return value or side-effects.
+ */
     private void mostraAllerta(String titolo, String messaggio, Alert.AlertType tipo) {
         Alert alert = new Alert(tipo);
         alert.setTitle(titolo);
@@ -155,6 +298,9 @@ public class CustomerProfileController {
         alert.showAndWait();
     }
 
+    /**
+     * Esegue il logout locale resettando lo stato nel Navigator e tornando
+     * alla schermata di login.*/
     @FXML
     void handleLogout(ActionEvent event) {
         System.out.println("Esecuzione del logout utente. Ritorno alla schermata di Login...");

@@ -1,4 +1,0 @@
--------------------------------------------------------------------------------
-Test set: project.shared.validation.RequestValidatorTest
--------------------------------------------------------------------------------
-Tests run: 8, Failures: 0, Errors: 0, Skipped: 0, Time elapsed: 0.018 s - in project.shared.validation.RequestValidatorTest

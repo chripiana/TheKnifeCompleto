@@ -1009,6 +1009,58 @@ public class TheKnifeDAO implements AutoCloseable {
         }
     }
 
+    public java.util.List<java.util.Map<String,Object>> getPrenotazioniRicevuteGestore(int idGestore) throws SQLException {
+        String sql = """
+                SELECT p.id_prenotazione,
+                      p.id_utente,
+                      u.nome AS nome_cliente,
+                      u.cognome AS cognome_cliente,
+                      p.id_ristorante,
+                      r.nome AS nome_ristorante,
+                      p.data_prenotazione,
+                      p.ora_prenotazione,
+                      p.numero_persone,
+                      p.codice_prenotazione,
+                      p.note,
+                      p.stato,
+                      p.created_at
+                 FROM Prenotazioni p
+                 JOIN RistorantiTheKnife r ON r.id_ristorante = p.id_ristorante
+                 JOIN Utenti u ON u.id_utente = p.id_utente
+                 WHERE r.id_gestore = ?
+                 ORDER BY p.data_prenotazione DESC, p.ora_prenotazione DESC
+                """;
+        try (PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setInt(1, idGestore);
+            try (ResultSet rs = ps.executeQuery()) {
+                return resultSetToList(rs);
+            }
+        }
+    }
+
+    public int aggiornaStatoPrenotazione(int idPrenotazione, int idGestore, String nuovoStato) throws SQLException {
+        String stato = nuovoStato == null ? "attiva" : nuovoStato.trim().toLowerCase();
+        if (!stato.equals("attiva") && !stato.equals("accettata") && !stato.equals("rifiutata")) {
+            throw new SQLException("Stato prenotazione non valido: " + nuovoStato);
+        }
+
+        String sql = """
+                UPDATE Prenotazioni p
+                  SET stato = ?,
+                      updated_at = CURRENT_TIMESTAMP
+                 FROM RistorantiTheKnife r
+                 WHERE p.id_ristorante = r.id_ristorante
+                  AND p.id_prenotazione = ?
+                  AND r.id_gestore = ?
+                """;
+        try (PreparedStatement ps = conn.prepareStatement(sql)) {
+            ps.setString(1, stato);
+            ps.setInt(2, idPrenotazione);
+            ps.setInt(3, idGestore);
+            return ps.executeUpdate();
+        }
+    }
+
     public java.util.Map<String,Object> getDatiUtenteMap(int idUtente) throws SQLException {
         String sql = """
                 SELECT nome, cognome, email, data_nascita,

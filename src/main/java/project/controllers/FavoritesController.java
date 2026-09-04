@@ -14,16 +14,89 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * FavoritesController
+ *
+ * Controller JavaFX responsabile della gestione della schermata "Preferiti".
+ * Compiti principali:
+ * - caricare i ristoranti preferiti dell'utente dal server
+ * - renderizzare schede compatte per ogni preferito
+ * - permettere la rimozione di un preferito
+ *
+ * Note di progettazione:
+ * - Tutta la comunicazione di rete è delegata a ServerApiClient per separare
+ *   preoccupazioni UI / networking.
+ * - Le view sono costruite dinamicamente come VBox/HBox per maggiore controllo
+ *   sul layout senza dover creare componenti FXML separati.
+ **/
+/**
+ * FavoritesController
+ *
+ * Purpose: Brief description of the class responsibilities and role in the application.
+ *
+ * Responsibilities/Usage:
+ * - Describe main responsibilities and how this class is used at a high level.
+ *
+ * Design notes / Dependencies:
+ * - List key dependencies and rationale for design choices (separation of concerns, performance, simplicity).
+ *
+ * Implementation details:
+ * - Mention important collaborators, expected inputs/outputs and lifecycle (initialization, cleanup, threading if relevant).
+ */
 public class FavoritesController {
 
+    /**
+     * Contenitore grafico che ospita le card dei ristoranti preferiti (bindato da FXML).*/
+/**
+ * Field: containerPreferiti
+ * Purpose: concise description of the fields role and how it is used by the class.
+ * Notes: mention nullability, lifecycle, and external dependencies if any.
+ */
     @FXML private FlowPane containerPreferiti;
+
+    /**
+     * Box mostrato quando non ci sono preferiti (bindato da FXML).*/
+/**
+ * Field: emptyFavoritesBox
+ * Purpose: concise description of the fields role and how it is used by the class.
+ * Notes: mention nullability, lifecycle, and external dependencies if any.
+ */
     @FXML private VBox emptyFavoritesBox;
 
+    /**
+     * Navigator singleton per la navigazione tra viste.*/
+/**
+ * Field: navigator
+ * Purpose: concise description of the fields role and how it is used by the class.
+ * Notes: mention nullability, lifecycle, and external dependencies if any.
+ */
     private Navigator navigator;
+
+    /**
+     * Client di rete per comunicare con il server.*/
+/**
+ * Field: apiClient
+ * Purpose: concise description of the fields role and how it is used by the class.
+ * Notes: mention nullability, lifecycle, and external dependencies if any.
+ */
     private ServerApiClient apiClient;
+
+    /**
+     * Id dell'utente loggato, ricavato dal Navigator.*/
+/**
+ * Field: idUtenteLoggato
+ * Purpose: concise description of the fields role and how it is used by the class.
+ * Notes: mention nullability, lifecycle, and external dependencies if any.
+ */
     private int idUtenteLoggato;
 
     @FXML
+/**
+ * Method: initialize
+ * Purpose: describe what this method does, its inputs and observable effects.
+ * Parameters: document important parameters and expected formats.
+ * Returns: describe the return value or side-effects.
+ */
     public void initialize() {
         this.navigator = Navigator.getInstance();
         this.apiClient = new ServerApiClient();
@@ -36,6 +109,12 @@ public class FavoritesController {
         }
     }
 
+/**
+ * Method: caricaPreferiti
+ * Purpose: describe what this method does, its inputs and observable effects.
+ * Parameters: document important parameters and expected formats.
+ * Returns: describe the return value or side-effects.
+ */
     private void caricaPreferiti() {
         containerPreferiti.getChildren().clear();
         boolean haPreferiti = false;
@@ -128,6 +207,12 @@ public class FavoritesController {
         }
     }
 
+/**
+ * Method: rimuoviPreferito
+ * Purpose: describe what this method does, its inputs and observable effects.
+ * Parameters: document important parameters and expected formats.
+ * Returns: describe the return value or side-effects.
+ */
     private void rimuoviPreferito(String idRistorante) {
         try {
             if (!apiClient.isConnected()) {
@@ -165,6 +250,12 @@ public class FavoritesController {
         return data;
     }
 
+/**
+ * Method: getEmojiCucina
+ * Purpose: describe what this method does, its inputs and observable effects.
+ * Parameters: document important parameters and expected formats.
+ * Returns: describe the return value or side-effects.
+ */
     private String getEmojiCucina(String cucina) {
         if (cucina == null) {
             return "🍽️";
@@ -181,6 +272,12 @@ public class FavoritesController {
         return "🍽️";
     }
 
+/**
+ * Method: showError
+ * Purpose: describe what this method does, its inputs and observable effects.
+ * Parameters: document important parameters and expected formats.
+ * Returns: describe the return value or side-effects.
+ */
     private void showError(String title, String message) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle(title);

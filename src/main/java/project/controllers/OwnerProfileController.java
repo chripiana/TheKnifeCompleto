@@ -15,23 +15,62 @@ import java.time.LocalDate;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * OwnerProfileController
+ *
+ * Controller per la gestione del profilo dell'utente proprietario/gestore.
+ * Fornisce le stesse funzionalità del profilo cliente con adattamenti della
+ * UI per il ruolo gestore (navbar diverse).
+ **/
+/**
+ * OwnerProfileController
+ *
+ * Purpose: Brief description of the class responsibilities and role in the application.
+ *
+ * Responsibilities/Usage:
+ * - Describe main responsibilities and how this class is used at a high level.
+ *
+ * Design notes / Dependencies:
+ * - List key dependencies and rationale for design choices (separation of concerns, performance, simplicity).
+ *
+ * Implementation details:
+ * - Mention important collaborators, expected inputs/outputs and lifecycle (initialization, cleanup, threading if relevant).
+ */
 public class OwnerProfileController {
+    /** Campo nome (bindato da FXML).*/
     @FXML private TextField nomeField;
+    /** Campo cognome (bindato da FXML).*/
     @FXML private TextField cognomeField;
+    /** DatePicker data di nascita (bindato da FXML).*/
     @FXML private DatePicker dataNascitaPicker;
+    /** Campo domicilio (bindato da FXML).*/
     @FXML private TextField domicilioField;
+    /** Campo password per eventuale modifica.*/
     @FXML private PasswordField passwordField;
+    /** Bottone per salvare modifiche.*/
     @FXML private Button btnSalvaModifiche;
 
+    /** Navbar per utente cliente (visibile solo se ruolo CLIENTE).*/
     @FXML private HBox navbarCliente;
+    /** Navbar per gestore (visibile solo se ruolo GESTORE).*/
     @FXML private HBox navbarGestore;
+    /** Titolo della pagina adattabile in base al ruolo.*/
     @FXML private Text titoloPagina;
 
+    /** Navigator per navigazione.*/
     private Navigator navigator;
+    /** Client di rete.*/
     private ServerApiClient apiClient;
+    /** Id utente loggato.*/
     private int idUtenteLoggato;
 
     @FXML
+/**
+ * Method: initialize
+ * Purpose: describe what this method does, its inputs and observable effects.
+ * Parameters: document important parameters and expected formats.
+ * Returns: describe the return value or side-effects.
+ */
     public void initialize() {
         this.navigator = Navigator.getInstance();
         this.apiClient = new ServerApiClient();
@@ -46,6 +85,12 @@ public class OwnerProfileController {
         }
     }
 
+/**
+ * Method: configuraInterfacciaPerRuolo
+ * Purpose: describe what this method does, its inputs and observable effects.
+ * Parameters: document important parameters and expected formats.
+ * Returns: describe the return value or side-effects.
+ */
     private void configuraInterfacciaPerRuolo() {
         String ruolo = navigator.getRuoloUtenteLoggato();
         if ("GESTORE".equalsIgnoreCase(ruolo)) {
@@ -67,6 +112,12 @@ public class OwnerProfileController {
         }
     }
 
+/**
+ * Method: caricaDatiProfilo
+ * Purpose: describe what this method does, its inputs and observable effects.
+ * Parameters: document important parameters and expected formats.
+ * Returns: describe the return value or side-effects.
+ */
     private void caricaDatiProfilo() {
         try {
             if (!apiClient.isConnected()) {
@@ -176,11 +227,23 @@ public class OwnerProfileController {
     }
 
     @FXML
+/**
+ * Method: handleGoToProfile
+ * Purpose: describe what this method does, its inputs and observable effects.
+ * Parameters: document important parameters and expected formats.
+ * Returns: describe the return value or side-effects.
+ */
     private void handleGoToProfile(ActionEvent event) {
         navigator.navigateToProfile();
     }
 
     @FXML
+/**
+ * Method: handleGoToHome
+ * Purpose: describe what this method does, its inputs and observable effects.
+ * Parameters: document important parameters and expected formats.
+ * Returns: describe the return value or side-effects.
+ */
     private void handleGoToHome(javafx.scene.input.MouseEvent event) {
         navigator.navigateToHomeIntelligent();
     }
@@ -197,6 +260,12 @@ public class OwnerProfileController {
         return data;
     }
 
+/**
+ * Method: mostraAllerta
+ * Purpose: describe what this method does, its inputs and observable effects.
+ * Parameters: document important parameters and expected formats.
+ * Returns: describe the return value or side-effects.
+ */
     private void mostraAllerta(String titolo, String messaggio, Alert.AlertType tipo) {
         Alert alert = new Alert(tipo);
         alert.setTitle(titolo);

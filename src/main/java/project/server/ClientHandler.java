@@ -153,6 +153,12 @@ public class ClientHandler implements Runnable {
                     case "GET_USER_RESERVATIONS":
                         return handleGetUserReservations(normalizedRequest, dao);
 
+                    case "GET_OWNER_RESERVATIONS":
+                        return handleGetOwnerReservations(parts, dao);
+
+                    case "UPDATE_RESERVATION_STATUS":
+                        return handleUpdateReservationStatus(parts, dao, normalizedRequest);
+
                     case "UPDATE_RESERVATION":
                         return handleUpdateReservation(normalizedRequest, dao);
 
@@ -1241,6 +1247,87 @@ public class ClientHandler implements Runnable {
         } catch (Exception e) {
             System.err.println("[Handler] GET_USER_RESERVATIONS - Errore: " + e.getMessage());
             return "GET_USER_RESERVATIONS_FAIL:Errore database";
+        }
+    }
+
+    private String handleGetOwnerReservations(String[] parts, TheKnifeDAO dao) {
+        try {
+            if (parts.length < 2 || parts[1].isEmpty()) {
+                return "GET_OWNER_RESERVATIONS_FAIL:ID gestore obbligatorio";
+            }
+
+            int ownerId;
+            try {
+                ownerId = Integer.parseInt(parts[1].trim());
+            } catch (NumberFormatException e) {
+                return "GET_OWNER_RESERVATIONS_FAIL:ID gestore non valido";
+            }
+
+            if (!userMatchesToken(ownerId)) {
+                return "ERROR:Sessione non valida o non autorizzata";
+            }
+
+            java.util.List<java.util.Map<String,Object>> rows = dao.getPrenotazioniRicevuteGestore(ownerId);
+            StringBuilder sb = new StringBuilder("GET_OWNER_RESERVATIONS_OK:");
+            boolean first = true;
+            for (java.util.Map<String,Object> r : rows) {
+                if (!first) sb.append(";");
+                sb.append(r.getOrDefault("id_prenotazione", "0")).append("|")
+                  .append(r.getOrDefault("id_utente", "0")).append("|")
+                  .append(r.getOrDefault("nome_cliente", "")).append("|")
+                  .append(r.getOrDefault("cognome_cliente", "")).append("|")
+                  .append(r.getOrDefault("id_ristorante", "")).append("|")
+                  .append(r.getOrDefault("nome_ristorante", "")).append("|")
+                  .append(r.getOrDefault("data_prenotazione", "")).append("|")
+                  .append(r.getOrDefault("ora_prenotazione", "")).append("|")
+                  .append(r.getOrDefault("numero_persone", "0")).append("|")
+                  .append(r.getOrDefault("codice_prenotazione", "")).append("|")
+                  .append(r.getOrDefault("note", "")).append("|")
+                  .append(r.getOrDefault("stato", "attiva"));
+                first = false;
+            }
+            if (first) sb.append("0");
+            return sb.toString();
+        } catch (Exception e) {
+            System.err.println("[Handler] GET_OWNER_RESERVATIONS - Errore: " + e.getMessage());
+            return "GET_OWNER_RESERVATIONS_FAIL:Errore database";
+        }
+    }
+
+    private String handleUpdateReservationStatus(String[] parts, TheKnifeDAO dao, String request) {
+        try {
+            String params = request.substring("UPDATE_RESERVATION_STATUS:".length());
+            String[] data = params.split(":", -1);
+            if (data.length < 3) {
+                return "UPDATE_RESERVATION_STATUS_FAIL:Parametri insufficienti";
+            }
+
+            int reservationId;
+            int ownerId;
+            String stato = data[2].trim().toLowerCase();
+            try {
+                reservationId = Integer.parseInt(data[0].trim());
+                ownerId = Integer.parseInt(data[1].trim());
+            } catch (NumberFormatException e) {
+                return "UPDATE_RESERVATION_STATUS_FAIL:ID non validi";
+            }
+
+            if (!userMatchesToken(ownerId)) {
+                return "ERROR:Sessione non valida o non autorizzata";
+            }
+
+            if (!("attiva".equals(stato) || "accettata".equals(stato) || "rifiutata".equals(stato))) {
+                return "UPDATE_RESERVATION_STATUS_FAIL:Stato non valido";
+            }
+
+            int rows = dao.aggiornaStatoPrenotazione(reservationId, ownerId, stato);
+            if (rows > 0) {
+                return "UPDATE_RESERVATION_STATUS_OK:" + stato;
+            }
+            return "UPDATE_RESERVATION_STATUS_FAIL:Impossibile aggiornare lo stato";
+        } catch (Exception e) {
+            System.err.println("[Handler] UPDATE_RESERVATION_STATUS - Errore: " + e.getMessage());
+            return "UPDATE_RESERVATION_STATUS_FAIL:Errore database";
         }
     }
 

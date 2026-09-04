@@ -4,12 +4,23 @@ import javafx.fxml.FXML;
 import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 
+/**
+ * HomeController
+ *
+ * Controller della home page pubblica (non loggata). Espone hander per la
+ * ricerca globale, filtri e scorciatoie per categorie di cucina.
+ **/
 public class HomeController {
 
+    /** Campo di ricerca principale (bindato dalla FXML).*/
     @FXML private TextField searchField;
+    /** Campo di filtro città (bindato dalla FXML).*/
     @FXML private TextField filterCitta;
+    /** Campo di filtro prezzo (bindato dalla FXML).*/
     @FXML private TextField filterPrezzo;
+    /** ComboBox per filtrare per stelle (bindato dalla FXML).*/
     @FXML private ComboBox<String> filterStelle;
+    /** ComboBox per scegliere l'ordine dei risultati (bindato dalla FXML).*/
     @FXML private ComboBox<String> filterOrdine;
 
 

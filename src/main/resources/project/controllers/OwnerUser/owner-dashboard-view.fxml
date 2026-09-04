@@ -184,6 +184,22 @@
                             </children>
                         </VBox>
 
+                        <!-- GESTIONE PRENOTAZIONI -->
+                        <VBox spacing="10">
+                            <children>
+                                <Label text="PRENOTAZIONI RICEVUTE" styleClass="section-title" />
+                                <VBox spacing="15" styleClass="card">
+                                    <padding><Insets top="20" right="20" bottom="20" left="20"/></padding>
+                                    <children>
+                                        <HBox alignment="CENTER_LEFT" styleClass="results-header">
+                                            <Label text="📅 Prenotazioni per i tuoi ristoranti" styleClass="card-title" HBox.hgrow="ALWAYS" maxWidth="Infinity"/>
+                                        </HBox>
+                                        <VBox fx:id="containerPrenotazioni" spacing="12" />
+                                    </children>
+                                </VBox>
+                            </children>
+                        </VBox>
+
                         <!-- GESTIONE RECENSIONI -->
                         <VBox spacing="10">
                             <children>

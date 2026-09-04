@@ -13,17 +13,62 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Optional;
+/**
+ * ReviewsController
+ *
+ * Purpose: Brief description of the class responsibilities and role in the application.
+ *
+ * Responsibilities/Usage:
+ * - Describe main responsibilities and how this class is used at a high level.
+ *
+ * Design notes / Dependencies:
+ * - List key dependencies and rationale for design choices (separation of concerns, performance, simplicity).
+ *
+ * Implementation details:
+ * - Mention important collaborators, expected inputs/outputs and lifecycle (initialization, cleanup, threading if relevant).
+ */
 
 public class ReviewsController {
 
+/**
+ * Field: containerRecensioni
+ * Purpose: concise description of the fields role and how it is used by the class.
+ * Notes: mention nullability, lifecycle, and external dependencies if any.
+ */
     @FXML private VBox containerRecensioni;
+/**
+ * Field: emptyReviewsBox
+ * Purpose: concise description of the fields role and how it is used by the class.
+ * Notes: mention nullability, lifecycle, and external dependencies if any.
+ */
     @FXML private VBox emptyReviewsBox;
 
+/**
+ * Field: navigator
+ * Purpose: concise description of the fields role and how it is used by the class.
+ * Notes: mention nullability, lifecycle, and external dependencies if any.
+ */
     private Navigator navigator;
+/**
+ * Field: apiClient
+ * Purpose: concise description of the fields role and how it is used by the class.
+ * Notes: mention nullability, lifecycle, and external dependencies if any.
+ */
     private ServerApiClient apiClient;
+/**
+ * Field: idUtenteLoggato
+ * Purpose: concise description of the fields role and how it is used by the class.
+ * Notes: mention nullability, lifecycle, and external dependencies if any.
+ */
     private int idUtenteLoggato;
 
     @FXML
+/**
+ * Method: initialize
+ * Purpose: describe what this method does, its inputs and observable effects.
+ * Parameters: document important parameters and expected formats.
+ * Returns: describe the return value or side-effects.
+ */
     public void initialize() {
         this.navigator = Navigator.getInstance();
         this.apiClient = new ServerApiClient();
@@ -36,6 +81,12 @@ public class ReviewsController {
         }
     }
 
+/**
+ * Method: caricaRecensioni
+ * Purpose: describe what this method does, its inputs and observable effects.
+ * Parameters: document important parameters and expected formats.
+ * Returns: describe the return value or side-effects.
+ */
     private void caricaRecensioni() {
         containerRecensioni.getChildren().clear();
         boolean haRecensioni = false;
@@ -175,6 +226,12 @@ public class ReviewsController {
         }
     }
 
+/**
+ * Method: mostraDialogModifica
+ * Purpose: describe what this method does, its inputs and observable effects.
+ * Parameters: document important parameters and expected formats.
+ * Returns: describe the return value or side-effects.
+ */
     private void mostraDialogModifica(int idRecensione, int vecchieStelle, String vecchioTesto) {
         Dialog<ButtonType> dialog = new Dialog<>();
         dialog.setTitle("Modifica Recensione");
@@ -220,6 +277,12 @@ public class ReviewsController {
         }
     }
 
+/**
+ * Method: eliminaRecensione
+ * Purpose: describe what this method does, its inputs and observable effects.
+ * Parameters: document important parameters and expected formats.
+ * Returns: describe the return value or side-effects.
+ */
     private void eliminaRecensione(int idRecensione) {
         Alert confirm = new Alert(Alert.AlertType.CONFIRMATION, "Sei sicuro di voler eliminare questa recensione?", ButtonType.YES, ButtonType.NO);
         confirm.setTitle("Conferma eliminazione");
@@ -263,6 +326,12 @@ public class ReviewsController {
         return data;
     }
 
+/**
+ * Method: showError
+ * Purpose: describe what this method does, its inputs and observable effects.
+ * Parameters: document important parameters and expected formats.
+ * Returns: describe the return value or side-effects.
+ */
     private void showError(String title, String message) {
         Alert alert = new Alert(Alert.AlertType.ERROR);
         alert.setTitle(title);

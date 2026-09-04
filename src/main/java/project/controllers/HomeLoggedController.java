@@ -8,16 +8,27 @@ import javafx.scene.control.ComboBox;
 import javafx.scene.control.TextField;
 import javafx.stage.Stage;
 
+/**
+ * HomeLoggedController
+ *
+ * Variante della Home riservata agli utenti loggati. Permette ricerche,
+ * accesso rapido a sezioni personalizzate e instradamento verso viste loggate.
+ **/
 public class HomeLoggedController {
 
+    /** Campo di ricerca principale per utenti loggati.*/
     @FXML
     private TextField searchField;
+    /** Campo di filtro città.*/
     @FXML
     private TextField filterCitta;
+    /** Campo di filtro prezzo.*/
     @FXML
     private TextField filterPrezzo;
+    /** ComboBox per filtrare per stelle.*/
     @FXML
     private ComboBox<String> filterStelle;
+    /** ComboBox per scegliere l'ordine dei risultati.*/
     @FXML
     private ComboBox<String> filterOrdine;
 

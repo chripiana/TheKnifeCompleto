@@ -4,6 +4,10 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
+import javafx.scene.layout.HBox;
+import javafx.scene.layout.Priority;
+import javafx.scene.layout.Region;
+import javafx.scene.layout.VBox;
 import project.client.services.ServerApiClient;
 
 import java.io.IOException;
@@ -13,24 +17,67 @@ import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * ReservationsController
+ *
+ * Controller che gestisce la vista delle prenotazioni dell'utente.
+ * Funzionalità:
+ * - caricare le prenotazioni dell'utente (GET_USER_RESERVATIONS)
+ * - consentire modifica/cancellazione di prenotazioni
+ *
+ * Nota sulla paginazione: usa currentPage e pageSize per limitare il carico
+ * della lista quando ci sono molte prenotazioni.
+ **/
+/**
+ * ReservationsController
+ *
+ * Purpose: Brief description of the class responsibilities and role in the application.
+ *
+ * Responsibilities/Usage:
+ * - Describe main responsibilities and how this class is used at a high level.
+ *
+ * Design notes / Dependencies:
+ * - List key dependencies and rationale for design choices (separation of concerns, performance, simplicity).
+ *
+ * Implementation details:
+ * - Mention important collaborators, expected inputs/outputs and lifecycle (initialization, cleanup, threading if relevant).
+ */
 public class ReservationsController {
 
+    /** Lista grafica delle prenotazioni (bindata da FXML).*/
     @FXML private ListView<ReservationEntry> reservationsListView;
+    /** DatePicker per selezionare data di prenotazione.*/
     @FXML private DatePicker reservationDatePicker;
+    /** ComboBox con orari disponibili.*/
     @FXML private ComboBox<String> reservationTimeCombo;
+    /** Spinner per il numero di persone.*/
     @FXML private Spinner<Integer> reservationGuestsSpinner;
+    /** Area per note aggiuntive sulla prenotazione.*/
     @FXML private TextArea reservationNotesArea;
+    /** Label per mostrare messaggi di stato relativi alle prenotazioni.*/
     @FXML private Label reservationStatusLabel;
+    /** Pulsanti per salvare o cancellare la prenotazione.*/
     @FXML private Button saveReservationButton;
     @FXML private Button deleteReservationButton;
 
+    /** Client di rete condiviso nel controller.*/
     private final ServerApiClient apiClient = new ServerApiClient();
+    /** Modello osservabile delle prenotazioni visualizzate nella ListView.*/
     private final ObservableList<ReservationEntry> reservations = FXCollections.observableArrayList();
+    /** Prenotazione selezionata dall'utente nella lista.*/
     private ReservationEntry selectedReservation;
+    /** Numero di pagina corrente per la paginazione lato client.*/
     private int currentPage = 0;
+    /** Dimensione della pagina (numero di elementi per richiesta).*/
     private final int pageSize = 50; // default page size for reservations
 
     @FXML
+/**
+ * Method: initialize
+ * Purpose: describe what this method does, its inputs and observable effects.
+ * Parameters: document important parameters and expected formats.
+ * Returns: describe the return value or side-effects.
+ */
     public void initialize() {
         reservationGuestsSpinner.setValueFactory(new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 20, 2));
         reservationTimeCombo.setItems(FXCollections.observableArrayList(buildTimeOptions()));
@@ -39,12 +86,20 @@ public class ReservationsController {
         reservationsListView.setItems(reservations);
         reservationsListView.setCellFactory(listView -> new ListCell<>() {
             @Override
+/**
+ * Method: updateItem
+ * Purpose: describe what this method does, its inputs and observable effects.
+ * Parameters: document important parameters and expected formats.
+ * Returns: describe the return value or side-effects.
+ */
             protected void updateItem(ReservationEntry item, boolean empty) {
                 super.updateItem(item, empty);
                 if (empty || item == null) {
                     setText(null);
+                    setGraphic(null);
                 } else {
-                    setText(item.code + " • " + item.restaurantName + " • " + item.date + " " + item.time);
+                    setGraphic(buildReservationCard(item));
+                    setText(null);
                 }
             }
         });
@@ -60,26 +115,56 @@ public class ReservationsController {
     }
 
     @FXML
+/**
+ * Method: handleBack
+ * Purpose: describe what this method does, its inputs and observable effects.
+ * Parameters: document important parameters and expected formats.
+ * Returns: describe the return value or side-effects.
+ */
     private void handleBack() {
         Navigator.getInstance().navigateToHomeIntelligent();
     }
 
     @FXML
+/**
+ * Method: handleGoToHome
+ * Purpose: describe what this method does, its inputs and observable effects.
+ * Parameters: document important parameters and expected formats.
+ * Returns: describe the return value or side-effects.
+ */
     private void handleGoToHome() {
         Navigator.getInstance().navigateToHomeIntelligent();
     }
 
     @FXML
+/**
+ * Method: handleGoToProfile
+ * Purpose: describe what this method does, its inputs and observable effects.
+ * Parameters: document important parameters and expected formats.
+ * Returns: describe the return value or side-effects.
+ */
     private void handleGoToProfile() {
         Navigator.getInstance().navigateToProfile();
     }
 
     @FXML
+/**
+ * Method: handleRefresh
+ * Purpose: describe what this method does, its inputs and observable effects.
+ * Parameters: document important parameters and expected formats.
+ * Returns: describe the return value or side-effects.
+ */
     private void handleRefresh() {
         loadReservations();
     }
 
     @FXML
+/**
+ * Method: handleSaveReservation
+ * Purpose: describe what this method does, its inputs and observable effects.
+ * Parameters: document important parameters and expected formats.
+ * Returns: describe the return value or side-effects.
+ */
     private void handleSaveReservation() {
         if (selectedReservation == null) {
             showStatus("Seleziona una prenotazione da modificare", true);
@@ -125,6 +210,12 @@ public class ReservationsController {
     }
 
     @FXML
+/**
+ * Method: handleDeleteReservation
+ * Purpose: describe what this method does, its inputs and observable effects.
+ * Parameters: document important parameters and expected formats.
+ * Returns: describe the return value or side-effects.
+ */
     private void handleDeleteReservation() {
         if (selectedReservation == null) {
             showStatus("Seleziona una prenotazione da cancellare", true);
@@ -166,6 +257,12 @@ public class ReservationsController {
         });
     }
 
+/**
+ * Method: loadReservations
+ * Purpose: describe what this method does, its inputs and observable effects.
+ * Parameters: document important parameters and expected formats.
+ * Returns: describe the return value or side-effects.
+ */
     private void loadReservations() {
         int userId = Navigator.getInstance().getIdUtenteLoggato();
         if (userId <= 0) {
@@ -201,6 +298,12 @@ public class ReservationsController {
         }
     }
 
+/**
+ * Method: parseReservations
+ * Purpose: describe what this method does, its inputs and observable effects.
+ * Parameters: document important parameters and expected formats.
+ * Returns: describe the return value or side-effects.
+ */
     private void parseReservations(String payload) {
         reservations.clear();
         if (payload == null || payload.isBlank() || "0".equals(payload.trim())) {
@@ -244,6 +347,12 @@ public class ReservationsController {
         }
     }
 
+/**
+ * Method: fillForm
+ * Purpose: describe what this method does, its inputs and observable effects.
+ * Parameters: document important parameters and expected formats.
+ * Returns: describe the return value or side-effects.
+ */
     private void fillForm(ReservationEntry reservation) {
         if (reservation == null) {
             clearForm();
@@ -255,6 +364,12 @@ public class ReservationsController {
         reservationNotesArea.setText(reservation.note);
     }
 
+/**
+ * Method: clearForm
+ * Purpose: describe what this method does, its inputs and observable effects.
+ * Parameters: document important parameters and expected formats.
+ * Returns: describe the return value or side-effects.
+ */
     private void clearForm() {
         reservationDatePicker.setValue(LocalDate.now());
         reservationTimeCombo.getSelectionModel().select("20:00");
@@ -262,6 +377,12 @@ public class ReservationsController {
         reservationNotesArea.clear();
     }
 
+/**
+ * Method: buildTimeOptions
+ * Purpose: describe what this method does, its inputs and observable effects.
+ * Parameters: document important parameters and expected formats.
+ * Returns: describe the return value or side-effects.
+ */
     private List<String> buildTimeOptions() {
         // Safe time options builder: cap iterations to avoid infinite loops causing OOM
         List<String> options = new ArrayList<>();
@@ -279,6 +400,97 @@ public class ReservationsController {
         return options;
     }
 
+/**
+ * Method: buildReservationCard
+ * Purpose: describe what this method does, its inputs and observable effects.
+ * Parameters: document important parameters and expected formats.
+ * Returns: describe the return value or side-effects.
+ */
+    private VBox buildReservationCard(ReservationEntry item) {
+        VBox card = new VBox(8);
+        card.getStyleClass().add("reservation-card");
+        card.setMinHeight(120);
+
+        HBox header = new HBox();
+        header.setAlignment(javafx.geometry.Pos.CENTER_LEFT);
+
+        Label restaurant = new Label(item.restaurantName);
+        restaurant.setStyle("-fx-font-weight: bold; -fx-font-size: 15px; -fx-text-fill: #163d2f;");
+
+        Region spacer = new Region();
+        HBox.setHgrow(spacer, javafx.scene.layout.Priority.ALWAYS);
+
+        Label status = new Label(getReservationStatusLabel(item.state));
+        status.getStyleClass().addAll("reservation-status-pill", getReservationStatusStyleClass(item.state));
+
+        header.getChildren().addAll(restaurant, spacer, status);
+
+        Label meta = new Label(item.date + " • " + item.time + " • " + item.people + " persone");
+        meta.setStyle("-fx-font-size: 12px; -fx-text-fill: #4A6B57;");
+
+        Label code = new Label("Codice: " + item.code);
+        code.setStyle("-fx-font-size: 12px; -fx-text-fill: #1B4332; -fx-font-weight: bold;");
+
+        String noteText = item.note == null || item.note.isBlank() ? "Nessuna nota aggiunta" : item.note;
+        Label note = new Label(noteText);
+        note.setWrapText(true);
+        note.setStyle("-fx-font-size: 12px; -fx-text-fill: #526B62; -fx-opacity: 0.95;");
+
+        card.getChildren().addAll(header, meta, code, note);
+        return card;
+    }
+
+/**
+ * Method: getReservationStatusLabel
+ * Purpose: describe what this method does, its inputs and observable effects.
+ * Parameters: document important parameters and expected formats.
+ * Returns: describe the return value or side-effects.
+ */
+    private String getReservationStatusLabel(String state) {
+        String normalized = normalizeReservationState(state);
+        switch (normalized) {
+            case "accettata": return "Accettata";
+            case "rifiutata": return "Rifiutata";
+            default: return "In attesa";
+        }
+    }
+
+/**
+ * Method: getReservationStatusStyleClass
+ * Purpose: describe what this method does, its inputs and observable effects.
+ * Parameters: document important parameters and expected formats.
+ * Returns: describe the return value or side-effects.
+ */
+    private String getReservationStatusStyleClass(String state) {
+        String normalized = normalizeReservationState(state);
+        switch (normalized) {
+            case "accettata": return "status-accepted";
+            case "rifiutata": return "status-rejected";
+            default: return "status-pending";
+        }
+    }
+
+/**
+ * Method: normalizeReservationState
+ * Purpose: describe what this method does, its inputs and observable effects.
+ * Parameters: document important parameters and expected formats.
+ * Returns: describe the return value or side-effects.
+ */
+    private String normalizeReservationState(String state) {
+        if (state == null) return "attiva";
+        String normalized = state.trim().toLowerCase();
+        if (normalized.contains("accett")) return "accettata";
+        if (normalized.contains("rifiut") || normalized.contains("respinta")) return "rifiutata";
+        if (normalized.contains("attiv") || normalized.contains("in attesa") || normalized.contains("modif")) return "attiva";
+        return normalized;
+    }
+
+/**
+ * Method: showStatus
+ * Purpose: describe what this method does, its inputs and observable effects.
+ * Parameters: document important parameters and expected formats.
+ * Returns: describe the return value or side-effects.
+ */
     private void showStatus(String message, boolean error) {
         if (reservationStatusLabel == null) {
             return;
@@ -288,14 +500,59 @@ public class ReservationsController {
     }
 
     public static class ReservationEntry {
+/**
+ * Field: id
+ * Purpose: concise description of the fields role and how it is used by the class.
+ * Notes: mention nullability, lifecycle, and external dependencies if any.
+ */
         private int id;
+/**
+ * Field: restaurantId
+ * Purpose: concise description of the fields role and how it is used by the class.
+ * Notes: mention nullability, lifecycle, and external dependencies if any.
+ */
         private String restaurantId;
+/**
+ * Field: restaurantName
+ * Purpose: concise description of the fields role and how it is used by the class.
+ * Notes: mention nullability, lifecycle, and external dependencies if any.
+ */
         private String restaurantName;
+/**
+ * Field: date
+ * Purpose: concise description of the fields role and how it is used by the class.
+ * Notes: mention nullability, lifecycle, and external dependencies if any.
+ */
         private String date;
+/**
+ * Field: time
+ * Purpose: concise description of the fields role and how it is used by the class.
+ * Notes: mention nullability, lifecycle, and external dependencies if any.
+ */
         private String time;
+/**
+ * Field: people
+ * Purpose: concise description of the fields role and how it is used by the class.
+ * Notes: mention nullability, lifecycle, and external dependencies if any.
+ */
         private int people;
+/**
+ * Field: code
+ * Purpose: concise description of the fields role and how it is used by the class.
+ * Notes: mention nullability, lifecycle, and external dependencies if any.
+ */
         private String code;
+/**
+ * Field: note
+ * Purpose: concise description of the fields role and how it is used by the class.
+ * Notes: mention nullability, lifecycle, and external dependencies if any.
+ */
         private String note;
+/**
+ * Field: state
+ * Purpose: concise description of the fields role and how it is used by the class.
+ * Notes: mention nullability, lifecycle, and external dependencies if any.
+ */
         private String state;
     }
 }

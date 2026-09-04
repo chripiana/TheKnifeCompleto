@@ -10,37 +10,75 @@ import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * NewRestaurantController
+ *
+ * Controller della vista che consente a un gestore di creare un nuovo
+ * ristorante. Valida i campi principali, calcola coordinate simulate e invia
+ * la richiesta CREATE_RESTAURANT al server.
+ **/
+/**
+ * NewRestaurantController
+ *
+ * Purpose: Brief description of the class responsibilities and role in the application.
+ *
+ * Responsibilities/Usage:
+ * - Describe main responsibilities and how this class is used at a high level.
+ *
+ * Design notes / Dependencies:
+ * - List key dependencies and rationale for design choices (separation of concerns, performance, simplicity).
+ *
+ * Implementation details:
+ * - Mention important collaborators, expected inputs/outputs and lifecycle (initialization, cleanup, threading if relevant).
+ */
 public class NewRestaurantController {
 
+    /** Testo che mostra le iniziali del gestore (bindato da FXML).*/
     @FXML private Text txtInizialiGestore;
+    /** Testo che mostra il nome del gestore.*/
     @FXML private Text txtNomeGestore;
+    /** Testo che mostra l'email del gestore.*/
     @FXML private Text txtEmailGestore;
+    /** KPI che indica il numero di ristoranti esistenti.*/
     @FXML private Text lblKpiRistoranti;
 
+    /** Campo nome ristorante (bindato da FXML).*/
     @FXML private TextField txtNome;
+    /** ComboBox per selezionare la cucina (bindato da FXML).*/
     @FXML private ComboBox<String> comboCucina;
+    /** Campo prezzo medio (bindato da FXML).*/
     @FXML private TextField txtPrezzoMedio;
+    /** Checkbox delivery.*/
     @FXML private CheckBox chkDelivery;
+    /** Checkbox prenotazione online.*/
     @FXML private CheckBox chkPrenotazione;
 
+    /** Labels che rappresentano le stelle cliccabili per la valutazione iniziale.*/
     @FXML private Label star1;
     @FXML private Label star2;
     @FXML private Label star3;
     @FXML private Label star4;
     @FXML private Label star5;
 
+    /** Campi di localizzazione (bindati da FXML).*/
     @FXML private TextField txtNazione;
     @FXML private TextField txtCitta;
     @FXML private TextField txtIndirizzo;
     @FXML private TextField txtLatitudine;
     @FXML private TextField txtLongitudine;
+    /** Anteprima coordinate calcolate automaticamente.*/
     @FXML private Text lblCoordinatePreview;
 
+    /** Navigator per la navigazione.*/
     private Navigator navigator;
+    /** Client di rete per comunicare con il server.*/
     private ServerApiClient apiClient;
+    /** Id del gestore loggato.*/
     private int idGestoreLoggato;
+    /** Stato locale: stelle selezionate per valutazione iniziale.*/
     private int stelleSelezionate = 0;
 
+    /** Inizializzazione: associa navigator, apiClient e imposta listener su città/indirizzo.*/
     @FXML
     public void initialize() {
         this.navigator = Navigator.getInstance();
@@ -60,6 +98,12 @@ public class NewRestaurantController {
     }
 
 
+/**
+ * Method: caricaDatiGestore
+ * Purpose: describe what this method does, its inputs and observable effects.
+ * Parameters: document important parameters and expected formats.
+ * Returns: describe the return value or side-effects.
+ */
     private void caricaDatiGestore() {
         try {
             if (!apiClient.isConnected()) {
@@ -104,6 +148,12 @@ public class NewRestaurantController {
         }
     }
 
+/**
+ * Method: calcolaCoordinateAutomatiche
+ * Purpose: describe what this method does, its inputs and observable effects.
+ * Parameters: document important parameters and expected formats.
+ * Returns: describe the return value or side-effects.
+ */
     private void calcolaCoordinateAutomatiche() {
         String citta = txtCitta.getText().trim();
         String indirizzo = txtIndirizzo.getText().trim();
@@ -204,11 +254,23 @@ public class NewRestaurantController {
     }
 
     @FXML
+/**
+ * Method: handleGoToProfile
+ * Purpose: describe what this method does, its inputs and observable effects.
+ * Parameters: document important parameters and expected formats.
+ * Returns: describe the return value or side-effects.
+ */
     private void handleGoToProfile(ActionEvent event) {
         navigator.navigateToProfile();
     }
 
     @FXML
+/**
+ * Method: handleGoToHome
+ * Purpose: describe what this method does, its inputs and observable effects.
+ * Parameters: document important parameters and expected formats.
+ * Returns: describe the return value or side-effects.
+ */
     private void handleGoToHome(javafx.scene.input.MouseEvent event) {
         navigator.navigateToHomeIntelligent();
     }
@@ -229,6 +291,12 @@ public class NewRestaurantController {
     //  GESTIONE RATING STELLATO CLICCABILE (INTERFACCIA DINAMICA)
     // =========================================================
 
+/**
+ * Method: aggiornaStelleVisive
+ * Purpose: describe what this method does, its inputs and observable effects.
+ * Parameters: document important parameters and expected formats.
+ * Returns: describe the return value or side-effects.
+ */
     private void aggiornaStelleVisive(int count) {
         stelleSelezionate = count;
         Label[] stelle = {star1, star2, star3, star4, star5};
@@ -247,6 +315,12 @@ public class NewRestaurantController {
     @FXML private void handleStar4() { aggiornaStelleVisive(4); }
     @FXML private void handleStar5() { aggiornaStelleVisive(5); }
 
+/**
+ * Method: mostraAllerta
+ * Purpose: describe what this method does, its inputs and observable effects.
+ * Parameters: document important parameters and expected formats.
+ * Returns: describe the return value or side-effects.
+ */
     private void mostraAllerta(String titolo, String messaggio, Alert.AlertType tipo) {
         Alert alert = new Alert(tipo);
         alert.setTitle(titolo);
