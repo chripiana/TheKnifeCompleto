@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.geometry.Insets?>
+<?import javafx.scene.control.*?>
+<?import javafx.scene.layout.*?>
+
+<BorderPane xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="project.server.ServerDashboardController" stylesheets="@../controllers/style.css" styleClass="server-dashboard" prefWidth="1180" prefHeight="820">
+    <top>
+        <VBox spacing="10" styleClass="server-header">
+            <HBox alignment="CENTER_LEFT" spacing="14">
+                <Label text="TheKnife" styleClass="server-brand"/>
+                <Label text="SERVER" styleClass="server-badge"/>
+            </HBox>
+            <HBox alignment="CENTER_LEFT" spacing="10">
+                <Label text="TheKnife Server" styleClass="server-title"/>
+                <Label fx:id="serverModeBadge" text="DISCONNECTED" styleClass="mode-pill disconnected"/>
+            </HBox>
+            <Label text="Configurazione server e monitoraggio connessioni" styleClass="server-subtitle"/>
+        </VBox>
+    </top>
+
+    <center>
+        <VBox spacing="18" styleClass="server-body">
+            <HBox spacing="18">
+                <VBox styleClass="stat-card" prefWidth="170">
+                    <Label text="Stato" styleClass="stat-label"/>
+                    <Label fx:id="serverStateLabel" text="OFFLINE" styleClass="stat-value offline"/>
+                </VBox>
+                <VBox styleClass="stat-card" prefWidth="170">
+                    <Label text="Client" styleClass="stat-label"/>
+                    <Label fx:id="connectedClientsCountLabel" text="0" styleClass="stat-value"/>
+                </VBox>
+                <VBox styleClass="stat-card" prefWidth="170">
+                    <Label text="Database" styleClass="stat-label"/>
+                    <Label text="PostgreSQL" styleClass="stat-value muted"/>
+                </VBox>
+            </HBox>
+
+            <HBox spacing="24" VBox.vgrow="ALWAYS">
+                <VBox spacing="16" HBox.hgrow="ALWAYS" maxWidth="640">
+                    <TitledPane text="Impostazioni server" collapsible="false" styleClass="card server-panel">
+                        <VBox spacing="14" style="-fx-padding: 16;">
+                            <HBox spacing="10" alignment="CENTER_LEFT">
+                                <Label text="Host DB:" minWidth="140" styleClass="field-label"/>
+                                <TextField fx:id="dbHostField" text="localhost" HBox.hgrow="ALWAYS" styleClass="modern-textfield"/>
+                            </HBox>
+                            <HBox spacing="10" alignment="CENTER_LEFT">
+                                <Label text="Porta DB:" minWidth="140" styleClass="field-label"/>
+                                <TextField fx:id="dbPortField" text="5432" styleClass="modern-textfield"/>
+                            </HBox>
+                            <HBox spacing="10" alignment="CENTER_LEFT">
+                                <Label text="Database:" minWidth="140" styleClass="field-label"/>
+                                <TextField fx:id="dbNameField" text="theknife" HBox.hgrow="ALWAYS" styleClass="modern-textfield"/>
+                            </HBox>
+                            <HBox spacing="10" alignment="CENTER_LEFT">
+                                <Label text="Utente DB:" minWidth="140" styleClass="field-label"/>
+                                <TextField fx:id="dbUserField" text="postgres" HBox.hgrow="ALWAYS" styleClass="modern-textfield"/>
+                            </HBox>
+                            <HBox spacing="10" alignment="CENTER_LEFT">
+                                <Label text="Password DB:" minWidth="140" styleClass="field-label"/>
+                                <PasswordField fx:id="dbPasswordField" text="password" HBox.hgrow="ALWAYS" styleClass="modern-textfield"/>
+                            </HBox>
+                            <HBox spacing="10" alignment="CENTER_LEFT">
+                                <Label text="Porta Server:" minWidth="140" styleClass="field-label"/>
+                                <TextField fx:id="serverPortField" text="8080" styleClass="modern-textfield"/>
+                            </HBox>
+                        </VBox>
+                    </TitledPane>
+
+                    <HBox spacing="10" alignment="CENTER_RIGHT">
+                        <Button text="Avvia server" onAction="#handleStartServer" styleClass="btn-primary"/>
+                        <Button text="Arresta server" onAction="#handleStopServer" styleClass="btn-accent"/>
+                    </HBox>
+
+                    <VBox styleClass="status-panel" spacing="8">
+                        <Label text="Status operativo" styleClass="section-title"/>
+                        <Label fx:id="statusLabel" text="Server non avviato" styleClass="status-text" wrapText="true"/>
+                    </VBox>
+                </VBox>
+
+                <VBox spacing="10" HBox.hgrow="ALWAYS" styleClass="client-panel">
+                    <Label text="Client connessi" styleClass="card-title"/>
+                    <ListView fx:id="connectedClientsList" prefHeight="520" styleClass="modern-scrollpane server-client-list"/>
+                </VBox>
+            </HBox>
+        </VBox>
+    </center>
+</BorderPane>
