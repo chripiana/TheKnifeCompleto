@@ -1,0 +1,5 @@
+cd /Users/christian/Desktop/TheKnifeCompleto-main/bin
+java --module-path "/Users/christian/Downloads/javafx-sdk-26.0.2/lib" --add-modules javafx.controls,javafx.fxml,javafx.graphics,javafx.web -cp "theknife-server-gui.jar" theknife.LauncherServer
+
+cd /Users/christian/Desktop/TheKnifeCompleto-main/bin
+java --module-path "/Users/christian/Downloads/javafx-sdk-26.0.2/lib" --add-modules javafx.controls,javafx.fxml,javafx.graphics,javafx.web -cp "theknife-client.jar" theknife.Launcher
