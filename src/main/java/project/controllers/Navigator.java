@@ -7,6 +7,8 @@ import javafx.stage.Stage;
 import javafx.application.Platform;
 import java.io.IOException;
 import java.net.URL;
+import java.util.ArrayDeque;
+import java.util.Deque;
 
 import project.client.services.ServerApiClient;
 
@@ -39,6 +41,8 @@ import project.client.services.ServerApiClient;
  * - Mention important collaborators, expected inputs/outputs and lifecycle (initialization, cleanup, threading if relevant).
  */
 public class Navigator {
+    private record NavigationState(String fxmlFile, String title) {}
+
     /** Istanza singleton */
     private static Navigator instance;
     /** Stage principale dell'app su cui viene caricata la Scene */
@@ -48,6 +52,26 @@ public class Navigator {
     private int idUtenteLoggato = -1;
     /** Ruolo dell'utente (CLIENTE/GESTORE), usato per routing.*/
     private String ruoloUtenteLoggato = null;
+    /** Cronologia delle pagine visitate per tornare indietro in modo pulito. */
+    private final Deque<NavigationState> backStack = new ArrayDeque<>();
+    /** Pagina da raggiungere dopo un login corretto. */
+    private String pendingReturnTarget = null;
+    /** Titolo della pagina da raggiungere dopo un login corretto. */
+    private String pendingReturnTitle = null;
+    /** Pagina corrente attiva nella navigazione. */
+    private String currentRoute = null;
+    /** Titolo della pagina corrente. */
+    private String currentTitle = null;
+    /** Ultima pagina di ricerca usata come destinazione di ritorno dal dettaglio. */
+    private String lastSearchRoute = null;
+    /** Titolo dell'ultima pagina di ricerca. */
+    private String lastSearchTitle = null;
+    /** Stato della ricerca precedente per ripristinare i criteri usati. */
+    private String lastSearchQuery = null;
+    private String lastSearchCitta = null;
+    private String lastSearchPrezzo = null;
+    private String lastSearchStelle = null;
+    private String lastSearchOrdine = null;
 
     /** Cache della view dei risultati di ricerca per poter tornare indietro velocemente.*/
     private Parent cachedSearchView = null;
@@ -195,10 +219,35 @@ public class Navigator {
  * Returns: describe the return value or side-effects.
  */
     public void navigateTo(String fxmlFile, String title) {
+        if (fxmlFile != null && isLoginRoute(fxmlFile) && !isLoginRoute(currentRoute)) {
+            pendingReturnTarget = currentRoute != null && !currentRoute.isBlank() ? currentRoute : "home-view.fxml";
+            pendingReturnTitle = currentTitle != null && !currentTitle.isBlank() ? currentTitle : "Home";
+        }
+        navigateToInternal(fxmlFile, title, true);
+    }
+
+    private boolean isLoginRoute(String route) {
+        if (route == null) return false;
+        String normalized = route.trim();
+        return normalized.endsWith("login-view.fxml") || normalized.equals("login-view.fxml");
+    }
+
+    private void navigateToInternal(String fxmlFile, String title, boolean recordHistory) {
         if (stage == null) {
             System.err.println("[NAVIGATOR] Errore: Lo Stage non è stato configurato!");
             return;
         }
+
+        if (fxmlFile == null || fxmlFile.isBlank()) {
+            System.err.println("[NAVIGATOR] Route vuota, salto la navigazione.");
+            return;
+        }
+
+        if (recordHistory && currentRoute != null && !currentRoute.equals(fxmlFile)) {
+            backStack.addLast(new NavigationState(currentRoute, currentTitle));
+        }
+        currentRoute = fxmlFile;
+        currentTitle = title;
 
         URL fxmlUrl = risolviPercorsoFXML(fxmlFile);
         if (fxmlUrl == null) {
@@ -217,6 +266,45 @@ public class Navigator {
         }
     }
 
+    public void goBack() {
+        if (backStack.isEmpty()) {
+            navigateToHomeIntelligent();
+            return;
+        }
+
+        NavigationState previous = backStack.removeLast();
+        String target = previous.fxmlFile();
+        String targetTitle = previous.title();
+
+        currentRoute = target;
+        currentTitle = targetTitle;
+
+        navigateToInternal(target, targetTitle, false);
+    }
+
+    public void navigateToLoginWithReturn(String returnTarget, String returnTitle) {
+        String target = returnTarget != null && !returnTarget.isBlank() ? returnTarget : currentRoute != null ? currentRoute : "home-view.fxml";
+        pendingReturnTarget = target;
+        pendingReturnTitle = returnTitle != null && !returnTitle.isBlank() ? returnTitle : currentTitle != null ? currentTitle : "Home";
+        navigateTo("login-view.fxml", "Accedi");
+    }
+
+    public boolean hasPendingReturnTarget() {
+        return pendingReturnTarget != null && !pendingReturnTarget.isBlank();
+    }
+
+    public void navigateAfterLogin() {
+        if (!hasPendingReturnTarget()) {
+            navigateToHomeIntelligent();
+            return;
+        }
+        String target = pendingReturnTarget;
+        String title = pendingReturnTitle;
+        pendingReturnTarget = null;
+        pendingReturnTitle = null;
+        navigateToInternal(target, title, false);
+    }
+
 
 /**
  * Method: navigateToSearchWithQueryLogged
@@ -225,6 +313,7 @@ public class Navigator {
  * Returns: describe the return value or side-effects.
  */
     public void navigateToSearchWithQueryLogged(String queryTesto) {
+        rememberSearchState("search-view-logged.fxml", "Cerca Ristoranti", queryTesto, null, null, null, null);
         URL fxmlUrl = risolviPercorsoFXML("search-view-logged.fxml");
         if (fxmlUrl == null) {
             System.err.println("[ERRORE] Impossibile trovare search-view-logged.fxml");
@@ -250,6 +339,7 @@ public class Navigator {
  * Returns: describe the return value or side-effects.
  */
     public void navigateToSearchWithQuery(String queryTesto) {
+        rememberSearchState("search-view.fxml", "Cerca Ristoranti", queryTesto, null, null, null, null);
         URL fxmlUrl = risolviPercorsoFXML("search-view.fxml");
         if (fxmlUrl == null) {
             System.err.println("[ERRORE] Impossibile trovare search-view.fxml");
@@ -276,6 +366,7 @@ public class Navigator {
  * Returns: describe the return value or side-effects.
  */
     public void navigateToSearchWithAdvancedFilters(String citta, String prezzoMax, String stelle, String ordine) {
+        rememberSearchState("search-view.fxml", "Cerca Ristoranti", null, citta, prezzoMax, stelle, ordine);
         URL fxmlUrl = risolviPercorsoFXML("search-view.fxml");
         if (fxmlUrl == null) {
             System.err.println("[ERRORE] Impossibile trovare search-view.fxml");
@@ -296,6 +387,7 @@ public class Navigator {
 
     public void navigateToSearchWithAdvancedFiltersLogged(String citta, String prezzoMax, String stelle,
             String ordine) {
+        rememberSearchState("search-view-logged.fxml", "Cerca Ristoranti", null, citta, prezzoMax, stelle, ordine);
         URL fxmlUrl = risolviPercorsoFXML("search-view-logged.fxml");
         if (fxmlUrl == null) {
             System.err.println("[ERRORE] Impossibile trovare search-view-logged.fxml");
@@ -321,11 +413,31 @@ public class Navigator {
  * Parameters: document important parameters and expected formats.
  * Returns: describe the return value or side-effects.
  */
+    public void rememberSearchRoute(String route, String title) {
+        rememberSearchState(route, title, lastSearchQuery, lastSearchCitta, lastSearchPrezzo, lastSearchStelle, lastSearchOrdine);
+    }
+
+    public void rememberSearchState(String route, String title, String query, String citta, String prezzo, String stelle, String ordine) {
+        if (route == null || route.isBlank()) {
+            return;
+        }
+        this.lastSearchRoute = route;
+        this.lastSearchTitle = title != null && !title.isBlank() ? title : "Cerca Ristoranti";
+        this.lastSearchQuery = query;
+        this.lastSearchCitta = citta;
+        this.lastSearchPrezzo = prezzo;
+        this.lastSearchStelle = stelle;
+        this.lastSearchOrdine = ordine;
+    }
+
     public void navigateToRestaurantDetails(SearchController.RistoranteOggetto ristorante) {
-        // Salva la schermata dei risultati prima di sovrascriverla
         if (stage != null && stage.getScene() != null) {
             cachedSearchView = stage.getScene().getRoot();
             cachedSearchTitle = stage.getTitle().replace("TheKnife — ", "");
+        }
+
+        if (currentRoute != null && currentRoute.contains("search-view")) {
+            rememberSearchRoute(currentRoute, currentTitle != null ? currentTitle : "Cerca Ristoranti");
         }
 
         boolean loggedUser = this.idUtenteLoggato != -1;
@@ -358,9 +470,30 @@ public class Navigator {
  * Returns: describe the return value or side-effects.
  */
     public void backToSearchResults() {
+        if (lastSearchRoute != null && !lastSearchRoute.isBlank()) {
+            String route = lastSearchRoute;
+            String title = lastSearchTitle != null ? lastSearchTitle : "Cerca Ristoranti";
+
+            if (route.endsWith("search-view-logged.fxml") && lastSearchQuery != null && !lastSearchQuery.isBlank()) {
+                navigateToSearchWithQueryLogged(lastSearchQuery);
+            } else if (route.endsWith("search-view-logged.fxml") && (lastSearchCitta != null || lastSearchPrezzo != null || lastSearchStelle != null || lastSearchOrdine != null)) {
+                navigateToSearchWithAdvancedFiltersLogged(lastSearchCitta, lastSearchPrezzo, lastSearchStelle, lastSearchOrdine);
+            } else if (route.endsWith("search-view.fxml") && lastSearchQuery != null && !lastSearchQuery.isBlank()) {
+                navigateToSearchWithQuery(lastSearchQuery);
+            } else if (route.endsWith("search-view.fxml") && (lastSearchCitta != null || lastSearchPrezzo != null || lastSearchStelle != null || lastSearchOrdine != null)) {
+                navigateToSearchWithAdvancedFilters(lastSearchCitta, lastSearchPrezzo, lastSearchStelle, lastSearchOrdine);
+            } else {
+                navigateTo(route, title);
+            }
+            System.out.println("[NAVIGATOR] Ritorno alla pagina di ricerca memorizzata: " + route);
+            return;
+        }
+
         if (cachedSearchView != null) {
             updateSceneRoot(cachedSearchView, cachedSearchTitle);
             System.out.println("[NAVIGATOR] Schermata di ricerca precedente ripristinata con successo.");
+        } else if (idUtenteLoggato != -1) {
+            navigateTo("search-view-logged.fxml", "Cerca Ristoranti");
         } else {
             navigateTo("search-view.fxml", "Cerca");
         }
@@ -393,12 +526,23 @@ public class Navigator {
  */
     public void navigateToProfile() {
         if (this.idUtenteLoggato == -1) {
-            navigateTo("login-view.fxml", "Accedi");
+            navigateToLoginWithReturn(currentRoute != null ? currentRoute : "home-view.fxml", currentTitle != null ? currentTitle : "Home");
+            return;
         } else if ("CLIENTE".equalsIgnoreCase(this.ruoloUtenteLoggato)) {
             navigateTo("customer-profile-view.fxml", "Il Mio Profilo");
         } else if ("GESTORE".equalsIgnoreCase(this.ruoloUtenteLoggato)) {
             navigateTo("owner-profile-view.fxml", "Dashboard Ristoratore");
         }
+    }
+
+    /**
+     * Forza il ricaricamento della route corrente ricreando la view (utile dopo
+     * cambi di stato globali come login/logout che devono aggiornare la navbar).
+     */
+    public void reloadCurrentRoute() {
+        if (this.currentRoute == null || this.currentRoute.isBlank()) return;
+        // Ricarica la stessa route senza registrare la navigazione nella history
+        navigateToInternal(this.currentRoute, this.currentTitle != null ? this.currentTitle : "", false);
     }
 
 /**
@@ -407,6 +551,14 @@ public class Navigator {
  * Parameters: document important parameters and expected formats.
  * Returns: describe the return value or side-effects.
  */
+    public String getCurrentRoute() {
+        return currentRoute;
+    }
+
+    public String getCurrentTitle() {
+        return currentTitle;
+    }
+
     public boolean isGuest() {
         return this.idUtenteLoggato == -1;
     }
@@ -439,7 +591,8 @@ public class Navigator {
  */
     public void navigateToReservations() {
         if (this.idUtenteLoggato == -1) {
-            navigateTo("login-view.fxml", "Accedi");
+            navigateToLoginWithReturn(currentRoute != null ? currentRoute : "home-view.fxml", currentTitle != null ? currentTitle : "Home");
+            return;
         } else if (isLoggedCustomer()) {
             navigateTo("reservations-view.fxml", "Le mie prenotazioni");
         } else {

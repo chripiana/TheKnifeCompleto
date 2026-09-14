@@ -15,7 +15,7 @@
             <padding><Insets left="60" right="60"/></padding>
             <Text text="TheKnife" style="-fx-font-family: 'Playfair Display'; -fx-font-size: 24; -fx-font-weight: bold; -fx-fill: #1B4332;"/>
             <Region HBox.hgrow="ALWAYS" />
-            <Button text="← Torna alla Home" onAction="#goToHome" style="-fx-background-color: transparent; -fx-text-fill: #2D6A4F; -fx-font-weight: bold; -fx-cursor: hand;"/>
+            <Button text="← Torna indietro" onAction="#goToHome" style="-fx-background-color: transparent; -fx-text-fill: #2D6A4F; -fx-font-weight: bold; -fx-cursor: hand;"/>
         </HBox>
 
         <StackPane VBox.vgrow="ALWAYS">

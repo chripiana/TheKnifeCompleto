@@ -200,7 +200,9 @@ public class ReservationsController {
                 loadReservations();
             } else if (response != null && response.startsWith("ERROR:Sessione")) {
                 Navigator.getInstance().logout();
-                Navigator.getInstance().navigateTo("login-view.fxml", "Accedi");
+                Navigator.getInstance().navigateToLoginWithReturn(
+                    Navigator.getInstance().getCurrentRoute() != null ? Navigator.getInstance().getCurrentRoute() : "home-view.fxml",
+                    Navigator.getInstance().getCurrentTitle() != null ? Navigator.getInstance().getCurrentTitle() : "Home");
             } else {
                 showStatus(response != null ? response.replace("UPDATE_RESERVATION_FAIL:", "") : "Aggiornamento non riuscito", true);
             }
@@ -246,7 +248,9 @@ public class ReservationsController {
                         loadReservations();
                     } else if (response != null && response.startsWith("ERROR:Sessione")) {
                         Navigator.getInstance().logout();
-                        Navigator.getInstance().navigateTo("login-view.fxml", "Accedi");
+                        Navigator.getInstance().navigateToLoginWithReturn(
+                            Navigator.getInstance().getCurrentRoute() != null ? Navigator.getInstance().getCurrentRoute() : "home-view.fxml",
+                            Navigator.getInstance().getCurrentTitle() != null ? Navigator.getInstance().getCurrentTitle() : "Home");
                     } else {
                         showStatus(response != null ? response.replace("DELETE_RESERVATION_FAIL:", "") : "Cancellazione non riuscita", true);
                     }
@@ -267,7 +271,9 @@ public class ReservationsController {
         int userId = Navigator.getInstance().getIdUtenteLoggato();
         if (userId <= 0) {
             showStatus("Effettua il login per vedere le prenotazioni", true);
-            Navigator.getInstance().navigateTo("login-view.fxml", "Accedi");
+            Navigator.getInstance().navigateToLoginWithReturn(
+                Navigator.getInstance().getCurrentRoute() != null ? Navigator.getInstance().getCurrentRoute() : "home-view.fxml",
+                Navigator.getInstance().getCurrentTitle() != null ? Navigator.getInstance().getCurrentTitle() : "Home");
             return;
         }
 

@@ -1,6 +1,8 @@
 package project.controllers;
 
 import project.client.services.ServerApiClient;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.*;
@@ -9,6 +11,7 @@ import javafx.scene.paint.Color;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 /**
  * NewRestaurantController
@@ -44,8 +47,8 @@ public class NewRestaurantController {
 
     /** Campo nome ristorante (bindato da FXML).*/
     @FXML private TextField txtNome;
-    /** ComboBox per selezionare la cucina (bindato da FXML).*/
-    @FXML private ComboBox<String> comboCucina;
+    /** Lista multiselezione per le tipologie di cucina (bindata da FXML).*/
+    @FXML private ListView<String> cuisineListView;
     /** Campo prezzo medio (bindato da FXML).*/
     @FXML private TextField txtPrezzoMedio;
     /** Checkbox delivery.*/
@@ -92,9 +95,31 @@ public class NewRestaurantController {
         }
 
         caricaDatiGestore();
+        inizializzaTipologieCucina();
 
         txtCitta.textProperty().addListener((obs, oldVal, newVal) -> calcolaCoordinateAutomatiche());
         txtIndirizzo.textProperty().addListener((obs, oldVal, newVal) -> calcolaCoordinateAutomatiche());
+    }
+
+    private void inizializzaTipologieCucina() {
+        if (cuisineListView == null) {
+            return;
+        }
+
+        ObservableList<String> cucine = FXCollections.observableArrayList(
+                "🍕 Italiana",
+                "🍣 Giapponese",
+                "🥐 Francese",
+                "🥩 Meats & Grills",
+                "🥗 Mediterranea",
+                "🌶️ Messicana",
+                "🍜 Asiatica",
+                "🥙 Vegetariana / Vegana",
+                "🍝 Pizzeria",
+                "🌮 Fusion"
+        );
+        cuisineListView.setItems(cucine);
+        cuisineListView.getSelectionModel().setSelectionMode(SelectionMode.MULTIPLE);
     }
 
 
@@ -181,11 +206,13 @@ public class NewRestaurantController {
         String nazione = txtNazione.getText().trim();
         String citta = txtCitta.getText().trim();
         String indirizzo = txtIndirizzo.getText().trim();
-        String cucinaConEmoji = comboCucina.getValue();
+        ObservableList<String> cucineSelezionate = cuisineListView != null
+                ? cuisineListView.getSelectionModel().getSelectedItems()
+                : FXCollections.emptyObservableList();
         String prezzoText = txtPrezzoMedio.getText().trim();
 
-        if (nome.isEmpty() || nazione.isEmpty() || citta.isEmpty() || indirizzo.isEmpty() || cucinaConEmoji == null || prezzoText.isEmpty()) {
-            mostraAllerta("Campi vuoti", "Tutti i campi obbligatori devono essere compilati.", Alert.AlertType.WARNING);
+        if (nome.isEmpty() || nazione.isEmpty() || citta.isEmpty() || indirizzo.isEmpty() || cucineSelezionate.isEmpty() || prezzoText.isEmpty()) {
+            mostraAllerta("Campi vuoti", "Tutti i campi obbligatori devono essere compilati, inclusa almeno una tipologia di cucina.", Alert.AlertType.WARNING);
             return;
         }
 
@@ -208,7 +235,11 @@ public class NewRestaurantController {
             lon = 9.1900;
         }
 
-        String cucinaPura = cucinaConEmoji.replaceAll("[^a-zA-Z\\s/]", "").trim();
+        String cucinaPura = cucineSelezionate.stream()
+                .map(this::normalizzaCucina)
+                .filter(s -> !s.isBlank())
+                .distinct()
+                .collect(Collectors.joining(", "));
 
         boolean delivery = chkDelivery.isSelected();
         boolean prenotazioneOnline = chkPrenotazione.isSelected();
@@ -245,6 +276,13 @@ public class NewRestaurantController {
     @FXML
     void handleAnnulla(ActionEvent event) {
         navigator.navigateTo("owner-dashboard-view.fxml", "Dashboard Proprietario");
+    }
+
+    private String normalizzaCucina(String cucina) {
+        if (cucina == null) {
+            return "";
+        }
+        return cucina.replaceAll("[^a-zA-Z\\s/]", "").trim();
     }
 
     @FXML

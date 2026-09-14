@@ -192,6 +192,8 @@ public class OwnerDashboardController {
  * Notes: mention nullability, lifecycle, and external dependencies if any.
  */
     private Button btnVediScheda;
+@FXML
+private javafx.scene.control.TitledPane modificaRistoranteSection;
 
 /**
  * Field: navigator
@@ -256,6 +258,7 @@ public class OwnerDashboardController {
             return;
         }
 
+        setModificaRistoranteVisible(false);
         Platform.runLater(this::caricaRistorantiERecensioni);
 
         if (btnSalvaRistorante != null) {
@@ -269,17 +272,34 @@ public class OwnerDashboardController {
         }
     }
 
+   @FXML
+   private void handleVediPreferiti(ActionEvent event) {
+       if (Navigator.getInstance().isLoggedOwner()) {
+           Navigator.getInstance().navigateTo("owner-favorites-view.fxml", "I Miei Preferiti");
+       } else {
+           Navigator.getInstance().navigateTo("favorites-view.fxml", "I Miei Preferiti");
+       }
+   }
+
 /**
  * Method: caricaRistorantiERecensioni
  * Purpose: describe what this method does, its inputs and observable effects.
  * Parameters: document important parameters and expected formats.
  * Returns: describe the return value or side-effects.
  */
+    private void setModificaRistoranteVisible(boolean visible) {
+        if (modificaRistoranteSection == null) return;
+        modificaRistoranteSection.setVisible(visible);
+        modificaRistoranteSection.setManaged(visible);
+        modificaRistoranteSection.setExpanded(visible);
+    }
+
     private void caricaRistorantiERecensioni() {
         containerRistoranti.getChildren().clear();
         containerRecensioni.getChildren().clear();
         ristoranti.clear();
         reviewsByRistorante.clear();
+        setModificaRistoranteVisible(false);
 
         try {
             if (!apiClient.isConnected()) {
@@ -354,7 +374,9 @@ public class OwnerDashboardController {
                         "Non hai ancora ristoranti registrati. Crea il tuo primo ristorante dal pannello.");
                 empty.setStyle("-fx-text-fill: #6B6B6B;");
                 containerRistoranti.getChildren().add(empty);
+                setModificaRistoranteVisible(false);
             } else {
+                setModificaRistoranteVisible(true);
                 for (RestaurantSummary r : ristoranti) {
                     HBox row = new HBox(10);
                     row.setAlignment(Pos.CENTER_LEFT);
@@ -375,10 +397,17 @@ public class OwnerDashboardController {
                     Button apri = new Button("Apri");
                     apri.getStyleClass().add("btn-outline");
                     apri.setMinWidth(82);
-
                     apri.setOnAction(ev -> openRestaurant(r));
 
-                    row.getChildren().addAll(nome, meta, spacer, apri);
+                    Button modifica = new Button("Modifica");
+                    modifica.getStyleClass().add("btn-primary");
+                    modifica.setMinWidth(90);
+                    modifica.setOnAction(ev -> openRestaurant(r));
+
+                    HBox actions = new HBox(8, apri, modifica);
+                    actions.setAlignment(Pos.CENTER_RIGHT);
+
+                    row.getChildren().addAll(nome, meta, spacer, actions);
                     containerRistoranti.getChildren().add(row);
                 }
             }
@@ -388,10 +417,11 @@ public class OwnerDashboardController {
                     selectedRestaurantId = ristoranti.get(0).getId();
                     selectedRestaurantName = ristoranti.get(0).getNome();
                 }
-                openRestaurant(ristoranti.stream()
+                RestaurantSummary selected = ristoranti.stream()
                         .filter(r -> r.getId().equals(selectedRestaurantId))
                         .findFirst()
-                        .orElse(ristoranti.get(0)));
+                        .orElse(ristoranti.get(0));
+                openRestaurant(selected);
             }
 
             caricaPrenotazioniRicevute();
@@ -620,6 +650,10 @@ public class OwnerDashboardController {
     private void openRestaurant(RestaurantSummary r) {
         selectedRestaurantId = r.getId();
         selectedRestaurantName = r.getNome();
+        setModificaRistoranteVisible(true);
+        if (modificaRistoranteSection != null) {
+            modificaRistoranteSection.setExpanded(true);
+        }
 
         dashNomeLabel.setText(r.getNome());
         try {

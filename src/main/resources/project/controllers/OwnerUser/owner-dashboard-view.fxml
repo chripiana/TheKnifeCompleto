@@ -95,6 +95,7 @@
                              <children>
                                  <HBox spacing="10" alignment="CENTER_LEFT">
                                      <Label text="I TUOI RISTORANTI" styleClass="section-title" HBox.hgrow="ALWAYS" />
+                                     <Button text="❤️ Preferiti" styleClass="btn-outline" onAction="#handleVediPreferiti" />
                                      <Button fx:id="btnNuovoRistorante" text="➕ Nuovo ristorante" styleClass="btn-primary" onAction="#handleNuovoRistorante" />
                                  </HBox>
                                  <VBox spacing="10" fx:id="containerRistoranti" styleClass="card">
@@ -103,10 +104,9 @@
                              </children>
                          </VBox>
 
-                        <!-- FORM: MODIFICA DATI (verrà popolato dinamicamente quando si seleziona un ristorante) -->
-                        <VBox spacing="10">
-                            <children>
-                                <Label text="MODIFICA DATI RISTORANTE" styleClass="section-title" />
+                        <!-- FORM: MODIFICA DATI (comparirà solo quando un ristorante è selezionato) -->
+                        <TitledPane fx:id="modificaRistoranteSection" text="MODIFICA DATI RISTORANTE" expanded="false" visible="false" managed="false" styleClass="owner-edit-panel">
+                            <content>
                                 <VBox spacing="15" styleClass="card">
                                     <padding><Insets top="20" right="20" bottom="20" left="20"/></padding>
                                     <children>
@@ -181,8 +181,8 @@
                                         </HBox>
                                     </children>
                                 </VBox>
-                            </children>
-                        </VBox>
+                            </content>
+                        </TitledPane>
 
                         <!-- GESTIONE PRENOTAZIONI -->
                         <VBox spacing="10">

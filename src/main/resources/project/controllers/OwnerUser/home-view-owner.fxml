@@ -23,6 +23,7 @@
             <Region HBox.hgrow="ALWAYS" />
             <HBox spacing="15" alignment="CENTER">
                 <Hyperlink text="I miei ristoranti" styleClass="nav-link" onAction="#visualizzaRistoranti"/>
+                <Hyperlink text="❤️ Preferiti" styleClass="nav-link" onAction="#visualizzaPreferiti"/>
 
                 <Button  styleClass="user-avatar-btn">
                     <graphic>

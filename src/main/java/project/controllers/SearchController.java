@@ -515,7 +515,7 @@ public class SearchController {
             Double minStelle, Boolean delivery, Boolean prenotazione, String ordine,
             Double lat, Double lon, Double radiusKm) {
         // preserve current results in case of failure so UI doesn't disappear
-        java.util.List<RistoranteOggetto> backup = new ArrayList<>(tuttiIRistoranti);
+        List<RistoranteOggetto> backup = new ArrayList<>(tuttiIRistoranti);
         tuttiIRistoranti.clear();
         paginaCorrente = 1;
         if (!apiClient.isConnected()) {

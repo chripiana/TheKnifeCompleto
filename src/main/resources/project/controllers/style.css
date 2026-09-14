@@ -1274,6 +1274,35 @@
    -fx-effect: dropshadow(three-pass-box, rgba(27,67,50,0.09), 10, 0, 0, 3);
 }
 
+.owner-edit-panel {
+   -fx-background-color: white;
+   -fx-background-radius: 16px;
+   -fx-border-color: #E8F1EC;
+   -fx-border-width: 1px;
+   -fx-border-radius: 16px;
+   -fx-effect: dropshadow(three-pass-box, rgba(27,67,50,0.06), 12, 0, 0, 4);
+}
+
+.owner-edit-panel > .title {
+   -fx-background-color: linear-gradient(to right, #EAF6F0 0%, #F4FBF7 100%);
+   -fx-text-fill: #1B4332;
+   -fx-font-weight: bold;
+   -fx-font-size: 13px;
+   -fx-padding: 12px 16px;
+   -fx-border-color: transparent;
+   -fx-border-radius: 16px 16px 0 0;
+}
+
+.owner-edit-panel > .content {
+   -fx-padding: 0;
+   -fx-background-color: transparent;
+}
+
+.owner-edit-panel .arrow-button {
+   -fx-background-color: transparent;
+   -fx-text-fill: #1B4332;
+}
+
 .owner-restaurant-card {
    -fx-background-color: white;
    -fx-background-radius: 16px;

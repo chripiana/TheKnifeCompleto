@@ -103,7 +103,11 @@ public class HomeLoggedController {
 
     @FXML
     private void visualizzaPreferiti(javafx.event.ActionEvent event) {
-        project.controllers.Navigator.getInstance().navigateTo("favorites-view.fxml", "I Miei Preferiti");
+        if (project.controllers.Navigator.getInstance().isLoggedOwner()) {
+            project.controllers.Navigator.getInstance().navigateTo("owner-favorites-view.fxml", "I Miei Preferiti");
+        } else {
+            project.controllers.Navigator.getInstance().navigateTo("favorites-view.fxml", "I Miei Preferiti");
+        }
     }
 
     public void visualizzaRistoranti(javafx.event.ActionEvent actionEvent) {

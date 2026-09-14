@@ -1,8 +1,9 @@
 package project.client.config;
 
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import project.shared.models.ServerConnection;
+
 import java.io.File;
 import java.nio.file.Files;
 import java.nio.file.Paths;

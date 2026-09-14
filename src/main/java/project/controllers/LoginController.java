@@ -129,11 +129,15 @@ public class LoginController {
                     loginErrorLabel.setVisible(false);
                     loginErrorLabel.setManaged(false);
 
-                    if ("CLIENTE".equalsIgnoreCase(ruolo)) {
-                        Navigator.getInstance().navigateTo("home-view-logged.fxml", "Home Cliente");
-                    } else if ("GESTORE".equalsIgnoreCase(ruolo)) {
-                        Navigator.getInstance().navigateTo("home-view-owner.fxml", "Home Ristoratore");
+                    if (Navigator.getInstance().hasPendingReturnTarget()) {
+                        Navigator.getInstance().navigateAfterLogin();
+                    } else {
+                        Navigator.getInstance().navigateToHomeIntelligent();
                     }
+                    // Forza ricaricamento della route per aggiornare la navbar e gli elementi
+                    try {
+                        Navigator.getInstance().reloadCurrentRoute();
+                    } catch (Exception ignored) {}
                 } else {
                     showLoginError("Risposta del server non valida.");
                 }
@@ -256,6 +260,14 @@ public class LoginController {
  * Returns: describe the return value or side-effects.
  */
     private void goToHome() {
+        if (Navigator.getInstance().hasPendingReturnTarget()) {
+            Navigator.getInstance().navigateAfterLogin();
+            return;
+        }
+        if (Navigator.getInstance().getCurrentRoute() != null && !"login-view.fxml".equals(Navigator.getInstance().getCurrentRoute())) {
+            Navigator.getInstance().goBack();
+            return;
+        }
         Navigator.getInstance().navigateTo("home-view.fxml", "Home Page");
     }
 

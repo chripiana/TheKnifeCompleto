@@ -89,20 +89,7 @@
                 <HBox spacing="16">
                     <VBox spacing="5" HBox.hgrow="ALWAYS">
                         <Label text="TIPOLOGIA CUCINA" styleClass="filter-label"/>
-                        <ComboBox fx:id="comboCucina" promptText="Seleziona una cucina" maxWidth="Infinity" styleClass="filter-combo">
-                            <items>
-                                <FXCollections fx:factory="observableArrayList">
-                                    <String fx:value="🍕 Italiana" />
-                                    <String fx:value="🍣 Giapponese" />
-                                    <String fx:value="🥐 Francese" />
-                                    <String fx:value="🥩 Meats &amp; Grills" />
-                                    <String fx:value="🥗 Mediterranea" />
-                                    <String fx:value="🌶️ Messicana" />
-                                    <String fx:value="🍜 Asiatica" />
-                                    <String fx:value="🥙 Vegetariana / Vegana" />
-                                </FXCollections>
-                            </items>
-                        </ComboBox>
+                        <ListView fx:id="cuisineListView" maxHeight="130" prefHeight="130" maxWidth="Infinity" styleClass="filter-input" />
                     </VBox>
                     <VBox spacing="5" HBox.hgrow="ALWAYS">
                         <Label text="PREZZO MEDIO (€)" styleClass="filter-label"/>

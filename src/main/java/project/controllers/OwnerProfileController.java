@@ -276,7 +276,7 @@ public class OwnerProfileController {
 
     @FXML
     void handleVediPreferiti(ActionEvent event) {
-        navigator.navigateTo("favorites-view.fxml", "I Miei Preferiti");
+        navigator.navigateTo("owner-favorites-view.fxml", "I Miei Preferiti");
     }
 
     @FXML

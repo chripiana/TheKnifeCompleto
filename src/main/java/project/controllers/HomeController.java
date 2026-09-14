@@ -87,13 +87,19 @@ public class HomeController {
     @FXML
     private void goToLogin() {
         System.out.println("[HOME] Spostamento alla pagina Login");
-        Navigator.getInstance().navigateTo("login-view.fxml", "Accedi");
+        Navigator.getInstance().navigateToLoginWithReturn(
+            Navigator.getInstance().getCurrentRoute() != null ? Navigator.getInstance().getCurrentRoute() : "home-view.fxml",
+            Navigator.getInstance().getCurrentTitle() != null ? Navigator.getInstance().getCurrentTitle() : "Home"
+        );
     }
 
     @FXML
     private void visualizzaPreferiti() {
         System.out.println("[HOME] Spostamento alla pagina Preferiti");
-        Navigator.getInstance().navigateTo("favorites-view.fxml", "I tuoi preferiti");
+        Navigator.getInstance().navigateToLoginWithReturn(
+            "favorites-view.fxml",
+            "I tuoi preferiti"
+        );
     }
 
     @FXML

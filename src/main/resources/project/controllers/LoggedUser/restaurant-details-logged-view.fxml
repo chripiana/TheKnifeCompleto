@@ -26,6 +26,7 @@
                     </children>
                 </HBox>
                 <Region HBox.hgrow="ALWAYS" />
+                <Button text="← Torna ai risultati" onAction="#handleTornaRisultati" style="-fx-background-color: transparent; -fx-text-fill: #D8F3DC; -fx-font-weight: bold; -fx-cursor: hand;"/>
             </children>
         </HBox>
     </top>

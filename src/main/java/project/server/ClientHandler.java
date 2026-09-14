@@ -319,7 +319,7 @@ public class ClientHandler implements Runnable {
            }
 
            System.out.println("[Handler] LOGIN: " + email);
-           java.util.Map<String,Object> userMap = dao.getLoginData(email);
+           Map<String,Object> userMap = dao.getLoginData(email);
 
            if (userMap == null || userMap.isEmpty()) {
                registerFailedLogin(email);
@@ -525,7 +525,7 @@ public class ClientHandler implements Runnable {
                            " delivery=" + delivery + " prenotazione=" + prenotazioneOnline +
                            " minStelle=" + minStelle + " lat=" + nearbyLat + " lon=" + nearbyLon + " radius=" + radiusKm);
 
-            java.util.List<java.util.Map<String,Object>> rows;
+            java.util.List<Map<String,Object>> rows;
 
             // Build cache key from search parameters
             StringBuilder keyBuilder = new StringBuilder();
@@ -542,7 +542,7 @@ public class ClientHandler implements Runnable {
             String cacheKey = keyBuilder.toString();
 
             // Try cache
-            java.util.List<java.util.Map<String,Object>> cached = SearchCache.get(cacheKey);
+            java.util.List<Map<String,Object>> cached = SearchCache.get(cacheKey);
             if (cached != null) {
                 AppLogger.info("Handler", "Cache hit for search key=" + cacheKey + ", rows=" + cached.size());
                 String resultCached = serializeRows(cached);
@@ -601,7 +601,7 @@ public class ClientHandler implements Runnable {
             System.out.println("[Handler] GET_USER_DATA: userId=" + userId);
 
             // Ottieni dati utente tramite DAO che restituisce Map per evitare ResultSet aperti
-            java.util.Map<String,Object> user = dao.getDatiUtenteMap(userId);
+            Map<String,Object> user = dao.getDatiUtenteMap(userId);
             if (user != null && !user.isEmpty()) {
                 String userData = serializeRows(java.util.List.of(user));
                 System.out.println("[Handler] GET_USER_DATA_OK");
@@ -668,14 +668,14 @@ public class ClientHandler implements Runnable {
         }
     }
 
-    private String serializeRows(java.util.List<java.util.Map<String,Object>> rows) {
+    private String serializeRows(java.util.List<Map<String,Object>> rows) {
         if (rows == null || rows.isEmpty()) return "";
         StringBuilder sb2 = new StringBuilder();
         int r = 0;
-        for (java.util.Map<String,Object> row : rows) {
+        for (Map<String,Object> row : rows) {
             if (r > 0) sb2.append(";");
             int c = 0;
-            for (java.util.Map.Entry<String,Object> e : row.entrySet()) {
+            for (Map.Entry<String,Object> e : row.entrySet()) {
                 if (c > 0) sb2.append("|");
                 sb2.append(e.getKey()).append("=").append(e.getValue() == null ? "" : e.getValue().toString());
                 c++;
@@ -884,7 +884,7 @@ public class ClientHandler implements Runnable {
             String ristoId = parts[1].trim();
 
             System.out.println("[Handler] GET_REVIEW_STATS: ristoId=" + ristoId);
-            java.util.Map<String,Object> stats = dao.getStatisticheRecensioniMap(ristoId);
+            Map<String,Object> stats = dao.getStatisticheRecensioniMap(ristoId);
             String result = "";
             if (stats != null && !stats.isEmpty()) {
                 result = serializeRows(java.util.List.of(stats));
@@ -910,7 +910,7 @@ public class ClientHandler implements Runnable {
             String ristoId = parts[1].trim();
 
             System.out.println("[Handler] GET_STAR_DISTRIBUTION: ristoId=" + ristoId);
-            java.util.List<java.util.Map<String,Object>> distro = dao.getDistribuzioneStelleList(ristoId);
+            java.util.List<Map<String,Object>> distro = dao.getDistribuzioneStelleList(ristoId);
             String result = serializeRows(distro);
             return "GET_STAR_DISTRIBUTION_OK:" + result;
 
@@ -944,7 +944,7 @@ public class ClientHandler implements Runnable {
             }
 
             System.out.println("[Handler] GET_PREFERITI_UTENTE: userId=" + userId);
-            java.util.List<java.util.Map<String,Object>> rows = dao.getPreferitiUtenteList(userId);
+            java.util.List<Map<String,Object>> rows = dao.getPreferitiUtenteList(userId);
             String result = serializeRows(rows);
             return "GET_PREFERITI_UTENTE_OK:" + result;
 
@@ -967,7 +967,7 @@ public class ClientHandler implements Runnable {
             String ristoId = parts[1].trim();
 
             System.out.println("[Handler] GET_RISTORANTE_DETAILS: ristoId=" + ristoId);
-            java.util.Map<String,Object> r = dao.getRistoranteDetailsMap(ristoId);
+            Map<String,Object> r = dao.getRistoranteDetailsMap(ristoId);
             if (r != null && !r.isEmpty()) {
                 String result = serializeRows(java.util.List.of(r));
                 System.out.println("[Handler] GET_RISTORANTE_DETAILS_OK");
@@ -1001,7 +1001,7 @@ public class ClientHandler implements Runnable {
             }
 
             System.out.println("[Handler] GET_USER_REVIEWS: userId=" + userId);
-            java.util.List<java.util.Map<String,Object>> rows = dao.getRecensioniUtenteList(userId);
+            java.util.List<Map<String,Object>> rows = dao.getRecensioniUtenteList(userId);
             String result = serializeRows(rows);
             return "GET_USER_REVIEWS_OK:" + result;
 
@@ -1211,10 +1211,10 @@ public class ClientHandler implements Runnable {
 
             int offset = page * size;
 
-            java.util.List<java.util.Map<String,Object>> rows = dao.getPrenotazioniUtenteList(userId, size, offset);
+            java.util.List<Map<String,Object>> rows = dao.getPrenotazioniUtenteList(userId, size, offset);
             StringBuilder sb = new StringBuilder("GET_USER_RESERVATIONS_OK:");
             boolean first = true;
-            for (java.util.Map<String,Object> r : rows) {
+            for (Map<String,Object> r : rows) {
                 if (!first) sb.append(";");
                 sb.append(r.getOrDefault("id_prenotazione","0")).append("|")
                   .append(r.getOrDefault("id_ristorante","")).append("|")
@@ -1267,10 +1267,10 @@ public class ClientHandler implements Runnable {
                 return "ERROR:Sessione non valida o non autorizzata";
             }
 
-            java.util.List<java.util.Map<String,Object>> rows = dao.getPrenotazioniRicevuteGestore(ownerId);
+            java.util.List<Map<String,Object>> rows = dao.getPrenotazioniRicevuteGestore(ownerId);
             StringBuilder sb = new StringBuilder("GET_OWNER_RESERVATIONS_OK:");
             boolean first = true;
-            for (java.util.Map<String,Object> r : rows) {
+            for (Map<String,Object> r : rows) {
                 if (!first) sb.append(";");
                 sb.append(r.getOrDefault("id_prenotazione", "0")).append("|")
                   .append(r.getOrDefault("id_utente", "0")).append("|")
@@ -1411,7 +1411,7 @@ public class ClientHandler implements Runnable {
             }
 
             System.out.println("[Handler] GET_USER_PROFILE: userId=" + userId);
-            java.util.Map<String,Object> user = dao.getDatiUtenteMap(userId);
+            Map<String,Object> user = dao.getDatiUtenteMap(userId);
             String result = "";
             if (user != null && !user.isEmpty()) {
                 result = serializeRows(java.util.List.of(user));
@@ -1697,7 +1697,7 @@ public class ClientHandler implements Runnable {
             System.out.println("[Handler] GET_RECIPES: restaurantId=" + restaurantId);
             
             String sql = "SELECT id_ricetta, nome, descrizione FROM Ricette WHERE id_ristorante = ?";
-            try (java.sql.PreparedStatement ps = DatabaseManager.getConnection().prepareStatement(sql)) {
+            try (PreparedStatement ps = DatabaseManager.getConnection().prepareStatement(sql)) {
                 ps.setString(1, restaurantId);
                 ResultSet rs = ps.executeQuery();
 
@@ -1751,7 +1751,7 @@ public class ClientHandler implements Runnable {
             System.out.println("[Handler] GET_FAVORITE_COUNT: restaurantId=" + restaurantId);
             
             String sql = "SELECT COUNT(*) as count FROM Preferiti WHERE id_ristorante = ?";
-            try (java.sql.PreparedStatement ps = DatabaseManager.getConnection().prepareStatement(sql)) {
+            try (PreparedStatement ps = DatabaseManager.getConnection().prepareStatement(sql)) {
                 ps.setString(1, restaurantId);
                 ResultSet rs = ps.executeQuery();
 
@@ -1791,7 +1791,7 @@ public class ClientHandler implements Runnable {
             
             String sql = "SELECT id_recensione, id_utente, nome_utente, stelle, testo, data_recensione FROM Recensioni " +
                     "WHERE id_ristorante = ? AND data_recensione >= DATE_SUB(NOW(), INTERVAL ? DAY) ORDER BY data_recensione DESC";
-            try (java.sql.PreparedStatement ps = DatabaseManager.getConnection().prepareStatement(sql)) {
+            try (PreparedStatement ps = DatabaseManager.getConnection().prepareStatement(sql)) {
                 ps.setString(1, restaurantId);
                 ps.setInt(2, days);
                 ResultSet rs = ps.executeQuery();
@@ -1822,7 +1822,7 @@ public class ClientHandler implements Runnable {
             
             String sql = "SELECT DATE(data_recensione) as data, AVG(stelle) as media_stelle, COUNT(*) as num_recensioni " +
                     "FROM Recensioni WHERE id_ristorante = ? GROUP BY DATE(data_recensione) ORDER BY data DESC LIMIT 30";
-            try (java.sql.PreparedStatement ps = DatabaseManager.getConnection().prepareStatement(sql)) {
+            try (PreparedStatement ps = DatabaseManager.getConnection().prepareStatement(sql)) {
                 ps.setString(1, restaurantId);
                 ResultSet rs = ps.executeQuery();
 

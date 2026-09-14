@@ -50,7 +50,7 @@ public class TheKnifeServer {
     public void start() {
         try {
             running = true;
-            serverSocket = new java.net.ServerSocket();
+            serverSocket = new ServerSocket();
             serverSocket.setReuseAddress(true);
             serverSocket.bind(new InetSocketAddress(InetAddress.getByName(bindHost), port), backlog);
             System.out.println("[Server] Avviato sulla porta " + port + " su " + bindHost + " (max clients=" + maxClients + ", backlog=" + backlog + ")");

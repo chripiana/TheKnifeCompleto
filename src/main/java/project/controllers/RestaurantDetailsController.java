@@ -808,7 +808,17 @@ public class RestaurantDetailsController {
  * Returns: describe the return value or side-effects.
  */
     private void handlePreferiti(ActionEvent event) {
-        Navigator.getInstance().navigateTo("favorites-view.fxml", "I Miei Preferiti");
+        if (Navigator.getInstance().getIdUtenteLoggato() == -1) {
+            Navigator.getInstance().navigateToLoginWithReturn(
+                Navigator.getInstance().getCurrentRoute() != null ? Navigator.getInstance().getCurrentRoute() : "home-view.fxml",
+                Navigator.getInstance().getCurrentTitle() != null ? Navigator.getInstance().getCurrentTitle() : "Home");
+            return;
+        }
+        if (Navigator.getInstance().isLoggedOwner()) {
+            Navigator.getInstance().navigateTo("owner-favorites-view.fxml", "I Miei Preferiti");
+        } else {
+            Navigator.getInstance().navigateTo("favorites-view.fxml", "I Miei Preferiti");
+        }
     }
 
     @FXML
@@ -862,7 +872,9 @@ public class RestaurantDetailsController {
             alert.setHeaderText("Devi effettuare il login");
             alert.setContentText("Per aggiungere un ristorante ai preferiti devi essere autenticato.");
             alert.showAndWait();
-            Navigator.getInstance().navigateTo("login-view.fxml", "Accedi");
+            Navigator.getInstance().navigateToLoginWithReturn(
+                Navigator.getInstance().getCurrentRoute() != null ? Navigator.getInstance().getCurrentRoute() : "home-view.fxml",
+                Navigator.getInstance().getCurrentTitle() != null ? Navigator.getInstance().getCurrentTitle() : "Home");
             return;
         }
 

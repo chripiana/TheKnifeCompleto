@@ -77,7 +77,9 @@ public class ReviewsController {
         if (idUtenteLoggato != -1) {
             caricaRecensioni();
         } else {
-            navigator.navigateTo("login-view.fxml", "Accedi");
+            navigator.navigateToLoginWithReturn(
+                navigator.getCurrentRoute() != null ? navigator.getCurrentRoute() : "home-view.fxml",
+                navigator.getCurrentTitle() != null ? navigator.getCurrentTitle() : "Home");
         }
     }
 
@@ -161,34 +163,6 @@ public class ReviewsController {
                         HBox actionBox = new HBox(10);
                         actionBox.setAlignment(Pos.CENTER_LEFT);
 
-                        Button btnRestaurant = new Button("Vai al ristorante");
-                        btnRestaurant.setStyle("-fx-background-color: #E8F5E9; -fx-text-fill: #1B4332; -fx-cursor: hand; -fx-font-size: 12px; -fx-font-weight: bold; -fx-background-radius: 999; -fx-padding: 8 12 8 12;");
-                        final String reviewRestaurantId = idRistorante;
-                        final String reviewRestaurantName = ristorante;
-                        final String reviewCity = citta;
-                        final int reviewStars = stelle;
-                        if (!reviewRestaurantId.isBlank()) {
-                            Map<String, String> restaurantData = new HashMap<>();
-                            restaurantData.put("id_ristorante", reviewRestaurantId);
-                            restaurantData.put("nome", reviewRestaurantName);
-                            restaurantData.put("citta", reviewCity);
-                            restaurantData.put("nazione", "");
-                            restaurantData.put("indirizzo", "");
-                            restaurantData.put("tipologia_cucina", "");
-                            restaurantData.put("prezzo_medio", "0");
-                            restaurantData.put("latitudine", "0");
-                            restaurantData.put("longitudine", "0");
-                            restaurantData.put("delivery", "false");
-                            restaurantData.put("prenotazione_online", "true");
-                            restaurantData.put("distanza_km", "0");
-                            restaurantData.put("media_stelle", String.valueOf(reviewStars));
-                            restaurantData.put("num_recensioni", "0");
-                            SearchController.RistoranteOggetto restaurant = new SearchController.RistoranteOggetto(restaurantData);
-                            btnRestaurant.setOnAction(e -> navigator.navigateToRestaurantDetails(restaurant));
-                        } else {
-                            btnRestaurant.setDisable(true);
-                        }
-
                         Button btnEdit = new Button("✏️ Modifica");
                         btnEdit.setStyle("-fx-background-color: #E0F2FE; -fx-text-fill: #0284C7; -fx-cursor: hand; -fx-font-size: 12px; -fx-font-weight: bold; -fx-background-radius: 999; -fx-padding: 8 12 8 12;");
                         int finalIdRecensione = idRecensione;
@@ -200,7 +174,7 @@ public class ReviewsController {
                         btnDelete.setStyle("-fx-background-color: #FEE2E2; -fx-text-fill: #DC2626; -fx-cursor: hand; -fx-font-size: 12px; -fx-font-weight: bold; -fx-background-radius: 999; -fx-padding: 8 12 8 12;");
                         btnDelete.setOnAction(e -> eliminaRecensione(finalIdRecensione));
 
-                        actionBox.getChildren().addAll(btnRestaurant, btnEdit, btnDelete);
+                        actionBox.getChildren().addAll(btnEdit, btnDelete);
 
                         card.getChildren().addAll(header, lblTesto, actionBox);
                         containerRecensioni.getChildren().add(card);
@@ -340,7 +314,13 @@ public class ReviewsController {
     }
 
     @FXML void handleCerca(ActionEvent event) { navigator.navigateTo("search-view-logged.fxml", "Cerca Ristoranti"); }
-    @FXML void handlePreferiti(ActionEvent event) { navigator.navigateTo("favorites-view.fxml", "I Miei Preferiti"); }
+    @FXML void handlePreferiti(ActionEvent event) { 
+        if (navigator.isLoggedOwner()) {
+            navigator.navigateTo("owner-favorites-view.fxml", "I Miei Preferiti");
+        } else {
+            navigator.navigateTo("favorites-view.fxml", "I Miei Preferiti");
+        }
+    }
     @FXML void handleProfilo(ActionEvent event) { navigator.navigateToProfile(); }
     @FXML void handleLogout(ActionEvent event) {
         navigator.logout();

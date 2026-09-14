@@ -51,6 +51,7 @@
                 <HBox fx:id="navbarGestore" alignment="CENTER" spacing="15" managed="false" visible="false">
                     <children>
                         <Button text="← Torna alla Dashboard" onAction="#handleTornaIndietroGestore" style="-fx-background-color: transparent; -fx-text-fill: #74C69D; -fx-font-weight: bold; -fx-font-size: 14; -fx-border-color: #74C69D; -fx-border-radius: 5; -fx-cursor: hand;" />
+                        <Hyperlink styleClass="nav-link" text="❤️ Preferiti" style="-fx-text-fill: #D8F3DC; -fx-underline: false;" onAction="#handleVediPreferiti" />
                         <Hyperlink onAction="#handleLogout" styleClass="nav-link" text="Esci" style="-fx-text-fill: #74C69D; -fx-underline: false;" />
                     </children>
                 </HBox>

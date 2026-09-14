@@ -52,7 +52,7 @@ public class TheKnifeDAO implements AutoCloseable {
     // =========================================================
 
     public int registrazione(String nome, String cognome, String email,
-            String passwordHash, java.sql.Date dataNascita,
+            String passwordHash, Date dataNascita,
             String luogoDomicilio, double latDomicilio,
             double lonDomicilio, String ruolo) throws SQLException {
 
@@ -232,7 +232,7 @@ public class TheKnifeDAO implements AutoCloseable {
         return ps.executeQuery();
     }
 
-    public int creaPrenotazione(int idUtente, String idRistorante, java.sql.Date data, java.sql.Time ora,
+    public int creaPrenotazione(int idUtente, String idRistorante, Date data, Time ora,
             int numeroPersone, String note, String codicePrenotazione) throws SQLException {
         String sql = """
                 INSERT INTO Prenotazioni
@@ -274,7 +274,7 @@ public class TheKnifeDAO implements AutoCloseable {
         return ps.executeQuery();
     }
 
-    public int aggiornaPrenotazione(int idPrenotazione, int idUtente, java.sql.Date data, java.sql.Time ora,
+    public int aggiornaPrenotazione(int idPrenotazione, int idUtente, Date data, Time ora,
             int numeroPersone, String note) throws SQLException {
         String sql = """
                 UPDATE Prenotazioni
@@ -307,7 +307,7 @@ public class TheKnifeDAO implements AutoCloseable {
         }
     }
 
-    public java.util.List<java.util.Map<String,Object>> ristorantiVicini(double lat, double lon) throws SQLException {
+    public List<Map<String,Object>> ristorantiVicini(double lat, double lon) throws SQLException {
         String sql = """
                 SELECT *,
                        SQRT(POWER(latitudine  - ?, 2) +
@@ -325,8 +325,8 @@ public class TheKnifeDAO implements AutoCloseable {
         }
     }
 
-    public java.util.List<java.util.Map<String,Object>> cercaRistorantiViciniPostGis(double lat, double lon, double radiusKm,
-            String citta, String tipoCucina, Integer prezzoMax, Double minStelle) throws SQLException {
+    public List<Map<String,Object>> cercaRistorantiViciniPostGis(double lat, double lon, double radiusKm,
+                                                                 String citta, String tipoCucina, Integer prezzoMax, Double minStelle) throws SQLException {
         long t0 = System.nanoTime();
         AppLogger.info("DAO", "cercaRistorantiViciniPostGis: lat=" + lat + ", lon=" + lon + ", radiusKm=" + radiusKm + ", citta=" + citta + ", tipoCucina=" + tipoCucina);
         // Uses PostGIS ST_DWithin on geography type for fast spatial search
@@ -346,7 +346,7 @@ public class TheKnifeDAO implements AutoCloseable {
                    AND ST_DWithin(r.geom, (SELECT geom FROM search_point), ?)
                 """);
 
-        java.util.List<Object> params = new java.util.ArrayList<>();
+        List<Object> params = new ArrayList<>();
         // point for search (used in WITH clause and ST_DWithin)
         params.add(lon); // ST_MakePoint expects (lon, lat)
         params.add(lat);
@@ -379,7 +379,7 @@ public class TheKnifeDAO implements AutoCloseable {
                 ps.setObject(i + 1, params.get(i));
             }
             try (ResultSet rs = ps.executeQuery()) {
-                java.util.List<java.util.Map<String,Object>> rows = resultSetToList(rs);
+                List<Map<String,Object>> rows = resultSetToList(rs);
                 long durMs = (long)((System.nanoTime() - t0) / 1_000_000.0);
                 AppLogger.info("DAO", "cercaRistorantiViciniPostGis took " + durMs + " ms, rows=" + rows.size());
                 return rows;
@@ -388,8 +388,8 @@ public class TheKnifeDAO implements AutoCloseable {
     }
 
     // Fallback: existing bounding-box + Haversine method kept for environments without PostGIS
-    public java.util.List<java.util.Map<String,Object>> cercaRistorantiVicini(double lat, double lon, double radiusKm,
-            String citta, String tipoCucina, Integer prezzoMax, Double minStelle) throws SQLException {
+    public List<Map<String,Object>> cercaRistorantiVicini(double lat, double lon, double radiusKm,
+                                                          String citta, String tipoCucina, Integer prezzoMax, Double minStelle) throws SQLException {
         long t0 = System.nanoTime();
         // Apply fast bounding-box filter before Haversine to drastically reduce scanned rows.
         // Compute lat/lon deltas for the given radius (in km).
@@ -471,7 +471,7 @@ public class TheKnifeDAO implements AutoCloseable {
                 ps.setObject(i + 1, params.get(i));
             }
             try (ResultSet rs = ps.executeQuery()) {
-                java.util.List<java.util.Map<String,Object>> rows = resultSetToList(rs);
+                List<Map<String,Object>> rows = resultSetToList(rs);
                 long durMs = (long)((System.nanoTime() - t0) / 1_000_000.0);
                 AppLogger.info("DAO", "cercaRistorantiVicini took " + durMs + " ms, rows=" + rows.size());
                 return rows;
@@ -663,7 +663,7 @@ public class TheKnifeDAO implements AutoCloseable {
     /**
      * Recupera i dettagli di un ristorante come Map (chiude le risorse)
      */
-    public java.util.Map<String,Object> getRistoranteDetailsMap(String idRistorante) throws SQLException {
+    public Map<String,Object> getRistoranteDetailsMap(String idRistorante) throws SQLException {
         String sql = "SELECT id_ristorante, nome, nazione, citta, indirizzo, tipologia_cucina, prezzo_medio, delivery, prenotazione_online, latitudine, longitudine FROM RistorantiTheKnife WHERE id_ristorante = ?";
         try (PreparedStatement ps = conn.prepareStatement(sql)) {
             ps.setString(1, idRistorante);
@@ -802,7 +802,7 @@ public class TheKnifeDAO implements AutoCloseable {
     }
 
     public boolean updateProfiloUtente(int idUtente, String nome, String cognome,
-            java.sql.Date dataNascita, String luogoDomicilio,
+            Date dataNascita, String luogoDomicilio,
             double latDomicilio, double lonDomicilio) throws SQLException {
         String sql = """
                 UPDATE Utenti
@@ -828,7 +828,7 @@ public class TheKnifeDAO implements AutoCloseable {
     }
 
     public boolean updateProfiloUtenteConPassword(int idUtente, String nome, String cognome,
-            java.sql.Date dataNascita, String luogoDomicilio,
+            Date dataNascita, String luogoDomicilio,
             double latDomicilio, double lonDomicilio,
             String nuovaPasswordHash) throws SQLException {
         String sql = """
@@ -884,7 +884,7 @@ public class TheKnifeDAO implements AutoCloseable {
     }
 
     // New convenience methods returning DTOs (List/Map) to avoid leaking ResultSet
-    public java.util.Map<String,Object> getLoginData(String email) throws SQLException {
+    public Map<String,Object> getLoginData(String email) throws SQLException {
         String sql = """
                 SELECT id_utente, password_hash, ruolo
                   FROM Utenti
@@ -894,7 +894,7 @@ public class TheKnifeDAO implements AutoCloseable {
             ps.setString(1, email);
             try (ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
-                    java.util.Map<String,Object> m = new java.util.HashMap<>();
+                    Map<String,Object> m = new HashMap<>();
                     m.put("id_utente", rs.getObject("id_utente"));
                     m.put("password_hash", rs.getObject("password_hash"));
                     m.put("ruolo", rs.getObject("ruolo"));
@@ -905,7 +905,7 @@ public class TheKnifeDAO implements AutoCloseable {
         return null;
     }
 
-    public java.util.Map<String,Object> getStatisticheRecensioniMap(String idRistorante) throws SQLException {
+    public Map<String,Object> getStatisticheRecensioniMap(String idRistorante) throws SQLException {
         String sql = """
                 SELECT COALESCE(AVG(stelle), 0) AS media_stelle,
                        COUNT(*)                  AS num_recensioni
@@ -916,7 +916,7 @@ public class TheKnifeDAO implements AutoCloseable {
             ps.setString(1, idRistorante);
             try (ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
-                    java.util.Map<String,Object> m = new java.util.HashMap<>();
+                    Map<String,Object> m = new HashMap<>();
                     m.put("media_stelle", rs.getObject("media_stelle"));
                     m.put("num_recensioni", rs.getObject("num_recensioni"));
                     return m;
@@ -926,7 +926,7 @@ public class TheKnifeDAO implements AutoCloseable {
         return null;
     }
 
-    public java.util.List<java.util.Map<String,Object>> getDistribuzioneStelleList(String idRistorante) throws SQLException {
+    public List<Map<String,Object>> getDistribuzioneStelleList(String idRistorante) throws SQLException {
         String sql = """
                 SELECT stelle, COUNT(*) AS conteggio
                   FROM Recensioni
@@ -941,7 +941,7 @@ public class TheKnifeDAO implements AutoCloseable {
         }
     }
 
-    public java.util.List<java.util.Map<String,Object>> getPreferitiUtenteList(int idUtente) throws SQLException {
+    public List<Map<String,Object>> getPreferitiUtenteList(int idUtente) throws SQLException {
         String sql = """
                 SELECT r.id_ristorante, r.nome, r.citta, r.tipologia_cucina, r.prezzo_medio
                   FROM Preferiti p
@@ -956,7 +956,7 @@ public class TheKnifeDAO implements AutoCloseable {
         }
     }
 
-    public java.util.List<java.util.Map<String,Object>> getRecensioniUtenteList(int idUtente) throws SQLException {
+    public List<Map<String,Object>> getRecensioniUtenteList(int idUtente) throws SQLException {
         String sql = """
                 SELECT rec.id_recensione, rec.testo, rec.stelle, rec.data_recensione, r.nome AS nome_ristorante
                   FROM Recensioni rec
@@ -972,12 +972,12 @@ public class TheKnifeDAO implements AutoCloseable {
         }
     }
 
-    public java.util.List<java.util.Map<String,Object>> getPrenotazioniUtenteList(int idUtente) throws SQLException {
+    public List<Map<String,Object>> getPrenotazioniUtenteList(int idUtente) throws SQLException {
         // Legacy call kept for compatibility: cap to 200
         return getPrenotazioniUtenteList(idUtente, 200, 0);
     }
 
-    public java.util.List<java.util.Map<String,Object>> getPrenotazioniUtenteList(int idUtente, int limit, int offset) throws SQLException {
+    public List<Map<String,Object>> getPrenotazioniUtenteList(int idUtente, int limit, int offset) throws SQLException {
         if (limit <= 0) limit = 50;
         if (limit > 500) limit = 500; // safety cap to prevent excessive memory use
         if (offset < 0) offset = 0;
@@ -1009,7 +1009,7 @@ public class TheKnifeDAO implements AutoCloseable {
         }
     }
 
-    public java.util.List<java.util.Map<String,Object>> getPrenotazioniRicevuteGestore(int idGestore) throws SQLException {
+    public List<Map<String,Object>> getPrenotazioniRicevuteGestore(int idGestore) throws SQLException {
         String sql = """
                 SELECT p.id_prenotazione,
                       p.id_utente,
@@ -1061,7 +1061,7 @@ public class TheKnifeDAO implements AutoCloseable {
         }
     }
 
-    public java.util.Map<String,Object> getDatiUtenteMap(int idUtente) throws SQLException {
+    public Map<String,Object> getDatiUtenteMap(int idUtente) throws SQLException {
         String sql = """
                 SELECT nome, cognome, email, data_nascita,
                        luogo_domicilio, lat_domicilio, lon_domicilio, ruolo
@@ -1072,8 +1072,8 @@ public class TheKnifeDAO implements AutoCloseable {
             ps.setInt(1, idUtente);
             try (ResultSet rs = ps.executeQuery()) {
                 if (rs.next()) {
-                    java.util.Map<String,Object> m = new java.util.HashMap<>();
-                    java.sql.ResultSetMetaData md = rs.getMetaData();
+                    Map<String,Object> m = new HashMap<>();
+                    ResultSetMetaData md = rs.getMetaData();
                     int cols = md.getColumnCount();
                     for (int i = 1; i <= cols; i++) {
                         String name = md.getColumnLabel(i);
@@ -1087,7 +1087,7 @@ public class TheKnifeDAO implements AutoCloseable {
         return null;
     }
 
-    public java.util.List<java.util.Map<String,Object>> visualizzaRiepilogoList(int idGestore) throws SQLException {
+    public List<Map<String,Object>> visualizzaRiepilogoList(int idGestore) throws SQLException {
         String sql = """
                 SELECT r.id_ristorante,
                        r.nome,
@@ -1108,7 +1108,7 @@ public class TheKnifeDAO implements AutoCloseable {
         }
     }
 
-    public java.util.List<java.util.Map<String,Object>> visualizzaRecensioniGestoreList(int idGestore) throws SQLException {
+    public List<Map<String,Object>> visualizzaRecensioniGestoreList(int idGestore) throws SQLException {
         String sql = """
                 SELECT r.id_ristorante,
                        r.nome AS nome,
@@ -1137,7 +1137,7 @@ public class TheKnifeDAO implements AutoCloseable {
         }
     }
 
-    public java.util.List<java.util.Map<String,Object>> mieRecensioniList(int idUtente) throws SQLException {
+    public List<Map<String,Object>> mieRecensioniList(int idUtente) throws SQLException {
         String sql = """
                 SELECT r.id_ristorante,
                        r.nome             AS nome_ristorante,
